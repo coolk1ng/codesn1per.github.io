@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Tree - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="Tree" />
+<meta property="og:description" content="1. 二叉查找树 二叉树结点类API的设计:    类名 Node&lt;Key,Value&gt;     构造方法 Node(Key key,Value value,Node left,Node right):创建Node对象   成员变量 1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值    代码实现: public class Node&lt;Key,Value&gt; { //存储键  public Key key; //存储值  public Value value; //存储左子结点  public Node left; //存储右子结点  public Node right; public Node(Key key, Value value, Node left, Node right) { this." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://codesn1per.github.io/tree/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-17T22:43:20&#43;08:00" />
+<meta property="article:modified_time" content="2021-01-17T22:43:20&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Tree"/>
+<meta name="twitter:description" content="1. 二叉查找树 二叉树结点类API的设计:    类名 Node&lt;Key,Value&gt;     构造方法 Node(Key key,Value value,Node left,Node right):创建Node对象   成员变量 1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值    代码实现: public class Node&lt;Key,Value&gt; { //存储键  public Key key; //存储值  public Value value; //存储左子结点  public Node left; //存储右子结点  public Node right; public Node(Key key, Value value, Node left, Node right) { this."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/tree/" /><link rel="prev" href="https://codesn1per.github.io/mybatis/" /><link rel="next" href="https://codesn1per.github.io/sort/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Tree",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/codesn1per.github.io\/tree\/"
+        },"genre": "posts","keywords": "二叉树","wordcount":  1034 ,
+        "url": "https:\/\/codesn1per.github.io\/tree\/","datePublished": "2021-01-17T22:43:20+08:00","dateModified": "2021-01-17T22:43:20+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "CodeSniper"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="CodeSniper&#39; Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 博客 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="CodeSniper&#39; Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">博客</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Tree</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="far fa-folder fa-fw"></i>算法与数据结构</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-17">2021-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1034 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-二叉查找树">1. 二叉查找树</a></li>
+        <li><a href="#2-二叉树的最小和最大键">2. 二叉树的最小和最大键</a></li>
+        <li><a href="#3-二叉树的基础遍历">3. 二叉树的基础遍历</a></li>
+        <li><a href="#4-二叉树层序遍历">4. 二叉树层序遍历</a></li>
+        <li><a href="#5-二叉树的最大深度问题">5. 二叉树的最大深度问题</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="1-二叉查找树">1. 二叉查找树</h3>
+<h6 id="二叉树结点类api的设计">二叉树结点类API的设计:</h6>
+<table>
+<thead>
+<tr>
+<th>类名</th>
+<th>Node&lt;Key,Value&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造方法</td>
+<td>Node(Key key,Value value,Node left,Node right):创建Node对象</td>
+</tr>
+<tr>
+<td>成员变量</td>
+<td>1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值</td>
+</tr>
+</tbody>
+</table>
+<h5 id="代码实现">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">,</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="c1">//存储键
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Key</span> <span class="n">key</span><span class="o">;</span>
+    <span class="c1">//存储值
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Value</span> <span class="n">value</span><span class="o">;</span>
+    <span class="c1">//存储左子结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="n">left</span><span class="o">;</span>
+    <span class="c1">//存储右子结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="n">right</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">value</span><span class="o">,</span> <span class="n">Node</span> <span class="n">left</span><span class="o">,</span> <span class="n">Node</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="二叉查找树的api设计">二叉查找树的API设计</h5>
+<table>
+<thead>
+<tr>
+<th>类名</th>
+<th>BinaryTree&lt;Key extends Comparable<!-- raw HTML omitted -->,Vlaue value&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造方法</td>
+<td>BinaryTree():创建BinaryTree对象</td>
+</tr>
+<tr>
+<td>成员变量</td>
+<td>1. private Node root:记录根结点 2. private int N :记录树中元素的个数</td>
+</tr>
+<tr>
+<td>成员方法</td>
+<td>1. public void put(Key key,Value value):向书中插入一个键值对 2. private Node put(Node x,Key key,Value value):给指定树x上,添加一个键值对,并返回添加后的新树 3. public Value get(Key key):根据key从书中找出相对应的值 4. private Value get(Node x,Key key):从指定的数x中,找出key对应的值 5. public] void delete(Key key):根据key,删除数中对应的键值对 6. private Node delete(Node x,Key key):删除指定树x上的键为key的键值对,并返回删除后的新树 7. public int size():获取树中元素的个数</td>
+</tr>
+</tbody>
+</table>
+<h5 id="二叉查找树实现">二叉查找树实现</h5>
+<ol>
+<li>如果当前树中没有任何一个结点,则直接把新节点当做根结点使用</li>
+<li>如果当前树不为空,则从根结点开始:
+<ul>
+<li>如果新结点的key小于当前结点的key,则继续找当前结点的左子节点;</li>
+<li>如果新结点的key大于当前结点的key,则继续找当前结点的右子节点;</li>
+<li>如果新结点的key等于当前结点的key,则树中已经存在这样的结点,替换该结点的value值即可;</li>
+</ul>
+</li>
+</ol>
+<h5 id="代码实现-1">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//向指定的树x中添加key-value,并返回添加元素后的新树
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">put</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span><span class="n">Value</span> <span class="n">value</span><span class="o">){</span>
+        <span class="c1">//如果x子树为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="c1">//元素个数+1
+</span><span class="c1"></span>            <span class="n">N</span><span class="o">++;</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">//如果x子树不为空
+</span><span class="c1"></span>        <span class="c1">//比较x结点的键和key的大小
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key大于x结点的键,则继续寻找x结点的右子树
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">put</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&lt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key小于x结点的键,则继续寻找x结点的左子树
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="n">put</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="c1">//如果key等于x结点的键,则替换x结点的值为value
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">value</span><span class="o">=</span><span class="n">value</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div><h5 id="查询方法get实现思想">查询方法get实现思想:</h5>
+<p>从根结点开始:</p>
+<ol>
+<li>如果要查询的key小于当前结点的key,则继续寻找当前结点的左子结点;</li>
+<li>如果要查询的key大于当前结点的key,则继续寻找当前结点的右子结点;</li>
+<li>如果要查询的key等于当前结点的key,则树中返回当前结点的value.</li>
+</ol>
+<h5 id="代码实现-2">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//从指定的数x中,查询key对应的值
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Value</span> <span class="nf">get</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span><span class="n">Key</span> <span class="n">key</span><span class="o">){</span>
+        <span class="c1">//如果x子树为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">//如果x子树不为空
+</span><span class="c1"></span>        <span class="c1">//比较x结点的键和key的大小
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key大于x结点的键,则继续寻找x结点的右子树
+</span><span class="c1"></span>            <span class="k">return</span> <span class="n">get</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+
+        <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&lt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key小于x结点的键,则继续寻找x结点的左子树
+</span><span class="c1"></span>            <span class="k">return</span> <span class="n">get</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="c1">//如果key等于x结点的键,则找到了键为key的结点,返回x结点的value即可
+</span><span class="c1"></span>            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div><h5 id="删除方法delete的实现思想">删除方法delete的实现思想:</h5>
+<ol>
+<li>找到被删除结点;</li>
+<li>找到被删除结点右子树的最小结点minNode</li>
+<li>删除右子树中的最小结点</li>
+<li>让被删除结点的左子树称为最小结点minNode的左子树,让被删除结点的右子树称为最小结点minNode的右子树</li>
+<li>让被删除结点的父结点指向最小结点minNode</li>
+</ol>
+<h5 id="代码实现-3">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//删除指定树中key对应的value,并返回删除后的新树
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span><span class="n">Key</span> <span class="n">key</span><span class="o">){</span>
+        <span class="c1">//如果x树为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">//如果x树不为空
+</span><span class="c1"></span>        <span class="c1">//比较x结点的键和key的大小
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key大于x结点的键,则继续寻找x结点的右子树
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">=</span> <span class="n">delete</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+
+        <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&lt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key小于x结点的键,则继续寻找x结点的左子树
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="n">delete</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="c1">//元素个数-1
+</span><span class="c1"></span>            <span class="n">N</span><span class="o">--;</span>
+            <span class="c1">//如果key等于x结点的键,则要删除的结点就是x;
+</span><span class="c1"></span>
+            <span class="c1">//寻找右子树的最小结点
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+                <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+                <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="c1">//默认情况记为右子树
+</span><span class="c1"></span>            <span class="n">Node</span> <span class="n">minNode</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">minNode</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+                <span class="n">minNode</span><span class="o">=</span><span class="n">minNode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="c1">//删除右子树中的最小结点
+</span><span class="c1"></span>            <span class="n">Node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">left</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+                    <span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+                <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                    <span class="c1">//变换n结点
+</span><span class="c1"></span>                    <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="c1">//让x结点的左子树成为minNode的左子树
+</span><span class="c1"></span>            <span class="n">minNode</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+
+            <span class="c1">//让x结点的右子树成为minNode的右子树
+</span><span class="c1"></span>            <span class="n">minNode</span><span class="o">.</span><span class="na">right</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+
+            <span class="c1">//让x结点的父结点指向minNode
+</span><span class="c1"></span>            <span class="n">x</span> <span class="o">=</span> <span class="n">minNode</span><span class="o">;</span>
+
+
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div><h5 id="完整代码">完整代码:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBinaryTree</span><span class="o">&lt;</span><span class="n">Key</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;,</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="c1">//记录根结点
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Node</span> <span class="n">root</span><span class="o">;</span>
+    <span class="c1">//记录树中元素的个数
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">N</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+        <span class="c1">//存储键
+</span><span class="c1"></span>        <span class="kd">public</span> <span class="n">Key</span> <span class="n">key</span><span class="o">;</span>
+        <span class="c1">//存储值
+</span><span class="c1"></span>        <span class="kd">private</span> <span class="n">Value</span> <span class="n">value</span><span class="o">;</span>
+        <span class="c1">//存储左子结点
+</span><span class="c1"></span>        <span class="kd">public</span> <span class="n">Node</span> <span class="n">left</span><span class="o">;</span>
+        <span class="c1">//存储右子结点
+</span><span class="c1"></span>        <span class="kd">public</span> <span class="n">Node</span> <span class="n">right</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">value</span><span class="o">,</span> <span class="n">Node</span> <span class="n">left</span><span class="o">,</span> <span class="n">Node</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">//获取树种元素的个数
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">N</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//向树中添加元素key-value
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">value</span><span class="o">){</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">put</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+
+    <span class="o">}</span>
+
+    <span class="c1">//向指定的树x中添加key-value,并返回添加元素后的新树
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">put</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span><span class="n">Value</span> <span class="n">value</span><span class="o">){</span>
+        <span class="c1">//如果x子树为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="c1">//元素个数+1
+</span><span class="c1"></span>            <span class="n">N</span><span class="o">++;</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">,</span><span class="kc">null</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">//如果x子树不为空
+</span><span class="c1"></span>        <span class="c1">//比较x结点的键和key的大小
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key大于x结点的键,则继续寻找x结点的右子树
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">put</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&lt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key小于x结点的键,则继续寻找x结点的左子树
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="n">put</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="c1">//如果key等于x结点的键,则替换x结点的值为value
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">value</span><span class="o">=</span><span class="n">value</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//查询树中指定key对应的value
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Value</span> <span class="nf">get</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">get</span><span class="o">(</span><span class="n">root</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//从指定的数x中,查询key对应的值
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Value</span> <span class="nf">get</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span><span class="n">Key</span> <span class="n">key</span><span class="o">){</span>
+        <span class="c1">//如果x子树为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">//如果x子树不为空
+</span><span class="c1"></span>        <span class="c1">//比较x结点的键和key的大小
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key大于x结点的键,则继续寻找x结点的右子树
+</span><span class="c1"></span>            <span class="k">return</span> <span class="n">get</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+
+        <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&lt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key小于x结点的键,则继续寻找x结点的左子树
+</span><span class="c1"></span>            <span class="k">return</span> <span class="n">get</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="c1">//如果key等于x结点的键,则找到了键为key的结点,返回x结点的value即可
+</span><span class="c1"></span>            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">//删除树中key对应的value
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">){</span>
+        <span class="n">delete</span><span class="o">(</span><span class="n">root</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//删除指定树中key对应的value,并返回删除后的新树
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span><span class="n">Key</span> <span class="n">key</span><span class="o">){</span>
+        <span class="c1">//如果x树为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">//如果x树不为空
+</span><span class="c1"></span>        <span class="c1">//比较x结点的键和key的大小
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key大于x结点的键,则继续寻找x结点的右子树
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">=</span> <span class="n">delete</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+
+        <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span><span class="o">&lt;</span><span class="n">0</span><span class="o">){</span>
+            <span class="c1">//如果key小于x结点的键,则继续寻找x结点的左子树
+</span><span class="c1"></span>            <span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="n">delete</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">key</span><span class="o">);</span>
+
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="c1">//元素个数-1
+</span><span class="c1"></span>            <span class="n">N</span><span class="o">--;</span>
+            <span class="c1">//如果key等于x结点的键,则要删除的结点就是x;
+</span><span class="c1"></span>
+            <span class="c1">//寻找右子树的最小结点
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+                <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+                <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="c1">//默认情况记为右子树
+</span><span class="c1"></span>            <span class="n">Node</span> <span class="n">minNode</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">minNode</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+                <span class="n">minNode</span><span class="o">=</span><span class="n">minNode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="c1">//删除右子树中的最小结点
+</span><span class="c1"></span>            <span class="n">Node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">left</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+                    <span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+                <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                    <span class="c1">//变换n结点
+</span><span class="c1"></span>                    <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="c1">//让x结点的左子树成为minNode的左子树
+</span><span class="c1"></span>            <span class="n">minNode</span><span class="o">.</span><span class="na">left</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+
+            <span class="c1">//让x结点的右子树成为minNode的右子树
+</span><span class="c1"></span>            <span class="n">minNode</span><span class="o">.</span><span class="na">right</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+
+            <span class="c1">//让x结点的父结点指向minNode
+</span><span class="c1"></span>            <span class="n">x</span> <span class="o">=</span> <span class="n">minNode</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div><h3 id="2-二叉树的最小和最大键">2. 二叉树的最小和最大键</h3>
+<h5 id="查找二叉树中最小的键">查找二叉树中最小的键</h5>
+<p>在某些情况下,我们需要查找出数中存储所有元素的键的最小值,比如我们的树中存储的是学生的排名和姓名数据,那么需要查找出排名最低是多少名&gt;这里我们设计如下两个方法来完成:</p>
+<table>
+<thead>
+<tr>
+<th>public Key min()</th>
+<th>找出树中最小的值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>private Node min(Node x)</td>
+<td>找出指定树x中,最小键所在的结点</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//找出整个树中的最小键
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Key</span> <span class="nf">min</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">min</span><span class="o">(</span><span class="n">root</span><span class="o">).</span><span class="na">key</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//找出指定树中的最小键所在的结点
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Node</span> <span class="nf">min</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">){</span>
+        <span class="c1">//判断x是否还有左子结点,如果有则继续向左找,如果没有,则x就是最小键所在的结点
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">min</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+</code></pre></div><h5 id="查找二叉树中最大的键">查找二叉树中最大的键</h5>
+<table>
+<thead>
+<tr>
+<th>public Key max()</th>
+<th>找出树中最大的键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>private Node max(Node x)</td>
+<td>找出指定树x中,最大键所在的结点</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//找出整个树中最大键
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Key</span> <span class="nf">max</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">max</span><span class="o">(</span><span class="n">root</span><span class="o">).</span><span class="na">key</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//找到指定树中最大的键所在的结点
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Node</span> <span class="nf">max</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">){</span>
+        <span class="c1">//判断x是否还有右结点,如果有,则继续向右找,如果没有,则x就是最大的键所在的结点
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">max</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+            <span class="k">return</span> <span class="n">x</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div><h3 id="3-二叉树的基础遍历">3. 二叉树的基础遍历</h3>
+<p>很多情况下,我们可能需要像遍历数组一样遍历树,从而拿出书中存储的每一个元素,由于树状结构和线性结构不一样,他没有办法从头开始依次向后遍历,所以存在如何遍历,也就是按照什么样的<strong>搜索路径</strong>进行遍历的问题.</p>
+<h4 id="我们可以把二叉树的遍历分为以下三种方式">我们可以把二叉树的遍历分为以下三种方式:</h4>
+<ol>
+<li>前序遍历:
+<ol>
+<li>先访问根结点,然后在访问左子树,最后访问右子树</li>
+</ol>
+</li>
+<li>中序遍历:
+<ol>
+<li>先访问左子树,中间访问根结点,最后访问右子树</li>
+</ol>
+</li>
+<li>后序遍历:
+<ol>
+<li>先访问左子树,在访问右子树,最后访问根结点</li>
+</ol>
+</li>
+</ol>
+<h4 id="前序遍历">前序遍历</h4>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">preErgodic</span><span class="o">():</span><span class="n">使用前序遍历</span><span class="o">,</span><span class="n">获取真个树中的所有键</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">proErgodic</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span><span class="o">):</span><span class="n">使用前序遍历</span><span class="o">,</span><span class="n">把指定树x中的所有键放入到keys队列中</span>
+</code></pre></div><p>实现过程中,我们通过前序遍历,把每个结点的key取出,放入到队列中返回即可.</p>
+<h5 id="实验步骤">实验步骤:</h5>
+<ol>
+<li>把当前结点的key放入到队列中;</li>
+<li>找到当前结点的左子树,如果不为空,递归遍历左子树;</li>
+<li>找到当前结点的右子树,如果不为空,递归遍历右子树</li>
+</ol>
+<h5 id="代码实现-4">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//获取整个树中的所有键
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">preErgodic</span><span class="o">(){</span>
+        <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyQueue</span><span class="o">&lt;&gt;();</span>
+        <span class="n">preErgodic</span><span class="o">(</span><span class="n">root</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">keys</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//获取指定树x中的所有键,并放到keys队列中
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">preErgodic</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span> <span class="o">,</span><span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span><span class="o">){</span>
+        <span class="c1">//判断x是否为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">//把x结点的key放入keys队列中
+</span><span class="c1"></span>        <span class="n">keys</span><span class="o">.</span><span class="na">inQueue</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+
+        <span class="c1">//递归遍历x结点的左子树
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">preErgodic</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//递归遍历x结点的右子树
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">preErgodic</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+</code></pre></div><h5 id="代码测试">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">Tree.BinaryTree</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">List.Queue.MyQueue</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BinaryTreeErgodicTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">MyBinaryTree</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyBinaryTree</span><span class="o">&lt;&gt;();</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;E&#34;</span><span class="o">,</span><span class="s">&#34;5&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;B&#34;</span><span class="o">,</span><span class="s">&#34;2&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;G&#34;</span><span class="o">,</span><span class="s">&#34;7&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;A&#34;</span><span class="o">,</span><span class="s">&#34;1&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;D&#34;</span><span class="o">,</span><span class="s">&#34;4&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;F&#34;</span><span class="o">,</span><span class="s">&#34;6&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;H&#34;</span><span class="o">,</span><span class="s">&#34;8&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;C&#34;</span><span class="o">,</span><span class="s">&#34;3&#34;</span><span class="o">);</span>
+        <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">preErgodic</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">:</span><span class="n">keys</span><span class="o">){</span>
+            <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="中序遍历">中序遍历</h4>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">minErgodic</span><span class="o">():</span><span class="n">使用中序遍历</span><span class="o">,</span><span class="n">获取整个树的所有键</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">midErgodic</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span><span class="o">):</span><span class="n">使用中序遍历</span><span class="o">,</span><span class="n">把指定树x的素有键放入到keys队列中</span>
+</code></pre></div><h5 id="实现步骤">实现步骤:</h5>
+<ol>
+<li>找到当前结点的左子树,如果不为空,递归遍历左子树;</li>
+<li>把当前结点的key放到队列中;</li>
+<li>找到当前结点的右子树,如果不为空,递归遍历右子树;</li>
+</ol>
+<h5 id="代码实现-5">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//获取整个树中的所有键
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">midErgodic</span><span class="o">(){</span>
+        <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyQueue</span><span class="o">&lt;&gt;();</span>
+        <span class="n">midErgodic</span><span class="o">(</span><span class="n">root</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">keys</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//获取指定树x中的所有键,并放到keys队列中
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">midErgodic</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span> <span class="o">,</span><span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span><span class="o">){</span>
+        <span class="c1">//判断x是否为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">//递归遍历x结点的左子树
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">preErgodic</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//把x结点的key放入keys队列中
+</span><span class="c1"></span>        <span class="n">keys</span><span class="o">.</span><span class="na">enQueue</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+
+        <span class="c1">//递归遍历x结点的右子树
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">preErgodic</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+</code></pre></div><h4 id="后序遍历">后序遍历</h4>
+<h5 id="实现步骤-1">实现步骤:</h5>
+<ol>
+<li>找到当前结点的左子树,如果不为空,递归遍历左子树;</li>
+<li>找到当前结点的右子树,如果不为空,递归遍历右子树;</li>
+<li>把当前结点的key放入到队列中;</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">afterErgodic</span><span class="o">():</span><span class="n">使用中序遍历</span><span class="o">,</span><span class="n">获取整个树的所有键</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">afterErgodic</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span><span class="o">):</span><span class="n">使用中序遍历</span><span class="o">,</span><span class="n">把指定树x的素有键放入到keys队列中</span>
+</code></pre></div><h5 id="代码实现-6">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//获取整个树中的所有键
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">afterErgodic</span><span class="o">(){</span>
+        <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyQueue</span><span class="o">&lt;&gt;();</span>
+        <span class="n">afterErgodic</span><span class="o">(</span><span class="n">root</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">keys</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//获取指定树x中的所有键,并放到keys队列中
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">afterErgodic</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span> <span class="o">,</span><span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span><span class="o">){</span>
+        <span class="c1">//判断x是否为空
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">//递归遍历x结点的左子树
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">preErgodic</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//递归遍历x结点的右子树
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">preErgodic</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">keys</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//把x结点的key放入keys队列中
+</span><span class="c1"></span>        <span class="n">keys</span><span class="o">.</span><span class="na">enQueue</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+
+    <span class="o">}</span>
+</code></pre></div><h3 id="4-二叉树层序遍历">4. 二叉树层序遍历</h3>
+<p>所谓的层序遍历,就是从根结点(第一层)开始,依次向下,获取每一层所有结点的值;</p>
+<h5 id="实现">实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">layerErgodic</span><span class="o">():</span><span class="n">使用层序遍历</span><span class="o">,</span><span class="n">获取整个树中的所有键</span>
+</code></pre></div><h5 id="实验步骤-1">实验步骤:</h5>
+<ol>
+<li>创建队列,存储每一层结点;</li>
+<li>使用循环从队列中弹出一个结点:
+<ol>
+<li>获取当前结点的key;</li>
+<li>如果当前结点的左子节点不为空,则把左子节点放入队列中;</li>
+<li>如果当前结点的右子结点不为空,则把右子节点放入队列中;</li>
+</ol>
+</li>
+</ol>
+<h5 id="代码实现-7">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">layerErgodic</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+       <span class="c1">//定义两个队列,分别存储树中的键和树中的结点
+</span><span class="c1"></span>       <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyQueue</span><span class="o">&lt;&gt;();</span>
+       <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyQueue</span><span class="o">&lt;&gt;();</span>
+
+       <span class="c1">//默认把根结点root放入队列中
+</span><span class="c1"></span>       <span class="n">nodes</span><span class="o">.</span><span class="na">enQueue</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
+
+       <span class="k">while</span> <span class="o">(!</span><span class="n">nodes</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span>
+           <span class="c1">//如果队列不为空,则弹出一个结点,把该结点的key放入keys中
+</span><span class="c1"></span>           <span class="n">Node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="na">deQueue</span><span class="o">();</span>
+           <span class="n">keys</span><span class="o">.</span><span class="na">enQueue</span><span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+
+           <span class="c1">//如果该结点有左子树,则把左子树放入队列中
+</span><span class="c1"></span>           <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+               <span class="n">nodes</span><span class="o">.</span><span class="na">enQueue</span><span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+           <span class="o">}</span>
+
+           <span class="c1">//如果该结点有右子树,则把右子树放入队列中
+</span><span class="c1"></span>           <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">right</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+               <span class="n">nodes</span><span class="o">.</span><span class="na">enQueue</span><span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+           <span class="o">}</span>
+
+       <span class="o">}</span>
+
+       <span class="k">return</span> <span class="n">keys</span><span class="o">;</span>
+   <span class="o">}</span>
+</code></pre></div><h5 id="代码测试-1">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">MyBinaryTree</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyBinaryTree</span><span class="o">&lt;&gt;();</span>
+       <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;E&#34;</span><span class="o">,</span> <span class="s">&#34;5&#34;</span><span class="o">);</span>
+       <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;B&#34;</span><span class="o">,</span> <span class="s">&#34;2&#34;</span><span class="o">);</span>
+       <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;G&#34;</span><span class="o">,</span> <span class="s">&#34;7&#34;</span><span class="o">);</span>
+       <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;A&#34;</span><span class="o">,</span> <span class="s">&#34;1&#34;</span><span class="o">);</span>
+       <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;D&#34;</span><span class="o">,</span> <span class="s">&#34;4&#34;</span><span class="o">);</span>
+       <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;F&#34;</span><span class="o">,</span> <span class="s">&#34;6&#34;</span><span class="o">);</span>
+       <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;H&#34;</span><span class="o">,</span> <span class="s">&#34;8&#34;</span><span class="o">);</span>
+       <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;C&#34;</span><span class="o">,</span> <span class="s">&#34;3&#34;</span><span class="o">);</span>
+       <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">layerErgodic</span><span class="o">();</span>
+       <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">:</span><span class="n">keys</span><span class="o">){</span>
+           <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+       <span class="o">}</span>
+</code></pre></div><h3 id="5-二叉树的最大深度问题">5. 二叉树的最大深度问题</h3>
+<h5 id="需求">需求:</h5>
+<p>给定一棵树,计算树的最大深度(树的根结点到最远叶子结点的最长路径上的结点树);</p>
+<h5 id="实现-1">实现:</h5>
+<p>public int maxDepth():计算整个树的最大深度 private int maxDepth(Node x):计算指定树的最大深度</p>
+<h5 id="实现步骤-2">实现步骤:</h5>
+<ol>
+<li>如果根结点为空,则最大深度为0;</li>
+<li>计算左子树的最大深度;</li>
+<li>计算右子树的最大深度;</li>
+<li>当前树的最大深度=左子树的最大深度和右子树的最大深度中的较大者+1</li>
+</ol>
+<h5 id="代码实现-8">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//计算树的最大深度
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">maxDepth</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">maxDepth</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">maxDepth</span><span class="o">(</span><span class="n">Node</span> <span class="n">x</span><span class="o">){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">==</span><span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+
+        <span class="c1">//记录整个树的最大深度
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">max</span><span class="o">=</span><span class="n">0</span><span class="o">;</span>
+        <span class="c1">//记录左子树的最大深度
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">maxLeft</span><span class="o">=</span><span class="n">0</span><span class="o">;</span>
+        <span class="c1">//记录右子树的最大深度
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">maxRight</span><span class="o">=</span><span class="n">0</span><span class="o">;</span>
+
+        <span class="c1">//计算x结点左子树的最大深度
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">maxLeft</span><span class="o">=</span><span class="n">maxDepth</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//计算x结点右子树的最大深度
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">maxRight</span><span class="o">=</span><span class="n">maxDepth</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//计算整个树的最大深度
+</span><span class="c1"></span>        <span class="n">max</span><span class="o">=</span><span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">maxLeft</span><span class="o">+</span><span class="n">1</span><span class="o">,</span><span class="n">maxRight</span><span class="o">+</span><span class="n">1</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">max</span><span class="o">;</span>
+
+
+
+    <span class="o">}</span>
+</code></pre></div><h5 id="代码测试-2">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">MyBinaryTree</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyBinaryTree</span><span class="o">&lt;&gt;();</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;E&#34;</span><span class="o">,</span> <span class="s">&#34;5&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;B&#34;</span><span class="o">,</span> <span class="s">&#34;2&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;G&#34;</span><span class="o">,</span> <span class="s">&#34;7&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;A&#34;</span><span class="o">,</span> <span class="s">&#34;1&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;D&#34;</span><span class="o">,</span> <span class="s">&#34;4&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;F&#34;</span><span class="o">,</span> <span class="s">&#34;6&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;H&#34;</span><span class="o">,</span> <span class="s">&#34;8&#34;</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;C&#34;</span><span class="o">,</span> <span class="s">&#34;3&#34;</span><span class="o">);</span>
+        <span class="n">MyQueue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">layerErgodic</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">:</span><span class="n">keys</span><span class="o">){</span>
+            <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">maxDepth</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    
+</code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-01-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/tree/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://codesn1per.github.io/tree/" data-title="Tree" data-via="xxxx" data-hashtags="二叉树"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://codesn1per.github.io/tree/" data-hashtag="二叉树"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://codesn1per.github.io/tree/" data-title="Tree" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://codesn1per.github.io/tree/" data-title="Tree"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://codesn1per.github.io/tree/" data-title="Tree"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://codesn1per.github.io/tree/" data-title="Tree" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://codesn1per.github.io/tree/" data-title="Tree" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://codesn1per.github.io/tree/" data-title="Tree"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mybatis/" class="prev" rel="prev" title="Mybatis"><i class="fas fa-angle-left fa-fw"></i>Mybatis</a>
+            <a href="/sort/" class="next" rel="next" title="Sort">Sort<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.84.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">CodeSniper</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"CodeSniper' Blog","id-2":"CodeSniper' Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

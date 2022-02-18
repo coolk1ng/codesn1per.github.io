@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Sort - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="Sort" />
+<meta property="og:description" content="1. comparable接口 代码测试: package Sort.comparable; public class student implements Comparable&lt;student&gt;{ private String username; private int age; public student() { } public student(String username, int age) { this.username = username; this.age = age; } public String getUsername() { return username; } public void setUsername(String username) { this.username = username; } public int getAge() { return age; } public void setAge(int age) { this.age = age; } @Override public String toString() { return &#34;student{&#34; &#43; &#34;username=&#39;&#34; &#43; username &#43; &#39;\&#39;&#39; &#43; &#34;, age=&#34; &#43; age &#43; &#39;}&#39;; } @Override public int compareTo(student o) { return this." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://codesn1per.github.io/sort/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-02-18T22:36:00&#43;08:00" />
+<meta property="article:modified_time" content="2021-02-18T22:36:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Sort"/>
+<meta name="twitter:description" content="1. comparable接口 代码测试: package Sort.comparable; public class student implements Comparable&lt;student&gt;{ private String username; private int age; public student() { } public student(String username, int age) { this.username = username; this.age = age; } public String getUsername() { return username; } public void setUsername(String username) { this.username = username; } public int getAge() { return age; } public void setAge(int age) { this.age = age; } @Override public String toString() { return &#34;student{&#34; &#43; &#34;username=&#39;&#34; &#43; username &#43; &#39;\&#39;&#39; &#43; &#34;, age=&#34; &#43; age &#43; &#39;}&#39;; } @Override public int compareTo(student o) { return this."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/sort/" /><link rel="prev" href="https://codesn1per.github.io/tree/" /><link rel="next" href="https://codesn1per.github.io/springcloud/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Sort",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/codesn1per.github.io\/sort\/"
+        },"genre": "posts","keywords": "排序","wordcount":  895 ,
+        "url": "https:\/\/codesn1per.github.io\/sort\/","datePublished": "2021-02-18T22:36:00+08:00","dateModified": "2021-02-18T22:36:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "CodeSniper"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="CodeSniper&#39; Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 博客 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="CodeSniper&#39; Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">博客</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Sort</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="far fa-folder fa-fw"></i>算法与数据结构</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-02-18">2021-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;895 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-comparable接口">1. comparable接口</a></li>
+        <li><a href="#2-冒泡排序">2. 冒泡排序</a></li>
+        <li><a href="#3-选择排序">3. 选择排序</a></li>
+        <li><a href="#4-插入排序">4. 插入排序</a></li>
+        <li><a href="#5-希尔排序">5. 希尔排序</a></li>
+        <li><a href="#6-归并排序">6. 归并排序</a></li>
+        <li><a href="#7-快速排序">7. 快速排序</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="1-comparable接口">1. comparable接口</h3>
+<h5 id="代码测试">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">Sort.comparable</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">student</span> <span class="kd">implements</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">student</span><span class="o">&gt;{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">student</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">student</span><span class="o">(</span><span class="n">String</span> <span class="n">username</span><span class="o">,</span> <span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">username</span> <span class="o">=</span> <span class="n">username</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUsername</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">username</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUsername</span><span class="o">(</span><span class="n">String</span> <span class="n">username</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">username</span> <span class="o">=</span> <span class="n">username</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">age</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;student{&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;username=&#39;&#34;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="s">&#34;, age=&#34;</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">student</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getAge</span><span class="o">()-</span><span class="n">o</span><span class="o">.</span><span class="na">getAge</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kn">package</span> <span class="nn">Sort.comparable</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">comparableTest</span> <span class="o">{</span>
+    <span class="c1">//创建两个对象
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">student</span> <span class="n">s1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">student</span><span class="o">();</span>
+        <span class="n">student</span> <span class="n">s2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">student</span><span class="o">();</span>
+        <span class="n">s1</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">&#34;张三&#34;</span><span class="o">);</span>
+        <span class="n">s1</span><span class="o">.</span><span class="na">setAge</span><span class="o">(</span><span class="n">15</span><span class="o">);</span>
+        <span class="n">s2</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">&#34;李四&#34;</span><span class="o">);</span>
+        <span class="n">s2</span><span class="o">.</span><span class="na">setAge</span><span class="o">(</span><span class="n">17</span><span class="o">);</span>
+        <span class="n">Comparable</span> <span class="n">max</span> <span class="o">=</span> <span class="n">getMax</span><span class="o">(</span><span class="n">s1</span><span class="o">,</span> <span class="n">s2</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">max</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Comparable</span> <span class="nf">getMax</span><span class="o">(</span><span class="n">Comparable</span> <span class="n">c1</span><span class="o">,</span><span class="n">Comparable</span> <span class="n">c2</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">c1</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">c2</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">result</span><span class="o">&gt;=</span><span class="n">0</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">c1</span><span class="o">;</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">c2</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="2-冒泡排序">2. 冒泡排序</h3>
+<h5 id="排序原理">排序原理:</h5>
+<ol>
+<li>比较相邻的元素,如果前一个元素比后一个元素大,就交换这两个元素;</li>
+<li>对每一对相邻的元素做同样的工作,从开始第一对元素到结尾的最后一个元素;最终最后位置的元素就是最大值;</li>
+</ol>
+<h5 id="代码实现">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/*冒泡排序*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBubble</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span> <span class="o">){</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span><span class="n">0</span> <span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="c1">//比较两个索引处的大小
+</span><span class="c1"></span>                <span class="k">if</span> <span class="o">(</span><span class="n">greater</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">],</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">])){</span>
+                    <span class="n">exchange</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">j</span><span class="o">,</span><span class="n">j</span><span class="o">+</span><span class="n">1</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//比较两个元素的大小
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">greater</span><span class="o">(</span><span class="n">Comparable</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span> <span class="n">b</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">b</span><span class="o">)&gt;</span><span class="n">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="c1">//两元素互换位置
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exchange</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="kt">int</span> <span class="n">j</span><span class="o">){</span>
+        <span class="n">Comparable</span> <span class="n">temp</span><span class="o">;</span>
+        <span class="n">temp</span><span class="o">=</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]=</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]=</span><span class="n">temp</span><span class="o">;</span>
+
+    <span class="o">}</span>
+
+
+<span class="o">}</span>
+</code></pre></div><h5 id="代码测试-1">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBubbleTest</span>  <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Integer</span><span class="o">[]</span> <span class="n">arr</span><span class="o">={</span><span class="n">1</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">9</span><span class="o">};</span>
+        <span class="n">MyBubble</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="3-选择排序">3. 选择排序</h3>
+<h5 id="排序原理-1">排序原理:</h5>
+<ol>
+<li>每一次遍历的过程中,都假定第一个索引处的元素是最小值,和其他索引处的值一次进行比较,如果当前索引处的值大于其他某个索引处的值,则假定其他某个索引处的值为最小值,最后可以找到最小值所在的索引;</li>
+<li>交换第一个索引处和最小值所在的索引处的值;</li>
+</ol>
+<h5 id="代码实现-1">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySelection</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span> <span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">minIndex</span><span class="o">=</span><span class="n">i</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">greater</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">minIndex</span><span class="o">],</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">])){</span>
+                    <span class="n">minIndex</span><span class="o">=</span><span class="n">j</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">exchange</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">i</span><span class="o">,</span><span class="n">minIndex</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+    <span class="c1">//比较两个元素的大小
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">greater</span><span class="o">(</span><span class="n">Comparable</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span> <span class="n">b</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">b</span><span class="o">)&gt;</span><span class="n">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="c1">//两元素互换位置
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exchange</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="kt">int</span> <span class="n">j</span><span class="o">){</span>
+        <span class="n">Comparable</span> <span class="n">temp</span><span class="o">;</span>
+        <span class="n">temp</span><span class="o">=</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]=</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]=</span><span class="n">temp</span><span class="o">;</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="代码测试-2">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySelectionTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Integer</span><span class="o">[]</span> <span class="n">arr</span><span class="o">={</span><span class="n">1</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">9</span><span class="o">,</span><span class="n">7</span><span class="o">};</span>
+        <span class="n">MySelection</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="4-插入排序">4. 插入排序</h3>
+<h5 id="原理">原理:</h5>
+<ol>
+<li>把所有的元素分为两组,已经排序的和未排序的;</li>
+<li>找到未排序的组中的第一个元素,向已经排序的组中进行插入;</li>
+<li>倒叙遍历已经排序的元素,一次和待插入的元素进行比较,知道找到一个元素小于等于待插入元素,那么就把待插入元素放到这个位置,其他元素向后移动一位;</li>
+</ol>
+<h5 id="代码实现-2">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/*插入排序*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyInsertion</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span> <span class="o">&gt;=</span><span class="n">0</span> <span class="o">;</span> <span class="n">j</span><span class="o">--)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">greater</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="n">1</span><span class="o">],</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">])){</span>
+                    <span class="n">exchange</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">j</span><span class="o">,</span><span class="n">j</span><span class="o">-</span><span class="n">1</span><span class="o">);</span>
+                <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+    
+    <span class="c1">//比较两个元素的大小
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">greater</span><span class="o">(</span><span class="n">Comparable</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span> <span class="n">b</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">b</span><span class="o">)&gt;</span><span class="n">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//两元素互换位置
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exchange</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="kt">int</span> <span class="n">j</span><span class="o">){</span>
+        <span class="n">Comparable</span> <span class="n">temp</span><span class="o">;</span>
+        <span class="n">temp</span><span class="o">=</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]=</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]=</span><span class="n">temp</span><span class="o">;</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="代码测试-3">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyInsertionTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Comparable</span><span class="o">[]</span> <span class="n">arr</span><span class="o">={</span><span class="n">1</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">8</span><span class="o">,</span><span class="n">9</span><span class="o">,</span><span class="n">3</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">8</span><span class="o">};</span>
+        <span class="n">MyInsertion</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="5-希尔排序">5. 希尔排序</h3>
+<h5 id="排序原理-2">排序原理:</h5>
+<ol>
+<li>选定一个增长量h,按照曾长量h作为数据分组的依据,对数据进行分组;</li>
+<li>对分好组的每一组数据完成插入排序;</li>
+<li>减小曾长量,最小减为3,重复第二步操作;</li>
+</ol>
+<h5 id="增长量h的确定没一固定的原则">增长量h的确定(没一固定的原则):</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">int</span> <span class="n">h</span><span class="o">=</span><span class="n">1</span><span class="o">;</span>
+<span class="k">while</span><span class="o">(</span><span class="n">h</span><span class="o">&lt;</span><span class="n">leng</span><span class="o">/</span><span class="n">2</span><span class="o">){</span>
+    <span class="n">h</span><span class="o">=</span><span class="n">2</span><span class="o">*</span><span class="n">h</span><span class="o">+</span><span class="n">1</span><span class="o">;</span>
+<span class="o">}</span>
+ <span class="c1">//循环结束后我们就可以确定h的最大值;
+</span><span class="c1"></span> <span class="n">h的减小规则为</span><span class="o">:</span>
+ <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="o">/</span><span class="n">2</span>
+</code></pre></div><h5 id="代码实现-3">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyShell</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+        <span class="c1">//得到曾长量h的值
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">h</span><span class="o">=</span><span class="n">1</span><span class="o">;</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">h</span><span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">/</span><span class="n">2</span><span class="o">){</span>
+            <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="o">*</span><span class="n">2</span><span class="o">+</span><span class="n">1</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">h</span><span class="o">&gt;=</span><span class="n">1</span><span class="o">){</span>
+            <span class="c1">//找到待插入的元素
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">h</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span> <span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="c1">//把待插入的元素插入到有序序列中
+</span><span class="c1"></span>                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span> <span class="o">&gt;=</span><span class="n">h</span> <span class="o">;</span> <span class="n">j</span><span class="o">-=</span><span class="n">h</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">greater</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="n">h</span><span class="o">],</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">])){</span>
+                        <span class="n">exchange</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">j</span><span class="o">-</span><span class="n">h</span><span class="o">,</span><span class="n">j</span><span class="o">);</span>
+                    <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                        <span class="c1">//待插入元素找到合适位置,结束循环
+</span><span class="c1"></span>                        <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+
+                <span class="o">}</span>
+
+            <span class="o">}</span>
+            <span class="c1">//减小曾长量h
+</span><span class="c1"></span>            <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="o">/</span><span class="n">2</span><span class="o">;</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="c1">//比较两个元素的大小
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">greater</span><span class="o">(</span><span class="n">Comparable</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span> <span class="n">b</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">b</span><span class="o">)&gt;</span><span class="n">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//两元素互换位置
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exchange</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="kt">int</span> <span class="n">j</span><span class="o">){</span>
+        <span class="n">Comparable</span> <span class="n">temp</span><span class="o">;</span>
+        <span class="n">temp</span><span class="o">=</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]=</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]=</span><span class="n">temp</span><span class="o">;</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="代码测试-4">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyShellTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Comparable</span><span class="o">[]</span> <span class="n">arr</span><span class="o">={</span><span class="n">1</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">8</span><span class="o">,</span><span class="n">9</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">8</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">9</span><span class="o">,</span><span class="n">45</span><span class="o">,</span><span class="n">67</span><span class="o">,</span><span class="n">23</span><span class="o">,</span><span class="n">7</span><span class="o">};</span>
+        <span class="n">MyShell</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="6-归并排序">6. 归并排序</h3>
+<h5 id="排序原理-3">排序原理:</h5>
+<ul>
+<li>尽可能的一组数据拆分成两个元素的子组,并对每一个子组继续拆分,知道拆分后的每个子组的元素个数是1为止;</li>
+<li>将相邻的两个子组进行合并成一个有序的大组;</li>
+<li>不断的重复步骤2,知道最终只有一个组为止;</li>
+</ul>
+<h5 id="归并排序api设计">归并排序API设计:</h5>
+<table>
+<thead>
+<tr>
+<th>类名</th>
+<th>Merge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造方法</td>
+<td>Merge():创建Merge对象</td>
+</tr>
+<tr>
+<td>成员方法</td>
+<td>1.public static void sort(Comparable[] a):对组内元素进行排序 2. private static void sort(Comparable[] a ,int left,int right):对组内索引lo到索引hi的元素进行排序 3.private static void merge(Comparable[] a ,int left,int mid,int right):从索引left到索引mid为一个子组,从索引mid+1到索引right为另一个子组,吧数组a中的这两个子组的数据合并成一个有序的大组(从索引leftPos到索引rightPos) 4.private static boolean less(Comparable v,Comparable w):判断v是否小于w</td>
+</tr>
+<tr>
+<td>成员变量</td>
+<td>1.private static Comparable[] assist:完成归并操作需要的辅助数组</td>
+</tr>
+</tbody>
+</table>
+<h5 id="代码实现-4">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">Sort.merge</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyMerge</span> <span class="o">{</span>
+    <span class="c1">//归并所需要的辅助数组
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Comparable</span><span class="o">[]</span> <span class="n">assist</span><span class="o">;</span>
+
+    <span class="c1">//比较a是否小于b
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">less</span><span class="o">(</span><span class="n">Comparable</span> <span class="n">v</span><span class="o">,</span><span class="n">Comparable</span> <span class="n">w</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">w</span><span class="o">)&lt;=</span><span class="n">0</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">//对数组a中的元素进行排序(private递归型方法sort的驱动程序)
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+        <span class="c1">//初始化辅助数组
+</span><span class="c1"></span>        <span class="n">assist</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="kt">int</span> <span class="n">left</span><span class="o">=</span><span class="n">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">right</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="n">1</span><span class="o">;</span>
+        <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">left</span><span class="o">,</span><span class="n">right</span><span class="o">);</span>
+
+    <span class="o">}</span>
+
+    <span class="c1">//对数组a中lo到hi的元素进行排序
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="kt">int</span> <span class="n">left</span><span class="o">,</span><span class="kt">int</span> <span class="n">right</span><span class="o">){</span>
+        <span class="c1">//安全性检验
+</span><span class="c1"></span>        <span class="k">if</span><span class="o">(</span><span class="n">right</span><span class="o">&lt;=</span><span class="n">left</span><span class="o">)</span>
+            <span class="k">return</span><span class="o">;</span>
+
+        <span class="kt">int</span> <span class="n">mid</span><span class="o">=(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="o">)/</span><span class="n">2</span><span class="o">;</span>
+        <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">left</span><span class="o">,</span><span class="n">mid</span><span class="o">);</span>
+        <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">mid</span><span class="o">+</span><span class="n">1</span><span class="o">,</span><span class="n">right</span><span class="o">);</span>
+        <span class="n">merge</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">left</span><span class="o">,</span><span class="n">mid</span><span class="o">+</span><span class="n">1</span><span class="o">,</span><span class="n">right</span><span class="o">);</span>
+
+    <span class="o">}</span>
+
+<span class="cm">/*对数组中,从lo到mid为一组,mid+1到hi为一组,
+</span><span class="cm"> leftPos,rightPos分别记录左右两数组中的开始位置,rightEnd记录最后的位置*/</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">merge</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span><span class="n">a</span> <span class="o">,</span><span class="kt">int</span> <span class="n">leftPos</span><span class="o">,</span><span class="kt">int</span> <span class="n">rightPos</span><span class="o">,</span><span class="kt">int</span> <span class="n">rightEnd</span><span class="o">){</span>
+        <span class="c1">//记录左边数组的最后位置
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">leftEnd</span><span class="o">=</span><span class="n">rightPos</span><span class="o">-</span><span class="n">1</span><span class="o">;</span>
+        
+        <span class="c1">//记录辅助数组的位置
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">assistPos</span><span class="o">=</span><span class="n">leftPos</span><span class="o">;</span>
+        
+        <span class="c1">//当左右数组都还有元素
+</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="n">leftPos</span><span class="o">&lt;=</span><span class="n">leftEnd</span> <span class="o">&amp;&amp;</span> <span class="n">rightPos</span><span class="o">&lt;=</span><span class="n">rightEnd</span><span class="o">)</span>
+            <span class="c1">//判断元素大小
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">leftPos</span><span class="o">],</span><span class="n">a</span><span class="o">[</span><span class="n">rightPos</span><span class="o">]))</span>
+                <span class="n">assist</span><span class="o">[</span><span class="n">assistPos</span><span class="o">++]=</span><span class="n">a</span><span class="o">[</span><span class="n">leftPos</span><span class="o">++];</span>
+            <span class="k">else</span>
+                <span class="n">assist</span><span class="o">[</span><span class="n">assistPos</span><span class="o">++]=</span><span class="n">a</span><span class="o">[</span><span class="n">rightPos</span><span class="o">++];</span>
+
+        <span class="c1">//当左数组没有元素时
+</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="n">rightPos</span><span class="o">&lt;=</span><span class="n">rightEnd</span><span class="o">)</span>
+            <span class="n">assist</span><span class="o">[</span><span class="n">assistPos</span><span class="o">++]=</span><span class="n">a</span><span class="o">[</span><span class="n">rightPos</span><span class="o">++];</span>
+        
+        <span class="c1">//当右数组没有元素时
+</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="n">leftPos</span><span class="o">&lt;=</span><span class="n">leftEnd</span><span class="o">)</span>
+            <span class="n">assist</span><span class="o">[</span><span class="n">assistPos</span><span class="o">++]=</span><span class="n">a</span><span class="o">[</span><span class="n">leftPos</span><span class="o">++];</span>
+
+        <span class="c1">//拷贝回原数组
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rightPos</span><span class="o">;</span> <span class="n">i</span><span class="o">++,</span><span class="n">rightEnd</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="n">a</span><span class="o">[</span><span class="n">rightEnd</span><span class="o">]=</span><span class="n">assist</span><span class="o">[</span><span class="n">rightEnd</span><span class="o">];</span>
+
+        <span class="o">}</span>
+
+        
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="测试代码">测试代码:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">Sort.merge</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyMergeTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Comparable</span><span class="o">[]</span> <span class="n">arr</span><span class="o">={</span><span class="n">3</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">9</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">9</span><span class="o">,</span><span class="n">32</span><span class="o">,</span><span class="n">45</span><span class="o">,</span><span class="n">33</span><span class="o">,</span><span class="n">55</span><span class="o">,</span><span class="n">33</span><span class="o">};</span>
+        <span class="n">MyMerge</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="7-快速排序">7. 快速排序</h3>
+<h5 id="排序原理-4">排序原理:</h5>
+<ol>
+<li>首先设定一个分界值,通过该分界值将数组分成左右两个部分;</li>
+<li>将大于或等于分界值的数据放到数组右边,小于分界值的数据放到数组的左边,此时左边部分中各元素都小于分界值,而右边部分中各元素都大于或等于分界值;</li>
+<li>然后,左边和右边的数据可以独立排序.对于左侧的数组数据,又可以取一个分界值,将该部分数据分成左右两个部分,同样在左边放置较小值,右边放置较大值.右侧的数组数据也可以做类似处理;</li>
+<li>重复上述过程,可以看出,这是一个递归定义.通过递归将左侧部分拍好序,在递归排好右边部分的顺序,当左侧和右侧两个部分的数据排完序后,整个数组的排序也就完成了;</li>
+</ol>
+<h5 id="快速排序api设计">快速排序API设计:</h5>
+<table>
+<thead>
+<tr>
+<th>类名</th>
+<th>Quick</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造方法</td>
+<td>Quick():创建Quick对象</td>
+</tr>
+<tr>
+<td>成员方法</td>
+<td>1.public static void sort(Comparable[] a):对组内元素进行排序 2. private static void sort(Comparable[] a ,int left,int right):对组内索引lo到索引hi的元素进行排序 3.private static int partition(Comparable[] a ,int left , int right):对数组a中,从索引left到索引right进行分组,并返回分组界限对应的索引 4.private static boolean less(Comparable v,Comparable w):判断v是否小于w</td>
+</tr>
+</tbody>
+</table>
+<h5 id="切分原理">切分原理:</h5>
+<h5 id="一个数组气氛成两个子数组的基本思想">一个数组气氛成两个子数组的基本思想:</h5>
+<ol>
+<li>找一个基准值,用两个指针分别指向数组的头部和尾部;</li>
+<li>先从尾部向头部开始搜索一个比基准值小的元素,搜索到即停止,并记录指针的位置;</li>
+<li>再从头部向尾部开始搜索一个比基准值大的元素,所有到即停止,并记录指针的位置;</li>
+<li>交换当前左边指针位置和右边指针位置的元素;</li>
+<li>重复2,3,4步骤,知道左边指针的值大于右边指针的值停止;</li>
+</ol>
+<h5 id="代码实现-5">代码实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyQuick</span> <span class="o">{</span>
+
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">left</span><span class="o">=</span><span class="n">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">right</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="n">1</span><span class="o">;</span>
+        <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">left</span><span class="o">,</span><span class="n">right</span><span class="o">);</span>
+
+    <span class="o">}</span>
+
+    <span class="c1">//对数组索引left到right进行排序
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span> <span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="kt">int</span> <span class="n">left</span><span class="o">,</span><span class="kt">int</span> <span class="n">right</span><span class="o">){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">right</span><span class="o">&lt;</span><span class="n">left</span><span class="o">){</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="c1">//对数组索引left到right之间的元素进行分组(左子组,右子组)
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">partition</span> <span class="o">=</span> <span class="n">partition</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">);</span><span class="c1">//返回的是变化后的分界值索引
+</span><span class="c1"></span>
+        <span class="c1">//让左子组有序
+</span><span class="c1"></span>        <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">left</span><span class="o">,</span><span class="n">partition</span><span class="o">-</span><span class="n">1</span><span class="o">);</span>
+        <span class="c1">//让右子组有序
+</span><span class="c1"></span>        <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">partition</span><span class="o">+</span><span class="n">1</span><span class="o">,</span><span class="n">right</span><span class="o">);</span>
+
+
+    <span class="o">}</span>
+
+    <span class="c1">//比较a是否小于b
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">less</span><span class="o">(</span><span class="n">Comparable</span> <span class="n">v</span><span class="o">,</span><span class="n">Comparable</span> <span class="n">w</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">w</span><span class="o">)&lt;=</span><span class="n">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//两元素互换位置
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exchange</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="kt">int</span> <span class="n">j</span><span class="o">){</span>
+        <span class="n">Comparable</span> <span class="n">temp</span><span class="o">;</span>
+        <span class="n">temp</span><span class="o">=</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]=</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]=</span><span class="n">temp</span><span class="o">;</span>
+
+    <span class="o">}</span>
+    <span class="c1">//对数组a中,索引left到right之间的元素进行分组,并返回分界值对应的索引
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">partition</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="kt">int</span> <span class="n">left</span><span class="o">,</span><span class="kt">int</span> <span class="n">right</span><span class="o">){</span>
+        <span class="c1">//确定分界值
+</span><span class="c1"></span>        <span class="n">Comparable</span> <span class="n">key</span><span class="o">=</span><span class="n">a</span><span class="o">[</span><span class="n">left</span><span class="o">];</span>
+        <span class="c1">//定义两个指针,分别指向切分元素最小索引处和最大索引处的下一个元素
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">leftPos</span><span class="o">=</span><span class="n">left</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">rightPos</span><span class="o">=</span><span class="n">right</span><span class="o">+</span><span class="n">1</span><span class="o">;</span>
+        <span class="c1">//切分
+</span><span class="c1"></span>        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+            <span class="c1">//从右往左扫描,移动rightPos指针,遇到比key小的值就停止
+</span><span class="c1"></span>            <span class="k">while</span> <span class="o">(</span><span class="n">less</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">a</span><span class="o">[--</span><span class="n">rightPos</span><span class="o">])){</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">rightPos</span><span class="o">==</span><span class="n">left</span><span class="o">){</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
+            <span class="c1">//从左往右扫描,移动leftPos指针,遇到比key大的值就停止
+</span><span class="c1"></span>            <span class="k">while</span> <span class="o">(</span><span class="n">less</span><span class="o">(</span><span class="n">a</span><span class="o">[++</span><span class="n">leftPos</span><span class="o">],</span><span class="n">key</span><span class="o">)){</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">leftPos</span><span class="o">==</span><span class="n">right</span><span class="o">){</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="c1">//判断leftPos&gt;=rightPos,如果是,则结束,不是则交换元素
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">leftPos</span><span class="o">&gt;=</span><span class="n">rightPos</span><span class="o">){</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                <span class="n">exchange</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">leftPos</span><span class="o">,</span><span class="n">rightPos</span><span class="o">);</span>
+
+            <span class="o">}</span>
+            <span class="c1">//分界值和相遇的元素交换
+</span><span class="c1"></span>        <span class="o">}</span>
+        <span class="n">exchange</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">left</span><span class="o">,</span><span class="n">rightPos</span><span class="o">);</span>
+
+           <span class="k">return</span> <span class="n">rightPos</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div><h5 id="代码测试-5">代码测试:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">Sort.quick</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyQuickTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Integer</span> <span class="o">[]</span> <span class="n">arr</span><span class="o">={</span><span class="n">6</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">9</span><span class="o">,</span><span class="n">3</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">8</span><span class="o">};</span>
+        <span class="n">MyQuick</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-02-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/sort/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://codesn1per.github.io/sort/" data-title="Sort" data-via="xxxx" data-hashtags="排序"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://codesn1per.github.io/sort/" data-hashtag="排序"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://codesn1per.github.io/sort/" data-title="Sort" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://codesn1per.github.io/sort/" data-title="Sort"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://codesn1per.github.io/sort/" data-title="Sort"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://codesn1per.github.io/sort/" data-title="Sort" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://codesn1per.github.io/sort/" data-title="Sort" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://codesn1per.github.io/sort/" data-title="Sort"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%8E%92%E5%BA%8F/">排序</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/tree/" class="prev" rel="prev" title="Tree"><i class="fas fa-angle-left fa-fw"></i>Tree</a>
+            <a href="/springcloud/" class="next" rel="next" title="SpringCloud">SpringCloud<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.84.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">CodeSniper</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"CodeSniper' Blog","id-2":"CodeSniper' Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

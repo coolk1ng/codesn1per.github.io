@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>SpringCloud - Tag - My New Hugo Site</title>
+        <title>SpringCloud - Tag - CodeSniper&#39; Blog</title>
         <link>https://codesn1per.github.io/tags/springcloud/</link>
-        <description>SpringCloud - Tag - My New Hugo Site</description>
+        <description>SpringCloud - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
             <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Fri, 18 Feb 2022 20:13:04 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/springcloud/" rel="self" type="application/rss+xml" /><item>
-    <title>First_blog</title>
-    <link>https://codesn1per.github.io/first_blog/</link>
+    <title>SpringCloud</title>
+    <link>https://codesn1per.github.io/springcloud/</link>
     <pubDate>Fri, 18 Feb 2022 20:13:04 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/first_blog/</guid>
+    <guid>https://codesn1per.github.io/springcloud/</guid>
     <description><![CDATA[SpringCloud 1. Eureka 1. 提供者与消费者  服务提供者: 一次业务中,被其他服务调用的服务(提供接口给其他服务) 服务消费者: 一次业务中,调用其他服务的服务(调用其他服务提供的接口) 提供者与消费者角色是相对 一个服务可以同时是服务提供者和服务消费者  2. Eureka注册中心  注册服务信息 拉取服务 负载均衡 远程调用 心跳续约 30s/次  1. Eureka的作用  消费者该如何获取服务提供者的具体信息?  服务提供者启动时向eureka注册自己的信息 eureka保存这些信息 消费者根据服务名称想eureka拉取提供者信息   如果有多个服务提供者,消费者该如何选择?  服务消费者利用负载均衡算法,从服务列表中挑选一个   消费者如何感知服务提供者健康状态?  服务提供者会每隔30s向eurekaServer发送心跳请求,报告健康状态 eureka会更新记录服务列表信息,心跳不正常会被剔除 消费者就可以拉取最新的信息    2. 服务注册  引入eureka-client依赖 在application.yml中配置eureka地址  2. Ribbon 1. Ribbon负载均衡规则  规则接口是IRule 默认实现是ZoneAvoidanceRule,根据zone选择服务列表,然后轮询  2. 负载均衡自定义方式  代码方式: 配置灵活,但修改时需要重新打包发布 配置方式: 直观,方便,无需重新打包发布,但是无法做全局配置  3. 饥饿加载  开启饥饿加载 eager-load 指定饥饿加载的服务名称  3.]]></description>
 </item></channel>
 </rss>
