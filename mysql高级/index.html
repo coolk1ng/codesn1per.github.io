@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/codesn1per.github.io\/mysql%E9%AB%98%E7%BA%A7\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  117 ,
+        },"genre": "posts","keywords": "MySQL","wordcount":  172 ,
         "url": "https:\/\/codesn1per.github.io\/mysql%E9%AB%98%E7%BA%A7\/","datePublished": "2022-02-19T15:25:53+08:00","dateModified": "2022-02-19T15:25:53+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL高级</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-19">2022-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;117 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-19">2022-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;172 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -119,6 +119,7 @@
       <ul>
         <li><a href="#1-存储引擎">1. 存储引擎</a></li>
         <li><a href="#2-性能分析">2. 性能分析</a></li>
+        <li><a href="#3-性能分析">3. 性能分析</a></li>
       </ul>
     </li>
   </ul>
@@ -297,6 +298,80 @@
 </li>
 </ul>
 </li>
+<li>
+<p>优势</p>
+<ul>
+<li>提高数据检索的效率,降低数据库的IO成本</li>
+<li>通过索引列队数据进行排序,降低数据排序的成本,降低了CPU的消耗</li>
+</ul>
+</li>
+<li>
+<p>劣势</p>
+<ul>
+<li>实际上索引也是一张表,该表保存了主键与索引字段,并指向实体表的记录了,所以索引列也是要占用空间的</li>
+<li>虽然索引大大提高了查询速度,同时却会降低更新表的速度,如对表进行INSERT,UIPDATE和DELETE.因为更新表时,MySQL不仅要保存数据,还要保存一下索引文件每次更新了索引列的字段,都会调整因为更新所带来的键值变化后的所有信息.</li>
+</ul>
+</li>
+<li>
+<p>MySQL索引分类</p>
+<ul>
+<li>单值索引: 即一个索引只包含单个列,一个表可以有多个单列索引</li>
+<li>唯一索引: 索引列的值必须唯一,但允许有空值</li>
+<li>复合索引: 即一个索引包含多个列</li>
+</ul>
+</li>
+<li>
+<p>MySQL索引结构</p>
+<ul>
+<li>BTree索引</li>
+<li>Hash索引</li>
+<li>full-text全文索引</li>
+<li>R-Tree索引</li>
+</ul>
+</li>
+<li>
+<p>哪些情况需要创建索引</p>
+<ul>
+<li>主键自动建立唯一索引</li>
+<li>频繁作为查询条件的字段应该创建索引</li>
+<li>查询中与其他表关联的字段,外键关系建立索引</li>
+<li>频繁更新的字段不适合不适合创建索引,因为每次更新不单单是更新了记录还会更新索引.</li>
+<li>where条件里用不到的字段不创建索引</li>
+<li>单键/组合索引的选择问题,在高并发下倾向创建组合索引</li>
+<li>查询中排序的字段,排序字段若通过索引去访问将大大提高排序素速度</li>
+<li>查询在中统计或者分组字段</li>
+</ul>
+</li>
+<li>
+<p>哪些情况不需要创建索引</p>
+<ul>
+<li>表记录太少</li>
+<li>经常增删改的表</li>
+<li>数据重复且分布平均的表字段,因此应该只为最经常查询和最经常排序的数据列建立索引(如果某个数据列包含许多重复的内容,为他建立索引就没有太大的意义)</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-性能分析">3. 性能分析</h3>
+<h5 id="31-mysql-query-optimizer">3.1. MySQL Query Optimizer</h5>
+<blockquote>
+<ol>
+<li>MySQL中有专门负责优化SELECT语句的优化器模块,主要功能: 通过计算分析系统中收集到的统计信息,为客户端请求的Query提供他任务最优的执行计划</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>当客户端想MySQL请求一条Query,命令解析器模块完成请求分类,区别出事SELECT并抓饭给MySQL Query Optimizer时,MySQL Query Optimizer首先会对整条Query进行优化,处理掉一些常量表达式的预算,之间换算成常量值,并对Query中的查询条件进行简化和转换,如去掉一些无用或显而易见的条件,结构调整等,然后分析Query中的Hint,看显示Hint信息是否可以完全确定该Query的执行计划.如果没有Hint或Hint信息还不足以完全确定执行计划,则会读取所涉及对象的统计信息,根据Query进行写响应的计算分析,然后再得出最后的执行计划.</li>
+</ol>
+</blockquote>
+<h5 id="32-mysql的常见瓶颈">3.2. MySQL的常见瓶颈</h5>
+<ul>
+<li>CUP: CUP在饱和的时候一般发生在数据装入内存或磁盘上读取数据时候</li>
+<li>IO: 磁盘I/O瓶颈发生在装入数据远大于内存容量的时候</li>
+<li>服务器硬件性能瓶颈; top,free,iostat和vmstat来查看系统的性能状态</li>
+</ul>
+<h5 id="33-explain">3.3. Explain</h5>
+<ul>
+<li>使用EXPLAIN关键字可以模拟优化器执行SQL查询语句,从而知道MySQL是如何处理你的SQL语句的,分析你的查询语句或是表结构的性能瓶颈</li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
