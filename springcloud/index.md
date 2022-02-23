@@ -306,6 +306,11 @@ spring:
             - Path=/order/** # 路径断言,.判断路径是否是以/user开头
 ```
 
+### 6. RabbitMQ
 
+##### 2.安装MQ
 
+> 拉取镜像: docker pull RabbitMQ:3-management
+
+> 运行MQ容器: docker run -d --name my_rabbitMQ -e RABBITMQ_DEFAULT_USER=codesniper -e RABBITMQ_DEFAULT_PASS=gongxiwu -p 15672:15672 -p 5672:5672 rabbitmq:3-management
 

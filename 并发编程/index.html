@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>并发编程 - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="并发编程" />
+<meta property="og:description" content="1. 进程与线程 1.1 进程与线程 1.1.1 进程   程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的. 当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程. 进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.   1.1.2 线程   一个进程之内可以分一到多个线程. 一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行 Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.   1.1.3 二者对比  进程基本上相互独立,线程在进程内,是进程的一个子集. 进程拥有共享的资源,如内存空间等,供内部的线程共享. 进程间通信较为复杂  同一台计算机的进程通信成为IPC 不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.   线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量 线程更轻量,线程上下文切换成本一般要比进程上下文切换低.  1.2 并行与并发   单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的. 一般会将这种线程轮流使用cpu的做法成为并发. 多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.     并发: 同一时间应对多件事情的能力. 并行: 同一时间动手做多件事情的能力.   1.3 应用 1.3.1 异步调用案例  从方法调用角度来说:
+ 需要等地啊结果返回,才能继续运行就是同步 不需要等待结果返回,就能继续运行就是异步  注意: 同步在多线程中海油另外一层的意思,是让多个线程步调一致
+设计: 多线程可以让方法执行变为异步的,比如说读取磁盘文件时,假设读取操作话费了5s,如果没有线程调度机制,这5s调用者什么都做不了,其代码都得暂停.
+结论:  比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程. tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程   1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-22T19:22:20&#43;08:00" />
+<meta property="article:modified_time" content="2022-01-22T19:22:20&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
+
+<meta name="twitter:title" content="并发编程"/>
+<meta name="twitter:description" content="1. 进程与线程 1.1 进程与线程 1.1.1 进程   程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的. 当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程. 进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.   1.1.2 线程   一个进程之内可以分一到多个线程. 一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行 Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.   1.1.3 二者对比  进程基本上相互独立,线程在进程内,是进程的一个子集. 进程拥有共享的资源,如内存空间等,供内部的线程共享. 进程间通信较为复杂  同一台计算机的进程通信成为IPC 不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.   线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量 线程更轻量,线程上下文切换成本一般要比进程上下文切换低.  1.2 并行与并发   单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的. 一般会将这种线程轮流使用cpu的做法成为并发. 多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.     并发: 同一时间应对多件事情的能力. 并行: 同一时间动手做多件事情的能力.   1.3 应用 1.3.1 异步调用案例  从方法调用角度来说:
+ 需要等地啊结果返回,才能继续运行就是同步 不需要等待结果返回,就能继续运行就是异步  注意: 同步在多线程中海油另外一层的意思,是让多个线程步调一致
+设计: 多线程可以让方法执行变为异步的,比如说读取磁盘文件时,假设读取操作话费了5s,如果没有线程调度机制,这5s调用者什么都做不了,其代码都得暂停.
+结论:  比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程. tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程   1."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><link rel="prev" href="https://codesn1per.github.io/sort/" /><link rel="next" href="https://codesn1per.github.io/springcloud/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "并发编程",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/codesn1per.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/"
+        },"genre": "posts","keywords": "多线程, 并发","wordcount":  960 ,
+        "url": "https:\/\/codesn1per.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/","datePublished": "2022-01-22T19:22:20+08:00","dateModified": "2022-01-22T19:22:20+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "CodeSniper"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="CodeSniper&#39; Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 博客 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="CodeSniper&#39; Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">博客</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">并发编程</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="far fa-folder fa-fw"></i>并发编程</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-22">2022-01-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;960 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-进程与线程">1. 进程与线程</a>
+      <ul>
+        <li><a href="#11-进程与线程">1.1 进程与线程</a></li>
+        <li><a href="#12-并行与并发">1.2 并行与并发</a></li>
+        <li><a href="#13-应用">1.3 应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-java线程">2. Java线程</a>
+      <ul>
+        <li><a href="#21-创建和运行线程">2.1 创建和运行线程</a></li>
+        <li><a href="#22-观察多个线程同时运行">2.2 观察多个线程同时运行</a></li>
+        <li><a href="#23-查看进程线程的方法">2.3 查看进程线程的方法</a></li>
+        <li><a href="#24-线程运行原理">2.4 线程运行原理</a></li>
+        <li><a href="#25-常见方法">2.5 常见方法</a></li>
+        <li><a href="#26-start与run">2.6 start与run</a></li>
+        <li><a href="#27-sleep与yield">2.7 sleep与yield</a></li>
+        <li><a href="#28-join方法详解">2.8 join方法详解</a></li>
+        <li><a href="#29-interrupt方法详解">2.9 interrupt方法详解</a></li>
+        <li><a href="#210-两阶段终止模式">2.10 两阶段终止模式</a></li>
+        <li><a href="#211-打断park线程">2.11 打断park线程</a></li>
+        <li><a href="#212-不推荐的方法">2.12 不推荐的方法</a></li>
+        <li><a href="#213-主线程与守护线程">2.13 主线程与守护线程</a></li>
+        <li><a href="#214-五种状态">2.14 五种状态</a></li>
+        <li><a href="#215-六种状态">2.15 六种状态</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="1-进程与线程">1. 进程与线程</h2>
+<h3 id="11-进程与线程">1.1 进程与线程</h3>
+<h5 id="111-进程">1.1.1 进程</h5>
+<blockquote>
+<ul>
+<li>程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的.</li>
+<li>当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程.</li>
+<li>进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.</li>
+</ul>
+</blockquote>
+<h5 id="112-线程">1.1.2 线程</h5>
+<blockquote>
+<ul>
+<li>一个进程之内可以分一到多个线程.</li>
+<li>一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行</li>
+<li>Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.</li>
+</ul>
+</blockquote>
+<h5 id="113-二者对比">1.1.3 二者对比</h5>
+<ul>
+<li>进程基本上相互独立,线程在进程内,是进程的一个子集.</li>
+<li>进程拥有共享的资源,如内存空间等,供内部的线程共享.</li>
+<li>进程间通信较为复杂
+<ul>
+<li>同一台计算机的进程通信成为IPC</li>
+<li>不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.</li>
+</ul>
+</li>
+<li>线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量</li>
+<li>线程更轻量,线程上下文切换成本一般要比进程上下文切换低.</li>
+</ul>
+<h3 id="12-并行与并发">1.2 并行与并发</h3>
+<blockquote>
+<ul>
+<li>单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的.</li>
+<li>一般会将这种线程轮流使用cpu的做法成为并发.</li>
+<li>多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>并发: 同一时间应对多件事情的能力.</li>
+<li>并行: 同一时间动手做多件事情的能力.</li>
+</ul>
+</blockquote>
+<h3 id="13-应用">1.3 应用</h3>
+<h5 id="131-异步调用案例">1.3.1 异步调用案例</h5>
+<blockquote>
+<p>从方法调用角度来说:</p>
+<ul>
+<li>需要等地啊结果返回,才能继续运行就是同步</li>
+<li>不需要等待结果返回,就能继续运行就是异步</li>
+</ul>
+<p>注意: 同步在多线程中海油另外一层的意思,是让多个线程步调一致</p>
+<h5 id="设计">设计:</h5>
+<p>多线程可以让方法执行变为异步的,比如说读取磁盘文件时,假设读取操作话费了5s,如果没有线程调度机制,这5s调用者什么都做不了,其代码都得暂停.</p>
+<h5 id="结论">结论:</h5>
+<ul>
+<li>比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程.</li>
+<li>tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程</li>
+</ul>
+</blockquote>
+<h5 id="132-提高效率案例">1.3.2 提高效率案例</h5>
+<blockquote>
+<p>充分利用多核cpu的有事,提高运行效率.想象下面的场景,执行3个计算,最后将计算结果汇总.</p>
+<pre><code>计算 1 花费 10 ms
+计算 2 花费 11 ms
+计算 3 花费 5 ms
+汇总需要 1 ms
+</code></pre><ul>
+<li>如果是串行执行,name总共花费 10 + 11 + 5 + 1 = 27ms</li>
+<li>但如果是四核cpu,各个核心分别使用线程1执行计算1 ,线程2执行计算2&hellip;..花费时间只取决于最长的那个线程运行的时间,及11ms 最后加上汇总的时间只会花费12ms</li>
+</ul>
+<pre><code>注意: 需要在多核cpu才能提高效率,单核仍然是轮流执行
+</code></pre><h5 id="结论-1">结论</h5>
+<ul>
+<li>单核cpu下,多线程不能实际提高程序运行效率,知识为了能够在不同的任务之间切换,不同线程轮流使用cpu,不至于一个线程总占用cpu,别的线程没法干活</li>
+<li>多核cpu可以并行跑多个线程,但能否提高程序运行效率还是要分情况的
+<ul>
+<li>有些任务,经过精心设计,将任务拆分,并行执行,当然可以提高程序的运行效率,但不是所有计算任务都能拆分</li>
+<li>也不是所有任务都需要拆分,任务的目的如果不同,谈拆分和效率没啥意义</li>
+</ul>
+</li>
+<li>IO操作不占用cpu,知识我们一般拷贝文件使用的是阻塞IO,这相当于线程虽然不用cpu,但需要一直等待IO结束,没能充分利用线程,所以才有后面的非阻塞IO和异步IO优化</li>
+</ul>
+</blockquote>
+<h2 id="2-java线程">2. Java线程</h2>
+<h3 id="21-创建和运行线程">2.1 创建和运行线程</h3>
+<h5 id="211-方法一直接使用thread">2.1.1 方法一,直接使用Thread</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CreateThread</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span> <span class="s">&#34;running...&#34;</span><span class="o">);</span>
+        <span class="o">});</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;t1&#34;</span><span class="o">);</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span> <span class="s">&#34;running...&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>		
+</code></pre></div><h5 id="212-方法二使用runnable配合thread">2.1.2 方法二,使用Runnable配合Thread</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CreateThreadByRunnable</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//创建任务对象
+</span><span class="c1"></span>        <span class="n">Runnable</span> <span class="n">runnable</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span> <span class="s">&#34;running&#34;</span><span class="o">);</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">runnable</span><span class="o">,</span> <span class="s">&#34;t1&#34;</span><span class="o">);</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span> <span class="s">&#34;running&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="213-方法三futuretask配置thread">2.1.3 方法三,FutureTask配置Thread</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CreateThreadByFutureTask</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ExecutionException</span><span class="o">,</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">FutureTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">futureTask</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FutureTask</span><span class="o">&lt;&gt;(()-&gt;{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;running...&#34;</span><span class="o">);</span>
+            <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">2000</span><span class="o">);</span>
+            <span class="k">return</span> <span class="s">&#34;continue running...&#34;</span><span class="o">;</span>
+        <span class="o">});</span>
+        <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">futureTask</span><span class="o">,</span><span class="s">&#34;t1&#34;</span><span class="o">);</span>
+        <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">futureTask</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="22-观察多个线程同时运行">2.2 观察多个线程同时运行</h3>
+<p>主要是理解</p>
+<ul>
+<li>交替执行</li>
+<li>谁先谁后,不由我们控制</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThreadRunSameTime</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//线程t1
+</span><span class="c1"></span>        <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span> <span class="s">&#34;running...&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="s">&#34;t1&#34;</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+
+        <span class="c1">//线程t2
+</span><span class="c1"></span>        <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span> <span class="s">&#34;running...&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="s">&#34;t2&#34;</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>							
+</code></pre></div><h3 id="23-查看进程线程的方法">2.3 查看进程线程的方法</h3>
+<h5 id="linux">linux</h5>
+<blockquote>
+<ul>
+<li>
+<p>ps -fe 查看所有进程</p>
+</li>
+<li>
+<p>ps -fT -p <!-- raw HTML omitted --> 查看某个进程(PID) 的所有信息</p>
+</li>
+<li>
+<p>kill 杀死进程</p>
+</li>
+<li>
+<p>top 按大写H切换是否显示进程</p>
+</li>
+<li>
+<p>top -H -p <!-- raw HTML omitted --> 查看某个进程(PID)的所有信息</p>
+</li>
+</ul>
+</blockquote>
+<h5 id="java">Java</h5>
+<blockquote>
+<ul>
+<li>jps 查看所有Java进程</li>
+<li>jstack <!-- raw HTML omitted --> 查看某个Java进程(PID)的所有线程状态</li>
+<li>jconsole 查看某个Java进程中线程的运行状态(图形界面)</li>
+</ul>
+</blockquote>
+<h3 id="24-线程运行原理">2.4 线程运行原理</h3>
+<h5 id="241-栈与栈帧">2.4.1 栈与栈帧</h5>
+<blockquote>
+<p>我们知道JVM中由堆,栈,方法区所组成,其中栈内存是给谁用的呢?其实就是线程,每个线程启动后,虚拟机就会为其分配一块栈内存.</p>
+<ul>
+<li>每个栈由多个栈帧(Frame)组成,对应着每个方法调用时所占用的内存</li>
+<li>每个线程只能有一个活动栈帧,对应着当前正在执行的那个方法</li>
+</ul>
+</blockquote>
+<h5 id="242-线程上下文切换thread-context-switch">2.4.2 线程上下文切换(Thread Context Switch)</h5>
+<blockquote>
+<p>因为以下一些原因导致cpu不在执行当前线程,转而执行另一个线程的代码</p>
+<ul>
+<li>线程的cpu时间片用完</li>
+<li>垃圾回收</li>
+<li>有更高优先级的线程需要运行</li>
+<li>线程自己调用sleep,yield,wait,join,park,synchronized,lock等方法</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>当Context Switch 发生时,需要由操作系统保存当前线程的状态,并恢复另一个线程的状态,Java中对应的概念就是程序计数器,它的作用就是记住下一条jvm指令的执行地址,是线程私有的</p>
+<ul>
+<li>状态包括程序计数器,虚拟机栈中的每个栈帧的信息,如局部变量,操作数栈,返回地址等</li>
+<li>COntext Switch 频繁发生会影响性能</li>
+</ul>
+</blockquote>
+<h3 id="25-常见方法">2.5 常见方法</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方法名</th>
+<th style="text-align:left">功能说明</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">start()</td>
+<td style="text-align:left">启动一个新线程,在新的线程运行run方法中的代码</td>
+<td>start方法只是让线程进入就绪,里面代码不一定立刻执行(cpu的时间片还没分给它).每个线程对象的start方法只能调用一次,如果调用了多次会出现IllegalThreadStateException</td>
+</tr>
+<tr>
+<td style="text-align:center">run()</td>
+<td style="text-align:left">新线程启动后会调用的方法</td>
+<td>如果在构造Thread对象时传递了Runnable参数,则线程启动后会调用Runnable中的run方法,否则默认不执行任何操作,但可以创建Thread的子类对象,来覆盖默认行为</td>
+</tr>
+<tr>
+<td style="text-align:center">join()</td>
+<td style="text-align:left">等待线程运行结束</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">join(long n)</td>
+<td style="text-align:left">等待线程运行结束最多等待n毫秒</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">getId()</td>
+<td style="text-align:left">获取线程长整形id</td>
+<td>id唯一</td>
+</tr>
+<tr>
+<td style="text-align:center">getName()</td>
+<td style="text-align:left">获取线程名</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">setName(String)</td>
+<td style="text-align:left">修改线程名</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">getPriority()</td>
+<td style="text-align:left">获取线程优先级</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">setPriority(int)</td>
+<td style="text-align:left">修改线程优先级</td>
+<td>Java中规定线程优先级是1~10的整数,较大的优先级能提高该线程被cpu调用的几率</td>
+</tr>
+<tr>
+<td style="text-align:center">getState()</td>
+<td style="text-align:left">获取线程黄台</td>
+<td>Java中线程状态是用6个enum表示,分别是: NEW,RUNNABLE,BLOCKED,WAITING,TIMED_WAITING,TERMINATED</td>
+</tr>
+<tr>
+<td style="text-align:center">isInterrupted()</td>
+<td style="text-align:left">判断是否被打断</td>
+<td>不会清除</td>
+</tr>
+<tr>
+<td style="text-align:center">isAlive</td>
+<td style="text-align:left">线程是否存活</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">interrupt()</td>
+<td style="text-align:left">打断线程</td>
+<td>如果被打断线程正在sleep,wait,join会导致被打断的线程抛出InterruptedExcepiton,并清除打断标记;如果打断的正在运行的线程,则会设置打断标记;park的线程被打断,也会设置打断标记</td>
+</tr>
+<tr>
+<td style="text-align:center">interrupted() (static)</td>
+<td style="text-align:left">判断当前线程是否打断</td>
+<td>会清除打断标记</td>
+</tr>
+<tr>
+<td style="text-align:center">currentThread() (static)</td>
+<td style="text-align:left">获取当前正在执行的线程</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">sleep(long n) (static)</td>
+<td style="text-align:left">让当前执行的线程休眠n毫秒,休眠时让出cpu的时间片给其他线程</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">yield() (static)</td>
+<td style="text-align:left">提示线程调度器让出当前线程对cpu的使用</td>
+<td>主要用于测试和调试</td>
+</tr>
+</tbody>
+</table>
+<h3 id="26-start与run">2.6 start与run</h3>
+<h5 id="调用run">调用run</h5>
+<blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StartAndRun</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="s">&#34;t1&#34;</span><span class="o">){</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span><span class="s">&#34;running...&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+
+        <span class="n">thread</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span><span class="s">&#34;do other things...&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220223001157228.png"
+        data-srcset="/image-20220223001157228.png, /image-20220223001157228.png 1.5x, /image-20220223001157228.png 2x"
+        data-sizes="auto"
+        alt="/image-20220223001157228.png"
+        title="image-20220223001157228" /></p>
+<blockquote>
+<p>程序仍然在main线程运行,方法调用还是同步</p>
+</blockquote>
+<h5 id="调用start">调用start</h5>
+<blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StartAndRun</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="s">&#34;t1&#34;</span><span class="o">){</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span><span class="s">&#34;running...&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+
+        <span class="c1">//thread.run();
+</span><span class="c1"></span>        <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">getState</span><span class="o">());</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span><span class="s">&#34;do other things...&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220223001800453.png"
+        data-srcset="/image-20220223001800453.png, /image-20220223001800453.png 1.5x, /image-20220223001800453.png 2x"
+        data-sizes="auto"
+        alt="/image-20220223001800453.png"
+        title="image-20220223001800453" /></p>
+<blockquote>
+<p>方法调用是异步的!!!!</p>
+</blockquote>
+<h3 id="27-sleep与yield">2.7 sleep与yield</h3>
+<h5 id="sleep">sleep</h5>
+<blockquote>
+<ol>
+<li>调用sleep会让当前线程从Running进入Timed Waiting状态</li>
+<li>其他线程可以使用interrupt方法打断正在睡眠的线程,这是sleep方法会抛出InterrupttedException</li>
+<li>睡眠结束后的线程尾部会立刻得到执行</li>
+<li>建议用TimeUnit的sleep代替Thread的sleep来获得更好的可读性</li>
+</ol>
+</blockquote>
+<h5 id="yield">yield</h5>
+<blockquote>
+<ol>
+<li>调用yield会让当前线程从Running进入Runnable状态,然后调度执行其他同优先级的线程.如果这是没有同优先级的线程,name不能保证让当前线程暂停的效果</li>
+<li>具体的实现依赖操作系统的任务调度器</li>
+</ol>
+</blockquote>
+<h5 id="线程优先级">线程优先级</h5>
+<blockquote>
+<ul>
+<li>
+<p>线程优先级会提示(hint)调度器优先级调度该线程,但他仅仅是一个提示,调度器可以忽略他</p>
+</li>
+<li>
+<p>如果cpu比较忙,name优先级高的线程会获得更多的时间片,但cpu闲时,优先级几乎没有用</p>
+</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Priority</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//任务一
+</span><span class="c1"></span>        <span class="n">Runnable</span> <span class="n">task1</span> <span class="o">=</span> <span class="o">()-&gt;{</span>
+            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+          <span class="k">for</span><span class="o">(;;){</span>
+              <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span><span class="n">count</span><span class="o">++);</span>
+          <span class="o">}</span>
+        <span class="o">};</span>
+
+        <span class="c1">//任务二
+</span><span class="c1"></span>        <span class="n">Runnable</span> <span class="n">task2</span> <span class="o">=</span> <span class="o">()-&gt;{</span>
+            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+            <span class="k">for</span><span class="o">(;;){</span>
+                <span class="c1">//让出时间片
+</span><span class="c1"></span>                <span class="n">Thread</span><span class="o">.</span><span class="na">yield</span><span class="o">();</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;-----------------&gt;&#34;</span> <span class="o">+</span><span class="n">count</span><span class="o">++);</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">task1</span><span class="o">,</span> <span class="s">&#34;t1&#34;</span><span class="o">);</span>
+        <span class="n">Thread</span> <span class="n">t2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">task2</span><span class="o">,</span> <span class="s">&#34;t2&#34;</span><span class="o">);</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">setPriority</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">MAX_PRIORITY</span><span class="o">);</span>
+        <span class="n">t2</span><span class="o">.</span><span class="na">setPriority</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">MIN_PRIORITY</span><span class="o">);</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">t2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div><h5 id="案例-防止cpu占用100">案例-防止CPU占用100%</h5>
+<h5 id="sleep实现">sleep实现:</h5>
+<blockquote>
+<p>在没有利用cpu计算时,不要让while(true)空转浪费cpu,这时可以使用yield或sleep来让出cpu的使用权给其他程序</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">500</span><span class="o">);</span>
+            <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">){</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+</code></pre></div><ul>
+<li>可以用wait或条件变量达到类似的效果</li>
+<li>不同的是,或两种都需要加锁,并且需要响应的唤醒操作,一般适用于进行同步的场景</li>
+<li>sleep使用与无需锁同步的场景</li>
+</ul>
+</blockquote>
+<h3 id="28-join方法详解">2.8 join方法详解</h3>
+<h6 id="为什么需要join">为什么需要join?</h6>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JoinThread</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">test</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">(){</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;start&#34;</span><span class="o">);</span>
+                <span class="n">sleep</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;end&#34;</span><span class="o">);</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;结果是---&gt;&#34;</span> <span class="o">+</span><span class="n">count</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;end&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="分析">分析:</h5>
+<ul>
+<li>因为主线程和线程t1是并行执行的,t1线程需要1秒后才能得到count = 10</li>
+<li>而主线程一开始就要打印count的结果,所以只能打印count = 0</li>
+</ul>
+<h5 id="解决方法">解决方法</h5>
+<p>主线程中对t1调用join()方法,等待t1线程执行完毕</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JoinThread</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">test</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;start&#34;</span><span class="o">);</span>
+                <span class="n">sleep</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;end&#34;</span><span class="o">);</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;结果是---&gt;&#34;</span> <span class="o">+</span><span class="n">count</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;end&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="29-interrupt方法详解">2.9 interrupt方法详解</h3>
+<h5 id="打断sleepwaitjoin的线程">打断sleep,wait,join的线程</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InterruptThread</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;sleep...&#34;</span><span class="o">);</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">5000</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="s">&#34;t1&#34;</span><span class="o">);</span>
+
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">2000</span><span class="o">);</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;打断标记-&gt;&#34;</span> <span class="o">+</span> <span class="n">t1</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="打断正常运行的线程不会清空打断标记">打断正常运行的线程(不会清空打断标记)</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InterruptNormalThread</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+                <span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">isInterrupted</span><span class="o">();</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">flag</span><span class="o">){</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;打断状态-&gt;&#34;</span> <span class="o">+</span> <span class="n">flag</span><span class="o">);</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;打断状态-&gt;&#34;</span> <span class="o">+</span> <span class="n">flag</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="s">&#34;t1&#34;</span><span class="o">);</span>
+
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;interrupt&#34;</span><span class="o">);</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="210-两阶段终止模式">2.10 两阶段终止模式</h3>
+<p>在一个线程T1中如何&quot;优雅&quot;的终止线程T2? 这里的&quot;优雅&quot; 指的是给T2一个机会去料理后事;</p>
+<h5 id="错误思路">错误思路:</h5>
+<blockquote>
+<ul>
+<li>使用线程对象的stop方法停止</li>
+<li>stop方法会真正杀死线程,如果这是线程锁住了共享资源,那么当他被杀死后就再没机会释放锁,其他区线程将永远无法获取锁</li>
+<li>使用System.exit(int) 方法停止线程</li>
+<li>目的仅仅是停止一个线程,但这种做法会让整个程序都停</li>
+</ul>
+</blockquote>
+<pre><code class="language-mermaid" data-lang="mermaid">graph TD
+w(&quot;while(true)&quot;) --&gt; a
+a(&quot;有没有被打断?&quot;) -- 是 --&gt; b(料理后事)
+b--&gt; c((结束循环))
+a -- 否 --&gt; d(睡眠2s)
+d -- 无异常 --&gt; e(执行监控记录)
+d -- 有异常 --&gt; i(设置打断标记)
+i --&gt; w
+e --&gt; w
+</code></pre><h5 id="实现">实现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TwoPhaseTerminationTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">TwoPhaseTermination</span> <span class="n">twoPhaseTermination</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TwoPhaseTermination</span><span class="o">();</span>
+        <span class="n">twoPhaseTermination</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">3000</span><span class="o">);</span>
+        <span class="n">twoPhaseTermination</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+    <span class="kd">class</span> <span class="nc">TwoPhaseTermination</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Thread</span> <span class="n">monitor</span><span class="o">;</span>
+
+        <span class="cm">/**
+</span><span class="cm">         * 启动线程
+</span><span class="cm">         * @return void
+</span><span class="cm">         */</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">start</span><span class="o">(){</span>
+           <span class="n">monitor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+               <span class="n">Thread</span> <span class="n">current</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+               <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+                   <span class="k">if</span> <span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">()){</span>
+                       <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;线程被打断了&#34;</span><span class="o">);</span>
+                       <span class="k">break</span><span class="o">;</span>
+                   <span class="o">}</span>
+                   <span class="k">try</span> <span class="o">{</span>
+                       <span class="c1">// 情况一: 睡眠状态被打断
+</span><span class="c1"></span>                       <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+                       <span class="c1">// 情况二: 执行监控记录被打断
+</span><span class="c1"></span>                       <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;执行监控记录&#34;</span><span class="o">);</span>
+                   <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                       <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                       <span class="c1">//重新设置打断标记
+</span><span class="c1"></span>                       <span class="n">monitor</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+                   <span class="o">}</span>
+               <span class="o">}</span>
+
+           <span class="o">});</span>
+           <span class="c1">// 启动线程
+</span><span class="c1"></span>           <span class="n">monitor</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="cm">/**
+</span><span class="cm">         * 停止线程
+</span><span class="cm">         * @return void
+</span><span class="cm">         */</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">stop</span><span class="o">(){</span>
+            <span class="n">monitor</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div><h3 id="211-打断park线程">2.11 打断park线程</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InterruptParkThread</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">test</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;park...&#34;</span><span class="o">);</span>
+            <span class="n">LockSupport</span><span class="o">.</span><span class="na">park</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;unPark...&#34;</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;打断状态-&gt;&#34;</span> <span class="o">+</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">isInterrupted</span><span class="o">());</span>
+        <span class="o">},</span><span class="s">&#34;t1&#34;</span><span class="o">);</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>打断标记为true时,park失效</p>
+<h3 id="212-不推荐的方法">2.12 不推荐的方法</h3>
+<p>还有一些不推荐的方法,这些方法已经过世,容易破坏同步代码块,造成线程死锁</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stop()</td>
+<td>停止线程运行</td>
+</tr>
+<tr>
+<td>suspend()</td>
+<td>挂起(暂停)线程运行</td>
+</tr>
+<tr>
+<td>resume()</td>
+<td>恢复线程运行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="213-主线程与守护线程">2.13 主线程与守护线程</h3>
+<blockquote>
+<p>默认情况下,Java进程需要等待所有线程都运行结束,才会结束,有一种特殊的线程叫做守护线程,只要其他守护线程运行结束,即使守护线程的代码没有执行完,也会强制结束.</p>
+</blockquote>
+<p>例如:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DaemonThread</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">daemon</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;running...&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="c1">// 设置为守护线程
+</span><span class="c1"></span>        <span class="n">daemon</span><span class="o">.</span><span class="na">setDaemon</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="n">daemon</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;end...&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="注意">注意:</h5>
+<blockquote>
+<ul>
+<li>垃圾回收线程就是一种守护线程</li>
+<li>Tomcat中的Acceptor和Poller线程都是守护线程,所以Tomcat接受到shutdown命令后,不会等待他们处理完当前请求</li>
+</ul>
+</blockquote>
+<h3 id="214-五种状态">2.14 五种状态</h3>
+<h5 id="这是从操作系统层面来描述的">这是从操作系统层面来描述的:</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220224043238257.png"
+        data-srcset="/image-20220224043238257.png, /image-20220224043238257.png 1.5x, /image-20220224043238257.png 2x"
+        data-sizes="auto"
+        alt="/image-20220224043238257.png"
+        title="image-20220224043238257" /></p>
+<ul>
+<li>初始状态: 仅是在语言层面创建了线程对象,还未与操作系统线程关联</li>
+<li>可运行状态: (就绪状态) 指该线程已经被创建(与操作系统线程关联).可以由cpu调度执行</li>
+<li>运行状态: 指获取了cpu时间片运行中的状态
+<ul>
+<li>当cpu时间片用完,会从运行状态转换至可运行状态,会导致线程的上下文切换</li>
+</ul>
+</li>
+<li>阻塞状态
+<ul>
+<li>如果调用了阻塞API,如BIO读写文件,这时该线程实际不会用到cpu,会导致线程上下文切换,进入阻塞状态</li>
+<li>等BIO操作完毕,会由操作系统唤醒阻塞的线程,转换至可运行状态</li>
+<li>与可运行状态的区别是,对阻塞状态的线程来说只要他们一直不唤醒,调度一直不会考虑调度他们</li>
+</ul>
+</li>
+<li>终止状态: 表示线程已经执行完毕,声明周期已经结束,不会再转换为其他状态</li>
+</ul>
+<h3 id="215-六种状态">2.15 六种状态</h3>
+<h5 id="这是从java-api层面来描述的根据threadstate枚举分为6种状态">这是从Java API层面来描述的,根据Thread.State枚举,分为6种状态</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220224044431446.png"
+        data-srcset="/image-20220224044431446.png, /image-20220224044431446.png 1.5x, /image-20220224044431446.png 2x"
+        data-sizes="auto"
+        alt="/image-20220224044431446.png"
+        title="image-20220224044431446" /></p>
+<ul>
+<li>NEW: 线程刚被创建,但是还没有调用start()方法</li>
+<li>RUNNABLE当调用了start()方法之后,注意,Java API层面的RUNNABLE状态涵盖了操作系统层面的 可运行状态,运行状态和阻塞状态(由于BIO导致的线程阻塞,在Java中无法区分,仍然认为是可运行的)</li>
+<li>BLOCKED,WAITING,TIMED_WAITING都Java API层面对阻塞状态的细分</li>
+<li>TERMINATED: 当线程代码运行结束</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-01-22</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-via="xxxx" data-hashtags="多线程,并发"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-hashtag="多线程"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>,&nbsp;<a href="/tags/%E5%B9%B6%E5%8F%91/">并发</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/sort/" class="prev" rel="prev" title="Sort"><i class="fas fa-angle-left fa-fw"></i>Sort</a>
+            <a href="/springcloud/" class="next" rel="next" title="SpringCloud">SpringCloud<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.84.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">CodeSniper</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"CodeSniper' Blog","id-2":"CodeSniper' Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

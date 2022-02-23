@@ -20,7 +20,7 @@
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/springcloud/" /><link rel="prev" href="https://codesn1per.github.io/sort/" /><link rel="next" href="https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/springcloud/" /><link rel="prev" href="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><link rel="next" href="https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/codesn1per.github.io\/springcloud\/"
-        },"genre": "posts","keywords": "SpringCloud","wordcount":  241 ,
+        },"genre": "posts","keywords": "SpringCloud","wordcount":  262 ,
         "url": "https:\/\/codesn1per.github.io\/springcloud\/","datePublished": "2022-02-18T20:13:04+08:00","dateModified": "2022-02-18T20:13:04+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">SpringCloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-18">2022-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;241 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-18">2022-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;262 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -122,6 +122,7 @@
         <li><a href="#3-nacos">3. Nacos</a></li>
         <li><a href="#4-feign">4. Feign</a></li>
         <li><a href="#5-gateway">5. Gateway</a></li>
+        <li><a href="#6-rabbitmq">6. RabbitMQ</a></li>
       </ul>
     </li>
   </ul>
@@ -406,7 +407,15 @@
 </span><span class="w">          </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="l">lb://orderservice</span><span class="w"> </span><span class="c"># 路由的目标地址</span><span class="w">
 </span><span class="w">          </span><span class="nt">predicates</span><span class="p">:</span><span class="w"> </span><span class="c"># 路由断言,判断是否符合规则</span><span class="w">
 </span><span class="w">            </span>- <span class="l">Path=/order/**</span><span class="w"> </span><span class="c"># 路径断言,.判断路径是否是以/user开头</span><span class="w">
-</span></code></pre></div></div><div class="post-footer" id="post-footer">
+</span></code></pre></div><h3 id="6-rabbitmq">6. RabbitMQ</h3>
+<h5 id="2安装mq">2.安装MQ</h5>
+<blockquote>
+<p>拉取镜像: docker pull RabbitMQ:3-management</p>
+</blockquote>
+<blockquote>
+<p>运行MQ容器: docker run -d &ndash;name my_rabbitMQ -e RABBITMQ_DEFAULT_USER=codesniper -e RABBITMQ_DEFAULT_PASS=gongxiwu -p 15672:15672 -p 5672:5672 rabbitmq:3-management</p>
+</blockquote>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -431,7 +440,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/sort/" class="prev" rel="prev" title="Sort"><i class="fas fa-angle-left fa-fw"></i>Sort</a>
+    <div class="post-nav"><a href="/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="prev" rel="prev" title="并发编程"><i class="fas fa-angle-left fa-fw"></i>并发编程</a>
             <a href="/mysql%E9%AB%98%E7%BA%A7/" class="next" rel="next" title="MySQL高级">MySQL高级<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"></div></article></div>
