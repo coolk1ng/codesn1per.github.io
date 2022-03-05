@@ -308,9 +308,367 @@ spring:
 
 ### 6. RabbitMQ
 
-##### 2.安装MQ
+##### 1.安装MQ
 
 > 拉取镜像: docker pull RabbitMQ:3-management
 
 > 运行MQ容器: docker run -d --name my_rabbitMQ -e RABBITMQ_DEFAULT_USER=codesniper -e RABBITMQ_DEFAULT_PASS=gongxiwu -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+
+##### 2. RabbitMQ概述
+
+RabbitMQ的结构和概念
+
+![image-20220304235408679](/image-20220304235408679.png)
+
+##### 3. RabbitMQ的几个概念
+
+* channel: 操作MQ的工具
+* exchange: 路由消息到队列中
+* queue: 缓存消息
+* virtual host: 虚拟主机,是对queue,exchange等资源的逻辑分组
+
+##### 4. 常见消息模型
+
+MQ的官方文档中给出了几个MQ的demo实例:
+
+* 基本消息队列(BasicQueue)
+
+![image-20220305000702942](/image-20220305000702942.png)
+
+* 工作消息队列(WorkQueue)
+
+![image-20220305000755990](/image-20220305000755990.png)
+
+* 发布订阅,根据交换机不同分3种
+  * Fanout Exchange: 广播
+  * Direct Exchange: 路由
+  * Topic Exchange: 主题
+
+![image-20220305001945402](/image-20220305001945402.png)
+
+![image-20220305001959751](/image-20220305001959751.png)
+
+
+
+> **Hello World案例**
+>
+> 官方的HelloWorld是基于最基础的消息队列模型来实现的,只包括三个角色
+>
+> * publisher: 消息发布者,将消息发送到队列queue
+> * queue: 消息队列,负责接受并缓存消息
+> * Consumer: 订阅队列,处理队列中的消息
+>
+> ![image-20220305002439028](../../static/image-20220305002439028.png)
+>
+> 基本消息队列的消息的发送流程:
+>
+> 1. 建立connection
+> 2. 创建channel
+> 3. 利用channel声明队列
+> 4. 利用channel向队列发送消息
+>
+> 基本消息队列的消息接受流程:
+>
+> 1. 建立connection
+> 2. 创建channel
+> 3. 利用channel声明队列
+> 4. 定义consumer的消费行为handleDelivery()
+> 5. 利用channel将消费者与队列绑定
+
+##### 5. SpringAMQP
+
+> **利用SpringAMQP实现HelloWorld中的基础消息队列功能**
+>
+> 流程如下:
+>
+> 1. 在父工程中引入spring-amqp的依赖
+> 2. 在publisher服务中利用RabbitTemplate发送消息到simple.queue中
+> 3. 在consumer服务中编写消费逻辑,绑定simple.queue这个队列
+>
+> > **1. 在publisher中编写测试方法,向simple.queue中发送消息**
+> >
+> > 1. 在publisher服务中编写application.yml,添加mq连接信息
+> >
+> > ```yml
+> > spring:
+> >   rabbitmq:
+> >     host: 110.40.236.91
+> >     port: 5672
+> >     virtual-host: /
+> >     username: ***
+> >     password: *****
+> > ```
+> >
+> > 2. 在publisher服务中编写测试方法
+> >
+> > ```java
+> > @SpringBootTest
+> > class PublisherApplicationTests {
+> >     @Autowired
+> >     private RabbitTemplate rabbitTemplate;
+> > 
+> >     @Test
+> >     public void sendMessageToSimpleQueueTest(){
+> >         String queueName = "simple.queue";
+> >         String message = "hello,world!";
+> >         rabbitTemplate.convertAndSend(queueName,message);
+> >     }
+> > 
+> > }		
+> > ```
+>
+> > **2. 在consumer中编写消费逻辑,监听simple.queue**
+> >
+> > 1. 在consumer服务中编写application.yml,添加mq连接信息
+> >
+> > ```yml
+> > spring:
+> >   rabbitmq:
+> >     host: 110.40.236.91
+> >     port: 5672
+> >     virtual-host: /
+> >     username: ***
+> >     password: *****
+> > ```
+> >
+> > 2. 在consumer服务中新建一个类,编写消费逻辑
+> >
+> > ```java
+> > @Component
+> > public class RabbitMQListener {
+> >     @RabbitListener(queues = "simple.queue")
+> >     public void listenSimpleQueue(String msg){
+> >         System.out.println("msg = " + msg);
+> >     }
+> > }
+> > ```
+
+
+
+> **Work Queue工作队列**
+>
+> Work Queue,工作队列,可以提高消息处理速度,避免队列消息堆积
+>
+> ![image-20220305113903773](/image-20220305113903773.png)
+>
+> **1. 消费预取限制**
+>
+> ```yml
+> spring:
+>   rabbitmq:
+>     host: 110.40.236.91
+>     port: 5672
+>     virtual-host: /
+>     username: ***
+>     password: ***
+>     listener:
+>       simple:
+>         prefetch: 1
+> ```
+
+> **发布(Publish),订阅(Subscribe)**
+>
+> 发布订阅模式之前案例的区别就是允许将同一信息发送给多个消费者.
+>
+> 常见exchange类型包括:
+>
+> * Fanout: 广播
+> * Direct: 路由
+> * Topicc: 话题
+
+> **1. 发布订阅-Fanout Exchange**
+>
+> Fanout Exchange会将接受到的消息路由到每一个跟其绑定的queue
+>
+> ![image-20220305120217545](/image-20220305120217545.png)
+>
+> **演示FanoutExchange的使用**
+>
+> 实现思路如下
+>
+> 1. 在consumer服务中,利用代码声明队列,交换机,并将两者绑定
+> 2. 在consumer服务中,利用两个消费方法,分别监听两个fanout.queue1和fanout.queue2
+> 3. 在publisher中编写测试方法,想itcast.fanout发送消息
+>
+> ![image-20220305120545971](/image-20220305120545971.png)
+>
+> **步骤1: 在consumer服务声明Exchange,Queue,Binding**
+>
+> 在consumer服务新建一个类,添加@configuration注解,声明FanoutExchange,Queue和绑定关系对象Binding
+>
+> ```java
+> /**
+>      * 声明交换机
+>      * @return FanoutExchange
+>      */
+>     @Bean
+>     public FanoutExchange fanoutExchange(){
+>         return new FanoutExchange("my.fanout");
+>     }
+> 
+>     /**
+>      * 声明队列1
+>      * @return Queue
+>      */
+>     @Bean
+>     public Queue fanoutQueue1(){
+>         return new Queue("fanout.queue1");
+>     }
+> 
+>     /**
+>      * 队列1绑定到交换机
+>      * @param queue
+>      * @param fanoutExchange
+>      * @return Binding
+>      */
+>     @Bean
+>     public Binding fanoutQueueBinding1(@Qualifier("fanoutQueue1") Queue queue, FanoutExchange fanoutExchange){
+>         return BindingBuilder.bind(queue).to(fanoutExchange);
+>     }
+> 
+>     /**
+>      * 声明队列2
+>      * @return Queue
+>      */
+>     @Bean
+>     public Queue fanoutQueue2(){
+>         return new Queue("fanout.queue2");
+>     }
+> 
+>     /**
+>      * 队列2绑定到交换机
+>      * @param queue
+>      * @param fanoutExchange
+>      * @return Binding
+>      */
+>     @Bean
+>     public Binding fanoutQueueBinding2(@Qualifier("fanoutQueue2") Queue queue,FanoutExchange fanoutExchange){
+>         return BindingBuilder.bind(queue).to(fanoutExchange);
+>     }
+> ```
+>
+> **步骤2: 在consumer服务声明两个消费者**
+>
+> 在consumer服务的监听类中,分别添加方法监听两个队列
+>
+> ```java
+> @RabbitListener(queues = "fanout.queue1")
+>     public void listenFanoutQueue1(String msg){
+>         System.out.println("接受fanout.queue1的消息: " + msg + LocalTime.now());
+>     }
+> 
+>     @RabbitListener(queues = "fanout.queue2")
+>     public void listenFanoutQueue2(String msg){
+>         System.out.println("接受fanout.queue2的消息: " + msg + LocalTime.now());
+>     }
+> ```
+>
+> **步骤3: 在publisher服务发送消息到FanoutExchange**
+>
+> 在publisher服务发送消息
+>
+> ```java
+> @Test
+>     public void sendMessageToFanoutExchange(){
+>         String exchangeName = "my.fanout";
+>         String message = "Hello,FanoutExchange!!";
+>         rabbitTemplate.convertAndSend(exchangeName,"",message);
+>     }
+> ```
+>
+> 
+
+> > **2. 发布订阅-DirectExchange**
+> >
+> > Direct Exchange 会将接受到的消息根据规则路由到指定的Queue
+> >
+> > * 每一个Queue都与Exchange设置一个BindingKey
+> > * 发布者发送消息时,指定信息的RoutingKey
+> > * Exchange将消息路由到BindingKey与消息RoutingKey一致的队列
+> >
+> > ![image-20220305173747895](/image-20220305173747895.png)
+> >
+> > **演示DirectExchange的使用**
+> >
+> > **步骤1: 在consumer服务声明Exchange,Queue**
+> >
+> > 1. 在consumer服务中,编写两个消费者方法,分别监听两个队列
+> > 2. 并利用@RabbitListener声明Exchange,Queue,RoutingKey
+> >
+> > ```java
+> > @RabbitListener(bindings = @QueueBinding(value = @Queue("direct.queue1"),exchange = @Exchange(value = "my.direct",type = ExchangeTypes.DIRECT),key = {"key1","key2"}))
+> >     public void listenDirectQueue1(String msg){
+> >         System.out.println("接受direct.queue1的消息: " + msg + LocalTime.now());
+> >     }
+> > 
+> >     @RabbitListener(bindings = @QueueBinding(value = @Queue("direct.queue2"),exchange = @Exchange(value = "my.direct",type = ExchangeTypes.DIRECT),key = {"key1","key3"}))
+> >     public void listenDirectQueue2(String msg){
+> >         System.out.println("接受direct.queue2的消息: " + msg + LocalTime.now());
+> >     }
+> > ```
+> >
+> > **步骤2: 在publisher服务发送消息**
+> >
+> > ```java
+> > @Test
+> >     public void sendMessageToDirectExchange(){
+> >         String exchangeName = "my.direct";
+> >         String message = "Hello,DirectExchange!!";
+> >         rabbitTemplate.convertAndSend(exchangeName,"key1",message);
+> >     }
+> > ```
+
+>  **发布订阅-TopicExchange**
+>
+> 1. TopicExchange与DirectExchange类似,区别在于routingKey必须是多个单词的列表,并以.分割
+>
+> 2. Queue与Exchange指定BindingKey时可以使用通配符
+>
+>    #: 指代0个或多个单词
+>
+>    : 指代一个单词
+>
+> **步骤1; 在consumer服务声明Exchange,Queue**
+>
+> 1. 在consumer服务中,编写两个消费者方法,分别监听两个队列
+> 2. 利用@RabbitListener声明Exchange,Queue,Routingkey
+>
+> ```java
+> @RabbitListener(bindings = @QueueBinding(value = @Queue("topic.queue1"),exchange = @Exchange(value = "my.topic",type = ExchangeTypes.TOPIC),key = {"#.topic1"}))
+>     public void listenTopicQueue1(String msg){
+>         System.out.println("接受topic.queue1的消息: " + msg + LocalTime.now());
+>     }
+> 
+>     @RabbitListener(bindings = @QueueBinding(value = @Queue("topic.queue2"),exchange = @Exchange(value = "my.topic",type = ExchangeTypes.TOPIC),key = {"topic.#"}))
+>     public void listenTopicQueue2(String msg){
+>         System.out.println("接受topic.queue2的消息: " + msg + LocalTime.now());
+>     }
+> ```
+>
+> **步骤2: 在publisher服务发送消息**
+>
+> ```java
+> @Test
+>     public void sendMessageToTopicExchange(){
+>         String exchangeName = "my.topic";
+>         String message = "Hello,TopicExchange!!";
+>         rabbitTemplate.convertAndSend(exchangeName,"topic.1",message);
+>     }
+> ```
+
+> **消息转换器**
+>
+> 覆盖原先的MessageConverter
+>
+> ```java
+> /**
+>      * 覆盖原先的MessageConverter
+>      * @return MessageConverter
+>      */
+>     @Bean
+>     public MessageConverter messageConverter(){
+>         return new Jackson2JsonMessageConverter();
+>     }
+> ```
+
 

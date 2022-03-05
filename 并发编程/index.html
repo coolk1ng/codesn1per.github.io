@@ -11,12 +11,12 @@
 设计: 多线程可以让方法执行变为异步的,比如说读取磁盘文件时,假设读取操作话费了5s,如果没有线程调度机制,这5s调用者什么都做不了,其代码都得暂停.
 结论:  比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程. tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程   1." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><meta property="og:image" content="https://codesniper.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-22T19:22:20&#43;08:00" />
 <meta property="article:modified_time" content="2022-01-22T19:22:20&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesniper.github.io/logo.png"/>
 
 <meta name="twitter:title" content="并发编程"/>
 <meta name="twitter:description" content="1. 进程与线程 1.1 进程与线程 1.1.1 进程   程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的. 当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程. 进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.   1.1.2 线程   一个进程之内可以分一到多个线程. 一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行 Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.   1.1.3 二者对比  进程基本上相互独立,线程在进程内,是进程的一个子集. 进程拥有共享的资源,如内存空间等,供内部的线程共享. 进程间通信较为复杂  同一台计算机的进程通信成为IPC 不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.   线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量 线程更轻量,线程上下文切换成本一般要比进程上下文切换低.  1.2 并行与并发   单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的. 一般会将这种线程轮流使用cpu的做法成为并发. 多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.     并发: 同一时间应对多件事情的能力. 并行: 同一时间动手做多件事情的能力.   1.3 应用 1.3.1 异步调用案例  从方法调用角度来说:
@@ -26,7 +26,7 @@
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><link rel="prev" href="https://codesn1per.github.io/sort/" /><link rel="next" href="https://codesn1per.github.io/springcloud/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><link rel="prev" href="https://codesniper.github.io/sort/" /><link rel="next" href="https://codesniper.github.io/springcloud/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -34,9 +34,9 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/codesn1per.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/"
-        },"genre": "posts","keywords": "多线程, 并发","wordcount":  960 ,
-        "url": "https:\/\/codesn1per.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/","datePublished": "2022-01-22T19:22:20+08:00","dateModified": "2022-01-22T19:22:20+08:00","publisher": {
+            "@id": "https:\/\/codesniper.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/"
+        },"genre": "posts","keywords": "多线程, 并发","wordcount":  1293 ,
+        "url": "https:\/\/codesniper.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/","datePublished": "2022-01-22T19:22:20+08:00","dateModified": "2022-01-22T19:22:20+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -112,8 +112,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">并发编程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="far fa-folder fa-fw"></i>并发编程</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-22">2022-01-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;960 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-22">2022-01-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1293 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -145,6 +145,16 @@
         <li><a href="#213-主线程与守护线程">2.13 主线程与守护线程</a></li>
         <li><a href="#214-五种状态">2.14 五种状态</a></li>
         <li><a href="#215-六种状态">2.15 六种状态</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-共享模型之管程">3. 共享模型之管程</a>
+      <ul>
+        <li><a href="#31-共享带来的问题">3.1 共享带来的问题</a></li>
+        <li><a href="#32-synchronized-解决方案">3.2 Synchronized 解决方案</a></li>
+        <li><a href="#33-方法上的synchronized">3.3 方法上的synchronized</a></li>
+        <li><a href="#34-变量的线程安全分析">3.4 变量的线程安全分析</a></li>
+        <li><a href="#35-monitor概念">3.5 Monitor概念</a></li>
+        <li><a href="#36-synchronized原理进阶">3.6 synchronized原理进阶</a></li>
       </ul>
     </li>
   </ul>
@@ -854,6 +864,239 @@ e --&gt; w
 <li>BLOCKED,WAITING,TIMED_WAITING都Java API层面对阻塞状态的细分</li>
 <li>TERMINATED: 当线程代码运行结束</li>
 </ul>
+<h2 id="3-共享模型之管程">3. 共享模型之管程</h2>
+<h3 id="31-共享带来的问题">3.1 共享带来的问题</h3>
+<h5 id="java的体现">Java的体现:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimultaneousOperation</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">count</span><span class="o">++;</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="s">&#34;t1&#34;</span><span class="o">);</span>
+
+        <span class="n">Thread</span> <span class="n">t2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">count</span><span class="o">--;</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="s">&#34;t2&#34;</span><span class="o">);</span>
+
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">t2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="n">t2</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h5 id="临界区-critical-section">临界区 Critical Section</h5>
+<blockquote>
+<ul>
+<li>一个程序运行多个线程本身是没有问题的</li>
+<li>问题出在多个线程访问共享资源
+<ul>
+<li>多个线程读共享资源其实也没问题</li>
+<li>在多个线程对共享资源读写操作时发生指令交错,就会出现问题</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h5 id="竞态条件-race-condition">竞态条件 Race Condition</h5>
+<blockquote>
+<p>多个线程在临界区内执行,由于代码的执行序列不同而导致结果无法预测,称之为发生了竞态条件</p>
+</blockquote>
+<h3 id="32-synchronized-解决方案">3.2 Synchronized 解决方案</h3>
+<p>为了避免临界区的竞态条件发生,有多种手段可以达到目的.</p>
+<ul>
+<li>阻塞式的解决方案: synchronized,Lock</li>
+<li>非阻塞式的解决方案: 原子变量</li>
+</ul>
+<blockquote>
+<p>使用synchronized来解决上述问题,即俗称的&quot;对象锁&quot;,他采用互斥的方式让同一时刻至多只能有一个线程能持有&quot;对象锁&quot;,其他线程再想获取这个&quot;对象锁&quot;时就会阻塞住.这样就能保证拥有锁的线程可以安全的执行临界区的代码,不用担心线程上下文的切换</p>
+</blockquote>
+<h5 id="synchronized">synchronized</h5>
+<p>语法:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">synchronized</span><span class="o">(</span><span class="n">对象</span><span class="o">)</span>
+<span class="o">{</span>
+		<span class="n">临界区</span>
+<span class="o">}</span>
+</code></pre></div><p>解决:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimultaneousOperation</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="kd">final</span> <span class="n">Object</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="kd">synchronized</span> <span class="o">(</span><span class="n">lock</span><span class="o">){</span>
+                    <span class="n">count</span><span class="o">++;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="s">&#34;t1&#34;</span><span class="o">);</span>
+
+        <span class="n">Thread</span> <span class="n">t2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()-&gt;{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="kd">synchronized</span> <span class="o">(</span><span class="n">lock</span><span class="o">){</span>
+                    <span class="n">count</span><span class="o">--;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="s">&#34;t2&#34;</span><span class="o">);</span>
+
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">t2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="n">t2</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><blockquote>
+<p>synchronized实际是用对象锁保证了临界区内代码的原子性,临界区的代码对外是不可分割的,不会被线程切换所打断</p>
+</blockquote>
+<h5 id="面向对象改进">面向对象改进</h5>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimultaneousOperation</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Room</span> <span class="n">room</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Room</span><span class="o">();</span>
+        <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">room</span><span class="o">.</span><span class="na">increase</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">},</span> <span class="s">&#34;t1&#34;</span><span class="o">);</span>
+
+        <span class="n">Thread</span> <span class="n">t2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">room</span><span class="o">.</span><span class="na">reduce</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">},</span> <span class="s">&#34;t2&#34;</span><span class="o">);</span>
+
+        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">t2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="n">t2</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">room</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+    <span class="c1">//面向对象改进
+</span><span class="c1"></span>    <span class="kd">class</span> <span class="nc">Room</span><span class="o">{</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+
+        <span class="cm">/**
+</span><span class="cm">         * 加操作
+</span><span class="cm">         * @return void
+</span><span class="cm">         */</span>
+        <span class="kt">void</span> <span class="nf">increase</span><span class="o">(){</span>
+            <span class="kd">synchronized</span> <span class="o">(</span><span class="k">this</span><span class="o">){</span>
+                <span class="n">count</span><span class="o">++;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="cm">/**
+</span><span class="cm">         * 减操作
+</span><span class="cm">         * @return void
+</span><span class="cm">         */</span>
+        <span class="kt">void</span> <span class="nf">reduce</span><span class="o">(){</span>
+            <span class="kd">synchronized</span> <span class="o">(</span><span class="k">this</span><span class="o">){</span>
+                <span class="n">count</span><span class="o">--;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="cm">/**
+</span><span class="cm">         * 获取值
+</span><span class="cm">         * @return int
+</span><span class="cm">         */</span>
+        <span class="kt">int</span> <span class="nf">getValue</span><span class="o">(){</span>
+            <span class="kd">synchronized</span> <span class="o">(</span><span class="k">this</span><span class="o">){</span>
+                <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div><h3 id="33-方法上的synchronized">3.3 方法上的synchronized</h3>
+<blockquote>
+<p>成员方法上的synchronized等于锁这个对象</p>
+</blockquote>
+<blockquote>
+<p>静态方法上的synchronized等于锁这个类对象</p>
+</blockquote>
+<h3 id="34-变量的线程安全分析">3.4 变量的线程安全分析</h3>
+<h5 id="成员变量和静态变量是否线程安全">成员变量和静态变量是否线程安全?</h5>
+<blockquote>
+<ul>
+<li>如果他们没有共享,则线程安全</li>
+<li>如果他们被共享了,根据他们的状态是否能够改变,又分两种情况
+<ul>
+<li>如果只有读操作,则线程安全</li>
+<li>如果有读写操作,则这段代码是临界区,需要考虑线程安全</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h5 id="局部变量是否线程安全">局部变量是否线程安全?</h5>
+<blockquote>
+<ul>
+<li>局部变量是线程安全的</li>
+<li>但局部变量引用的对象则未必
+<ul>
+<li>如果该对象没有逃离方法的作用访问,他是线程安全的</li>
+<li>如果该对象逃离方法的作用范围,需要考虑线程安全</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h5 id="常见线程安全类">常见线程安全类</h5>
+<ul>
+<li>String</li>
+<li>Integer</li>
+<li>StringBuffer</li>
+<li>Random</li>
+<li>Vector</li>
+<li>Hashtable</li>
+<li>java.util.concurrent包下的类</li>
+</ul>
+<blockquote>
+<p>这里说他们是线程安全是指,多个线程调用他们同一个实例的某个方法时,是线程安全的.</p>
+<ul>
+<li>他们的每个方法时原子的</li>
+<li>但注意他们多个方法的组合不是原子的</li>
+</ul>
+</blockquote>
+<h5 id="不可变类线程安全性">不可变类线程安全性</h5>
+<blockquote>
+<p>String,Integer等都是不可变类,因为其内部的状态不可以改变,因此他们的方法都是线程安全的</p>
+</blockquote>
+<h3 id="35-monitor概念">3.5 Monitor概念</h3>
+<h5 id="monitor锁">Monitor(锁)</h5>
+<blockquote>
+<p>Monitor被翻译成监视器或管程</p>
+</blockquote>
+<blockquote>
+<p>每个Java对象都可以关联一个Monitor对象,如果使用synchronized给对象上锁之后,.该对象头的Mark Word中就被设置指向Monitor对象的指针</p>
+</blockquote>
+<p>Monitor结构如下:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220225033040590.png"
+        data-srcset="/image-20220225033040590.png, /image-20220225033040590.png 1.5x, /image-20220225033040590.png 2x"
+        data-sizes="auto"
+        alt="/image-20220225033040590.png"
+        title="image-20220225033040590" /></p>
+<blockquote>
+<ul>
+<li>刚开始Monitor中Owner为null</li>
+<li>当Thread-2执行synchronized(obj)就会将Monitor中的所有者Owner置为Thread-2,Monitor中只能有一个Owner</li>
+<li>在Thread-2上锁的过程中,如果Thread-3,Thread-4,Thread-5也来执行synchronized(obj),就会进入EntryList BLOCKED</li>
+<li>Thread-2执行完同步代码块中的内容,然后唤醒EntryList中等待的线程来竞争锁,竞争时是非公平的</li>
+<li>WaitSet中的Thread-0,Thread-1是之前获得过锁,但条件不满足进入WAITING状态的线程</li>
+</ul>
+</blockquote>
+<p>注意:</p>
+<blockquote>
+<ul>
+<li>synchronized必须是进入同一个对象的monitor才有的效果</li>
+<li>不加synchronized的对象不会关联监视器,不遵从以上规则</li>
+</ul>
+</blockquote>
+<h3 id="36-synchronized原理进阶">3.6 synchronized原理进阶</h3>
+<h5 id="轻量级锁">轻量级锁</h5>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -867,7 +1110,7 @@ e --&gt; w
                             <a class="link-to-markdown" href="/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-via="xxxx" data-hashtags="多线程,并发"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-hashtag="多线程"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-via="xxxx" data-hashtags="多线程,并发"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-hashtag="多线程"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>

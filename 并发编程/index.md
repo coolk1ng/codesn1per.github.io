@@ -632,3 +632,230 @@ public class DaemonThread {
 * BLOCKED,WAITING,TIMED_WAITING都Java API层面对阻塞状态的细分
 * TERMINATED: 当线程代码运行结束
 
+## 3. 共享模型之管程
+
+### 3.1 共享带来的问题
+
+##### Java的体现:
+
+```java
+public class SimultaneousOperation {
+    static int count = 0;
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(()->{
+            for (int i = 0; i < 5000; i++) {
+                count++;
+            }
+        },"t1");
+
+        Thread t2 = new Thread(()->{
+            for (int i = 0; i < 5000; i++) {
+                count--;
+            }
+        },"t2");
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+        System.out.println(count);
+    }
+}
+```
+
+##### 临界区 Critical Section
+
+> * 一个程序运行多个线程本身是没有问题的
+> * 问题出在多个线程访问共享资源
+>   * 多个线程读共享资源其实也没问题
+>   * 在多个线程对共享资源读写操作时发生指令交错,就会出现问题
+
+##### 竞态条件 Race Condition
+
+> 多个线程在临界区内执行,由于代码的执行序列不同而导致结果无法预测,称之为发生了竞态条件
+
+### 3.2 Synchronized 解决方案
+
+为了避免临界区的竞态条件发生,有多种手段可以达到目的.
+
+* 阻塞式的解决方案: synchronized,Lock
+* 非阻塞式的解决方案: 原子变量
+
+> 使用synchronized来解决上述问题,即俗称的"对象锁",他采用互斥的方式让同一时刻至多只能有一个线程能持有"对象锁",其他线程再想获取这个"对象锁"时就会阻塞住.这样就能保证拥有锁的线程可以安全的执行临界区的代码,不用担心线程上下文的切换
+
+##### synchronized
+
+语法:
+
+```java
+synchronized(对象)
+{
+		临界区
+}
+```
+
+解决:
+
+```java
+public class SimultaneousOperation {
+    static int count = 0;
+    static final Object lock = new Object();
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(()->{
+            for (int i = 0; i < 5000; i++) {
+                synchronized (lock){
+                    count++;
+                }
+            }
+        },"t1");
+
+        Thread t2 = new Thread(()->{
+            for (int i = 0; i < 5000; i++) {
+                synchronized (lock){
+                    count--;
+                }
+            }
+        },"t2");
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+        System.out.println(count);
+    }
+}
+```
+
+> synchronized实际是用对象锁保证了临界区内代码的原子性,临界区的代码对外是不可分割的,不会被线程切换所打断
+
+##### 面向对象改进
+
+```java
+public class SimultaneousOperation {
+    public static void main(String[] args) throws InterruptedException {
+        Room room = new Room();
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 5000; i++) {
+                room.increase();
+            }
+        }, "t1");
+
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 5000; i++) {
+                room.reduce();
+            }
+        }, "t2");
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+        System.out.println(room.getValue());
+    }
+}
+
+    //面向对象改进
+    class Room{
+        private int count = 0;
+
+        /**
+         * 加操作
+         * @return void
+         */
+        void increase(){
+            synchronized (this){
+                count++;
+            }
+        }
+
+        /**
+         * 减操作
+         * @return void
+         */
+        void reduce(){
+            synchronized (this){
+                count--;
+            }
+        }
+
+        /**
+         * 获取值
+         * @return int
+         */
+        int getValue(){
+            synchronized (this){
+                return count;
+            }
+        }
+    }
+```
+
+### 3.3 方法上的synchronized
+
+> 成员方法上的synchronized等于锁这个对象
+
+> 静态方法上的synchronized等于锁这个类对象
+
+### 3.4 变量的线程安全分析
+
+##### 成员变量和静态变量是否线程安全?
+
+> * 如果他们没有共享,则线程安全
+> * 如果他们被共享了,根据他们的状态是否能够改变,又分两种情况
+>   * 如果只有读操作,则线程安全
+>   * 如果有读写操作,则这段代码是临界区,需要考虑线程安全
+
+##### 局部变量是否线程安全?
+
+> * 局部变量是线程安全的
+> * 但局部变量引用的对象则未必
+>   * 如果该对象没有逃离方法的作用访问,他是线程安全的
+>   * 如果该对象逃离方法的作用范围,需要考虑线程安全
+
+##### 常见线程安全类
+
+* String
+* Integer
+* StringBuffer
+* Random
+* Vector
+* Hashtable
+* java.util.concurrent包下的类
+
+> 这里说他们是线程安全是指,多个线程调用他们同一个实例的某个方法时,是线程安全的.
+>
+> * 他们的每个方法时原子的
+> * 但注意他们多个方法的组合不是原子的
+
+##### 不可变类线程安全性
+
+> String,Integer等都是不可变类,因为其内部的状态不可以改变,因此他们的方法都是线程安全的
+
+### 3.5 Monitor概念
+
+##### Monitor(锁)
+
+> Monitor被翻译成监视器或管程
+
+> 每个Java对象都可以关联一个Monitor对象,如果使用synchronized给对象上锁之后,.该对象头的Mark Word中就被设置指向Monitor对象的指针
+
+Monitor结构如下:
+
+![image-20220225033040590](/image-20220225033040590.png)
+
+> * 刚开始Monitor中Owner为null
+> * 当Thread-2执行synchronized(obj)就会将Monitor中的所有者Owner置为Thread-2,Monitor中只能有一个Owner
+> * 在Thread-2上锁的过程中,如果Thread-3,Thread-4,Thread-5也来执行synchronized(obj),就会进入EntryList BLOCKED
+> * Thread-2执行完同步代码块中的内容,然后唤醒EntryList中等待的线程来竞争锁,竞争时是非公平的
+> * WaitSet中的Thread-0,Thread-1是之前获得过锁,但条件不满足进入WAITING状态的线程
+
+注意:
+
+> * synchronized必须是进入同一个对象的monitor才有的效果
+> * 不加synchronized的对象不会关联监视器,不遵从以上规则
+
+### 3.6 synchronized原理进阶
+
+##### 轻量级锁
+
+
