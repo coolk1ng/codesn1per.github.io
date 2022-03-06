@@ -11,12 +11,12 @@
 设计: 多线程可以让方法执行变为异步的,比如说读取磁盘文件时,假设读取操作话费了5s,如果没有线程调度机制,这5s调用者什么都做不了,其代码都得暂停.
 结论:  比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程. tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程   1." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><meta property="og:image" content="https://codesniper.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-22T19:22:20&#43;08:00" />
 <meta property="article:modified_time" content="2022-01-22T19:22:20&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://codesniper.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="并发编程"/>
 <meta name="twitter:description" content="1. 进程与线程 1.1 进程与线程 1.1.1 进程   程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的. 当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程. 进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.   1.1.2 线程   一个进程之内可以分一到多个线程. 一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行 Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.   1.1.3 二者对比  进程基本上相互独立,线程在进程内,是进程的一个子集. 进程拥有共享的资源,如内存空间等,供内部的线程共享. 进程间通信较为复杂  同一台计算机的进程通信成为IPC 不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.   线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量 线程更轻量,线程上下文切换成本一般要比进程上下文切换低.  1.2 并行与并发   单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的. 一般会将这种线程轮流使用cpu的做法成为并发. 多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.     并发: 同一时间应对多件事情的能力. 并行: 同一时间动手做多件事情的能力.   1.3 应用 1.3.1 异步调用案例  从方法调用角度来说:
@@ -26,7 +26,7 @@
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><link rel="prev" href="https://codesniper.github.io/sort/" /><link rel="next" href="https://codesniper.github.io/springcloud/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><link rel="prev" href="https://codesn1per.github.io/sort/" /><link rel="next" href="https://codesn1per.github.io/springcloud/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -34,9 +34,9 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/codesniper.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/"
-        },"genre": "posts","keywords": "多线程, 并发","wordcount":  1293 ,
-        "url": "https:\/\/codesniper.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/","datePublished": "2022-01-22T19:22:20+08:00","dateModified": "2022-01-22T19:22:20+08:00","publisher": {
+            "@id": "https:\/\/codesn1per.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/"
+        },"genre": "posts","keywords": "多线程, 并发","wordcount":  1345 ,
+        "url": "https:\/\/codesn1per.github.io\/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B\/","datePublished": "2022-01-22T19:22:20+08:00","dateModified": "2022-01-22T19:22:20+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -112,7 +112,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">并发编程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="far fa-folder fa-fw"></i>并发编程</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-22">2022-01-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1293 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-22">2022-01-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1345 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -692,16 +692,15 @@
 <li>目的仅仅是停止一个线程,但这种做法会让整个程序都停</li>
 </ul>
 </blockquote>
-<pre><code class="language-mermaid" data-lang="mermaid">graph TD
-w(&quot;while(true)&quot;) --&gt; a
-a(&quot;有没有被打断?&quot;) -- 是 --&gt; b(料理后事)
-b--&gt; c((结束循环))
-a -- 否 --&gt; d(睡眠2s)
-d -- 无异常 --&gt; e(执行监控记录)
-d -- 有异常 --&gt; i(设置打断标记)
-i --&gt; w
-e --&gt; w
-</code></pre><h5 id="实现">实现:</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220307003116112.png"
+        data-srcset="/image-20220307003116112.png, /image-20220307003116112.png 1.5x, /image-20220307003116112.png 2x"
+        data-sizes="auto"
+        alt="/image-20220307003116112.png"
+        title="image-20220307003116112" /></p>
+<h5 id="实现">实现:</h5>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TwoPhaseTerminationTest</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
         <span class="n">TwoPhaseTermination</span> <span class="n">twoPhaseTermination</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TwoPhaseTermination</span><span class="o">();</span>
@@ -1097,6 +1096,200 @@ e --&gt; w
 </blockquote>
 <h3 id="36-synchronized原理进阶">3.6 synchronized原理进阶</h3>
 <h5 id="轻量级锁">轻量级锁</h5>
+<ul>
+<li>创建锁记录(Lock Record)对象,每个线程的栈帧都会包含一个锁记录的结构,内部可以存储锁定对象的Mark Word</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220306230634827.png"
+        data-srcset="/image-20220306230634827.png, /image-20220306230634827.png 1.5x, /image-20220306230634827.png 2x"
+        data-sizes="auto"
+        alt="/image-20220306230634827.png"
+        title="image-20220306230634827" /></p>
+<ul>
+<li>让锁记录中的Object reference指向锁对象,并尝试用cas替换Object的Mark Word,将Mark Word的值存入锁记录</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220306231404682.png"
+        data-srcset="/image-20220306231404682.png, /image-20220306231404682.png 1.5x, /image-20220306231404682.png 2x"
+        data-sizes="auto"
+        alt="/image-20220306231404682.png"
+        title="image-20220306231404682" /></p>
+<ul>
+<li>如果cas替换成功,对象头中存储了锁记录地址和状态00,表示由该线程给对象加锁</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220306231532588.png"
+        data-srcset="/image-20220306231532588.png, /image-20220306231532588.png 1.5x, /image-20220306231532588.png 2x"
+        data-sizes="auto"
+        alt="/image-20220306231532588.png"
+        title="image-20220306231532588" /></p>
+<ul>
+<li>如果cas替换失败,有两种情况
+<ul>
+<li>如果是其他线程已经持有该Object的轻量级锁,这时表明有竞争,进入锁膨胀过程</li>
+<li>如果是自己执行了synchronized锁重入,那么在添加一条Lock Record作为重入的计数</li>
+</ul>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220306231942707.png"
+        data-srcset="/image-20220306231942707.png, /image-20220306231942707.png 1.5x, /image-20220306231942707.png 2x"
+        data-sizes="auto"
+        alt="/image-20220306231942707.png"
+        title="image-20220306231942707" /></p>
+<ul>
+<li>当退出synchronized代码块时(解锁时),如果有取值为null的锁记录,表示有重入,这时重置锁记录,表示重入计数减一</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220306232356852.png"
+        data-srcset="/image-20220306232356852.png, /image-20220306232356852.png 1.5x, /image-20220306232356852.png 2x"
+        data-sizes="auto"
+        alt="/image-20220306232356852.png"
+        title="image-20220306232356852" /></p>
+<ul>
+<li>当退出synchronized代码块(解锁时)锁记录的值不为null,这时使用cas将Mark Word的值恢复给对象头
+<ul>
+<li>成功,则解锁成功</li>
+<li>失败,说明轻量级锁进入了锁膨胀或已经升级为重量级锁,进入重量级锁解锁流程</li>
+</ul>
+</li>
+</ul>
+<h5 id="锁膨胀">锁膨胀</h5>
+<p>如果在尝试加轻量级锁的过程中,CAS操作无法成功时,这时一种情况就是有其他线程为此对象加上了轻量级锁(有竞争),这时需要进行锁膨胀,将轻量级锁变为重量级锁</p>
+<ul>
+<li>当Thread-1进行轻量级加锁时,Thread-0已经对该对象加了轻量级锁</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220306233223005.png"
+        data-srcset="/image-20220306233223005.png, /image-20220306233223005.png 1.5x, /image-20220306233223005.png 2x"
+        data-sizes="auto"
+        alt="/image-20220306233223005.png"
+        title="image-20220306233223005" /></p>
+<ul>
+<li>这时Thread-1加轻量级锁失败,进入锁膨胀流程
+<ul>
+<li>即为Object对象申请Monitor锁,让Object指向重量级锁地址</li>
+<li>然后进入Monitor的EntryList BLCOKED</li>
+</ul>
+</li>
+<li>当Thread-0退出同步块解锁时,使用cas将Mark Word的值恢复给对象头,失败.这时进入重量级解锁流程,按照Monitor地址找到Monitor对象,设置Owner为null,唤醒EntryList中的BLOCKED线程</li>
+</ul>
+<h5 id="自旋优化">自旋优化</h5>
+<p>重量级锁竞争的时候,还可以使用自旋来进行优化,如果当前线程自旋成功(即这时候持有锁线程已经退出了同步块,释放了锁),这时当前线程就可以避免阻塞</p>
+<table>
+<thead>
+<tr>
+<th>线程1(cpu1上)</th>
+<th>对象Mark Word</th>
+<th>线程2(cpu2上)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>10(重量级锁)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>访问同步块,获取monitor</td>
+<td>10(重量级锁)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>成功(加锁)</td>
+<td>10(重量级锁)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>执行同步块</td>
+<td>10(重量级锁)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>执行同步块</td>
+<td>10(重量级锁)</td>
+<td>访问同步块,获取monitor</td>
+</tr>
+<tr>
+<td>执行同步块</td>
+<td>10(重量级锁)</td>
+<td>自旋重试</td>
+</tr>
+<tr>
+<td>执行完毕</td>
+<td>10(重量级锁)</td>
+<td>自旋重试</td>
+</tr>
+<tr>
+<td>成功(解锁)</td>
+<td>01(无锁)</td>
+<td>自旋重试</td>
+</tr>
+<tr>
+<td>-</td>
+<td>10(重量级锁)</td>
+<td>成功(加锁)</td>
+</tr>
+<tr>
+<td>-</td>
+<td>10(重量级锁)</td>
+<td>执行同步块</td>
+</tr>
+</tbody>
+</table>
+<p>自旋失败,会阻塞</p>
+<blockquote>
+<ul>
+<li>在Java6以后自旋锁是自适应的,比如对象刚刚的一次自旋操作成功过,那么认为这次自旋成功的可能性会高,就多自旋几次</li>
+<li>自旋会占用cpu时间,单核cpu自旋就是浪费,多核cpu自旋才能发挥优势</li>
+<li>Java7之后不能控制是否开启自旋功能</li>
+</ul>
+</blockquote>
+<h5 id="偏向锁">偏向锁</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220307005512672.png"
+        data-srcset="/image-20220307005512672.png, /image-20220307005512672.png 1.5x, /image-20220307005512672.png 2x"
+        data-sizes="auto"
+        alt="/image-20220307005512672.png"
+        title="image-20220307005512672" /></p>
+<p>轻量级锁在没有竞争时(就自己这个线程),每次重入仍然需要执行CAS操作.</p>
+<p>Java6中引入了偏向锁来做进一步优化,只有第一次使用CAS操作将线程ID设置到对象的Mark Word中,之后发现这个线程ID是自己的表示没有竞争,不用重新CAS.以后只要不发生竞争,这个对象就归该线程所有</p>
+<blockquote>
+<p><strong>1. 偏向状态</strong></p>
+<p>一个对象创建时:</p>
+<ul>
+<li>如果开启了偏向锁(默认开启),name对象创建以后,markWord值为0x05即最后3位位101,这时他的thread,epoch,age都为0</li>
+<li>偏向锁默认是延迟的,不会在程序启动时立即生效,如果想避免延迟,可以加VM参数:-xx:BiasedLockingStartupDelay=0来禁用延迟</li>
+<li>如果没有开启偏向锁,那么对象创建后,MarkWord值为0x01即最后3位位001,这时他的hashcode,age都为0,第一次用到hashcode时才会赋值</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>2. 撤销-调用对象hashCode</strong></p>
+<p>调用了对象的hashCode,但偏向锁的对象MarkWord中存储的是线程id,如果调用hashCode会导致偏向锁被撤销</p>
+<ul>
+<li>轻量级锁会在锁记录中记录hashCode</li>
+<li>重量级锁会在Monitor中记录hashCode</li>
+</ul>
+<p>在调用hashCode后使用偏向锁,记得去掉-xx:-UseBiasedLocking</p>
+</blockquote>
+<blockquote>
+<p><strong>3. 撤销-其他线程使用对象</strong></p>
+<p>当其他线程使用偏向锁对象时,会将偏向锁升级为轻量级锁</p>
+</blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -1110,7 +1303,7 @@ e --&gt; w
                             <a class="link-to-markdown" href="/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-via="xxxx" data-hashtags="多线程,并发"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-hashtag="多线程"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-via="xxxx" data-hashtags="多线程,并发"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-hashtag="多线程"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-title="并发编程"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>

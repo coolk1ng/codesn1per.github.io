@@ -1,53 +1,53 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>All Posts - CodeSniper&#39; Blog</title>
-        <link>https://codesniper.github.io/posts/</link>
+        <link>https://codesn1per.github.io/posts/</link>
         <description>All Posts | CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 19 Feb 2022 15:25:53 &#43;0800</lastBuildDate><atom:link href="https://codesniper.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 19 Feb 2022 15:25:53 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>MySQL高级</title>
-    <link>https://codesniper.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
+    <link>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
     <pubDate>Sat, 19 Feb 2022 15:25:53 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesniper.github.io/mysql%E9%AB%98%E7%BA%A7/</guid>
+    <guid>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</guid>
     <description><![CDATA[1. 存储引擎 1.1. 对比MyISAM和InnoDB    对比项 MyISAM InnoDB     主外键 不支持 支持   事务 不支持 支持   行表锁 表锁,即使操作一条记录也会锁住整个表,不适合高并发的操作 行锁,操作时只锁一行,不对其他行有影响,适合高并发的操作   缓存 只缓存索引,不缓存真实数据 不仅缓存索引还要缓存真实数据,对内存要求较高,而且内存大小对性能有决定性的影响   表空间 小 大   关注点 性能 事务   默认安装 Y Y    1.2. 阿里巴巴,淘宝用哪个?    产品 价格 目标 主要功能 是否可投入生产     PerCona Server 免费 提供XtraDB存储引擎的包装器和其他分析工具 XtraDB 是   MariaDB 免费 拓展MySQL以包含XtraDB和其他性能改进 XtraDB 是   Drizzle 免费 提供比MySQL更强大的可拓展性和性能改进 高可用性 是     Percona为MySQL数据库服务器进行了改进,在功能和性能上较MySQL有着很显著的提升.]]></description>
 </item><item>
     <title>SpringCloud</title>
-    <link>https://codesniper.github.io/springcloud/</link>
+    <link>https://codesn1per.github.io/springcloud/</link>
     <pubDate>Fri, 18 Feb 2022 20:13:04 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesniper.github.io/springcloud/</guid>
+    <guid>https://codesn1per.github.io/springcloud/</guid>
     <description><![CDATA[SpringCloud 1. Eureka 1. 提供者与消费者  服务提供者: 一次业务中,被其他服务调用的服务(提供接口给其他服务) 服务消费者: 一次业务中,调用其他服务的服务(调用其他服务提供的接口) 提供者与消费者角色是相对 一个服务可以同时是服务提供者和服务消费者  2. Eureka注册中心  注册服务信息 拉取服务 负载均衡 远程调用 心跳续约 30s/次  1. Eureka的作用  消费者该如何获取服务提供者的具体信息?  服务提供者启动时向eureka注册自己的信息 eureka保存这些信息 消费者根据服务名称想eureka拉取提供者信息   如果有多个服务提供者,消费者该如何选择?  服务消费者利用负载均衡算法,从服务列表中挑选一个   消费者如何感知服务提供者健康状态?  服务提供者会每隔30s向eurekaServer发送心跳请求,报告健康状态 eureka会更新记录服务列表信息,心跳不正常会被剔除 消费者就可以拉取最新的信息    2. 服务注册  引入eureka-client依赖 在application.yml中配置eureka地址  2. Ribbon 1. Ribbon负载均衡规则  规则接口是IRule 默认实现是ZoneAvoidanceRule,根据zone选择服务列表,然后轮询  2. 负载均衡自定义方式  代码方式: 配置灵活,但修改时需要重新打包发布 配置方式: 直观,方便,无需重新打包发布,但是无法做全局配置  3. 饥饿加载  开启饥饿加载 eager-load 指定饥饿加载的服务名称  3.]]></description>
 </item><item>
     <title>并发编程</title>
-    <link>https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+    <link>https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
     <pubDate>Sat, 22 Jan 2022 19:22:20 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesniper.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+    <guid>https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
     <description><![CDATA[1. 进程与线程 1.1 进程与线程 1.1.1 进程   程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的. 当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程. 进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.   1.1.2 线程   一个进程之内可以分一到多个线程. 一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行 Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.   1.1.3 二者对比  进程基本上相互独立,线程在进程内,是进程的一个子集. 进程拥有共享的资源,如内存空间等,供内部的线程共享. 进程间通信较为复杂  同一台计算机的进程通信成为IPC 不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.   线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量 线程更轻量,线程上下文切换成本一般要比进程上下文切换低.  1.2 并行与并发   单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的. 一般会将这种线程轮流使用cpu的做法成为并发. 多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.     并发: 同一时间应对多件事情的能力. 并行: 同一时间动手做多件事情的能力.   1.3 应用 1.3.1 异步调用案例  从方法调用角度来说:
  需要等地啊结果返回,才能继续运行就是同步 不需要等待结果返回,就能继续运行就是异步  注意: 同步在多线程中海油另外一层的意思,是让多个线程步调一致
 设计: 多线程可以让方法执行变为异步的,比如说读取磁盘文件时,假设读取操作话费了5s,如果没有线程调度机制,这5s调用者什么都做不了,其代码都得暂停.
 结论:  比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程. tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程   1.]]></description>
 </item><item>
     <title>Sort</title>
-    <link>https://codesniper.github.io/sort/</link>
+    <link>https://codesn1per.github.io/sort/</link>
     <pubDate>Thu, 18 Feb 2021 22:36:00 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesniper.github.io/sort/</guid>
+    <guid>https://codesn1per.github.io/sort/</guid>
     <description><![CDATA[1. comparable接口 代码测试: package Sort.comparable; public class student implements Comparable&lt;student&gt;{ private String username; private int age; public student() { } public student(String username, int age) { this.username = username; this.age = age; } public String getUsername() { return username; } public void setUsername(String username) { this.username = username; } public int getAge() { return age; } public void setAge(int age) { this.age = age; } @Override public String toString() { return &#34;student{&#34; + &#34;username=&#39;&#34; + username + &#39;\&#39;&#39; + &#34;, age=&#34; + age + &#39;}&#39;; } @Override public int compareTo(student o) { return this.]]></description>
 </item><item>
     <title>Tree</title>
-    <link>https://codesniper.github.io/tree/</link>
+    <link>https://codesn1per.github.io/tree/</link>
     <pubDate>Sun, 17 Jan 2021 22:43:20 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesniper.github.io/tree/</guid>
+    <guid>https://codesn1per.github.io/tree/</guid>
     <description><![CDATA[1. 二叉查找树 二叉树结点类API的设计:    类名 Node&lt;Key,Value&gt;     构造方法 Node(Key key,Value value,Node left,Node right):创建Node对象   成员变量 1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值    代码实现: public class Node&lt;Key,Value&gt; { //存储键  public Key key; //存储值  public Value value; //存储左子结点  public Node left; //存储右子结点  public Node right; public Node(Key key, Value value, Node left, Node right) { this.]]></description>
 </item><item>
     <title>Mybatis</title>
-    <link>https://codesniper.github.io/mybatis/</link>
+    <link>https://codesn1per.github.io/mybatis/</link>
     <pubDate>Tue, 18 Feb 2020 22:05:34 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesniper.github.io/mybatis/</guid>
+    <guid>https://codesn1per.github.io/mybatis/</guid>
     <description><![CDATA[Mybatis配置 1. 搭建实验数据库  创建一个MyBatis实验数据库,并创建一个user表  2. Idea新建项目,连接数据库  新建一个普通的maven项目 pom.xml中导入相关的maven依赖  Mysql驱动 Mybatis驱动 junit驱动    &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.21&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.5&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;  连接我们的Mysql  解决时区问题    3. 编写MyBatis核心配置文件  创建一个子模块mybatis-01 在该模块下的resource目录下,新建mybatis-config.xml文件,这是MyBatis的核心配置文件  &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!DOCTYPE configuration PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34; &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt; &lt;configuration&gt; &lt;environments default=&#34;development&#34;&gt; &lt;environment id=&#34;development&#34;&gt; &lt;transactionManager type=&#34;JDBC&#34;/&gt; &lt;dataSource type=&#34;POOLED&#34;&gt; &lt;property name=&#34;driver&#34; value=&#34;com.]]></description>
 </item></channel>
 </rss>
