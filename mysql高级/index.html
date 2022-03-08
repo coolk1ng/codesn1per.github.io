@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/codesn1per.github.io\/mysql%E9%AB%98%E7%BA%A7\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  172 ,
+        },"genre": "posts","keywords": "MySQL","wordcount":  187 ,
         "url": "https:\/\/codesn1per.github.io\/mysql%E9%AB%98%E7%BA%A7\/","datePublished": "2022-02-19T15:25:53+08:00","dateModified": "2022-02-19T15:25:53+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL高级</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-19">2022-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;172 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-19">2022-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;187 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -120,6 +120,7 @@
         <li><a href="#1-存储引擎">1. 存储引擎</a></li>
         <li><a href="#2-性能分析">2. 性能分析</a></li>
         <li><a href="#3-性能分析">3. 性能分析</a></li>
+        <li><a href="#4-性能分析">4. 性能分析</a></li>
       </ul>
     </li>
   </ul>
@@ -369,9 +370,20 @@
 <li>IO: 磁盘I/O瓶颈发生在装入数据远大于内存容量的时候</li>
 <li>服务器硬件性能瓶颈; top,free,iostat和vmstat来查看系统的性能状态</li>
 </ul>
-<h5 id="33-explain">3.3. Explain</h5>
+<h3 id="4-性能分析">4. 性能分析</h3>
+<h5 id="索引失效">索引失效</h5>
 <ul>
-<li>使用EXPLAIN关键字可以模拟优化器执行SQL查询语句,从而知道MySQL是如何处理你的SQL语句的,分析你的查询语句或是表结构的性能瓶颈</li>
+<li>最佳左前缀法则</li>
+</ul>
+<p>​	如果索引了多列,要遵守最左前缀法则,指的是查询从索引的最左前列开始并且不跳过索引中的列</p>
+<ul>
+<li>不要在索引列上做任何操作(计算,函数,(自动或手动)类型转换),会导致索引失效而转向全表扫描</li>
+<li>存储引擎不能使用索引中范围条件右边的列</li>
+<li>尽量使用覆盖索引(只访问索引的查询(索引列和查询列一致)),减少select *</li>
+<li>mysql在使用不等于(!=或者&lt;&gt;)的时候无法使用索引会导致全表扫描</li>
+<li>is null ,is not null也无法使用索引</li>
+<li>like以通配符开头('%abc'),mysql索引失效编程全表扫描的操作</li>
+<li>字符串不加单引号索引失效</li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
