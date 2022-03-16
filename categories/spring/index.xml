@@ -4,7 +4,25 @@
         <link>https://codesn1per.github.io/categories/spring/</link>
         <description>Spring - Category - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 16 Mar 2022 12:57:14 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/spring/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/spring/" rel="self" type="application/rss+xml" /><item>
+    <title>Aop</title>
+    <link>https://codesn1per.github.io/aop/</link>
+    <pubDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/aop/</guid>
+    <description><![CDATA[AOP是什么   AOP(Aspect Oriented Programming),意味面向切面编程,可以通过预编译方式和运行期动态代理实现在不修改源代码的情况下给程序动态同一添加功能的一种技术.
+  AOP的编程思想就是把很多类对象的横切问题点,从业务逻辑中分离出来,从而达到解耦的目的,增加代码的重用性,提高开发效率
+  AOP应用场景  日志记录 异常处理 权限验证 缓存处理 事务处理 数据持久化 效率检查 内容分发  Aspect概念  aspect:切面,切面有切点和通知组成,即包括横切逻辑的定义也包括连接点的定义 pointcut: 切点,每个类都拥有多个连接点,可以理解是连接点的集合 joinpoint: 连接点,程序执行的某个特定位置,如某个方法调用前后等 weaving: 织入,将增强添加到目标类的具体连接点的过程 advice: 通知,是织入到目标类连接点上的一段代码,就是增强到什么地方?增强什么内容? target: 目标对象,通知织入的目标类 aop Proxy: 代理对象,即增强后产生的对象  Spring AOP底层实现,是通过JDK动态代理或CGlib代理在运行时期在对象初始化阶段织入代码的
+   Before advice
+前置通知,即在目标方法调用之前执行.注意: 无论方法是否遇到异常都执行
+  After returning advice
+后置通知,在目标方法执行后执行,前提是目标方法没有遇到异常,如果有异常则不执行通知
+  After throwing advice
+异常通知,在目标方法抛出异常时执行,可以获取异常信息
+  After finally advice
+最终通知,在目标方法执行后执行,无论是否是异常执行
+  Around advice]]></description>
+</item><item>
     <title>动态代理</title>
     <link>https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</link>
     <pubDate>Wed, 16 Mar 2022 12:57:14 &#43;0800</pubDate>
