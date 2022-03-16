@@ -671,4 +671,46 @@ MQ的官方文档中给出了几个MQ的demo实例:
 >     }
 > ```
 
+### 7. ES
+
+##### 概念:
+
+| MySQL  | ES       | 说明                                                         |
+| ------ | -------- | ------------------------------------------------------------ |
+| Table  | Index    | 索引(index),就是文档的集合,类似数据库的表(table)             |
+| Row    | Document | 文档(Document),就是一条条的数据,类似数据库的行(Row),文档就是JSON格式 |
+| Column | Field    | 字段(Field),就是JSON文档中的字段,类似数据库的列(COlumn)      |
+| Schema | Mapping  | Mapping(映射)是索引中的文档的约束,例如字段类型约束.类似数据库的表结构 |
+| SQL    | DSL      | DSL是elasticsearch提供的JSON风格的请求语句,用来操作elasticsearch,实现CRUD |
+
+##### 架构:
+
+MySQL: 擅长事务类型操作,可以确保数据的安全和一致性
+
+Elasticsearch: 擅长海量数据的搜索,分析,计算
+
+
+
+docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+-e "discovery.type=single-node" \
+-e ES_JAVA_OPTS="-Xms64m -Xmx128m" \
+-v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
+-v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-d elasticsearch:7.4.2
+
+
+
+9d2f21adf463
+
+
+
+docker run -it -e ELASTICSEARCH_URL=http://127.0.0.1:9200 --name kibana --network=container:elasticsearch 9d2f21adf463
+
+
+
+```
+docker run --name elasticsearch --net hahanetwork -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -d elasticsearch:7.4.1
+```
+
 

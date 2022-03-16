@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/codesn1per.github.io\/springcloud\/"
-        },"genre": "posts","keywords": "SpringCloud","wordcount":  705 ,
+        },"genre": "posts","keywords": "SpringCloud","wordcount":  776 ,
         "url": "https:\/\/codesn1per.github.io\/springcloud\/","datePublished": "2022-02-18T20:13:04+08:00","dateModified": "2022-02-18T20:13:04+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">SpringCloud</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-18">2022-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;705 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-18">2022-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;776 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -123,6 +123,7 @@
         <li><a href="#4-feign">4. Feign</a></li>
         <li><a href="#5-gateway">5. Gateway</a></li>
         <li><a href="#6-rabbitmq">6. RabbitMQ</a></li>
+        <li><a href="#7-es">7. ES</a></li>
       </ul>
     </li>
   </ul>
@@ -795,7 +796,58 @@
         <span class="k">return</span> <span class="k">new</span> <span class="n">Jackson2JsonMessageConverter</span><span class="o">();</span>
     <span class="o">}</span>
 </code></pre></div></blockquote>
-</div><div class="post-footer" id="post-footer">
+<h3 id="7-es">7. ES</h3>
+<h5 id="概念">概念:</h5>
+<table>
+<thead>
+<tr>
+<th>MySQL</th>
+<th>ES</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table</td>
+<td>Index</td>
+<td>索引(index),就是文档的集合,类似数据库的表(table)</td>
+</tr>
+<tr>
+<td>Row</td>
+<td>Document</td>
+<td>文档(Document),就是一条条的数据,类似数据库的行(Row),文档就是JSON格式</td>
+</tr>
+<tr>
+<td>Column</td>
+<td>Field</td>
+<td>字段(Field),就是JSON文档中的字段,类似数据库的列(COlumn)</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>Mapping</td>
+<td>Mapping(映射)是索引中的文档的约束,例如字段类型约束.类似数据库的表结构</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td>DSL</td>
+<td>DSL是elasticsearch提供的JSON风格的请求语句,用来操作elasticsearch,实现CRUD</td>
+</tr>
+</tbody>
+</table>
+<h5 id="架构">架构:</h5>
+<p>MySQL: 擅长事务类型操作,可以确保数据的安全和一致性</p>
+<p>Elasticsearch: 擅长海量数据的搜索,分析,计算</p>
+<p>docker run &ndash;name elasticsearch -p 9200:9200 -p 9300:9300<br>
+-e &ldquo;discovery.type=single-node&rdquo;<br>
+-e ES_JAVA_OPTS=&quot;-Xms64m -Xmx128m&quot;<br>
+-v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml<br>
+-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data<br>
+-v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins<br>
+-d elasticsearch:7.4.2</p>
+<p>9d2f21adf463</p>
+<p>docker run -it -e ELASTICSEARCH_URL=http://127.0.0.1:9200 &ndash;name kibana &ndash;network=container:elasticsearch 9d2f21adf463</p>
+<pre><code>docker run --name elasticsearch --net hahanetwork -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:7.4.1
+</code></pre></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
