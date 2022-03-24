@@ -4,7 +4,44 @@
         <link>https://codesn1per.github.io/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
         <description>并发编程 - Category - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 22 Jan 2022 19:22:20 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Thu, 24 Mar 2022 18:05:17 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="self" type="application/rss+xml" /><item>
+    <title>线程安全之CAS操作</title>
+    <link>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</link>
+    <pubDate>Thu, 24 Mar 2022 18:05:17 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</guid>
+    <description><![CDATA[背景介绍：假设现在有一个线程共享的变量c=0，让两个线程分别对c进行c++操作100次，那么我们最后得到的结果是200吗？
+**1.在线程不安全的方式下:**结果可能小于200，比如当前线程A取得c的值为3，然后线程A阻塞了，线程B取得的c的值也是3，然后线程B也阻塞了，现在线程A被唤醒执行了++操作使得c=4，结果写回c值内存，线程A执行结束，线程B被唤醒执行了++操作使得3++=4，也写回了c值内存，现在问题来了，两个线程分别进行了一次++操作，最后c值却为4而不是5，所以c值最后的结果肯定是小于200的，产生这种情况的原因就是线程不安全！，两个线程在同一时间读取了c值，然后又没有各种先执行完++操作而被阻塞（就是没有同步）
+**2.在线程安全的方式下:**比如++操作加上synchronized同步锁，结果一定是200，因为这样使得读取c值和++操作是一个原子性操作，不能被打断，所以线程是安全的，保证了同步
+现在问题来了，我们要保证线程安全只有加synchorized同步锁这一种办法吗？synchorized同步锁又有什么缺点呢?
+当然不仅只有synchorized这一种方法，还有原子操作类，关于原子操作类我们等下再说，先说说synchorized的缺点：
+syschorized缺点：
+synchorized的缺点关键在于性能！我们知道synchorized关键字会让没有得到锁资源的线程进入Blocked状态，而在得到锁的资源恢复为Runnable状态，这个过程涉及到操作系统用户模式和内核模式的切换，代价比较高！
+现在我们来说说原子操作类，顾名思义，就是保证某个操作的原子性，那它是怎么实现的呢？这个我们就要垃圾原子操作类的底层：CAS机制了
+CAS机制的英文缩写是Compare and Swap，翻译一下就是比较和交换
+CAS机制中使用3个基本操作数：内存地址V，旧的预期值A，要修改的新值B，更新一个变量的时候，只有当变量的旧的预期值A和内存地址V中的值相同的时候，才会将内存地址V中的值更新为新值B
+下面举个栗子：
+1）内存地址V中存放着值为10的变量
+2）此时线程1要把变量值加1，对线程1来说，旧的预期值A=10，要修改的新值B=11
+3）在线程1提交更新之前，另外一个线程2提前一步将内存地址V中的变量值率先更新成了11
+4）线程1此时开始提交更新，首先进行A和内存地址V中的值比较，发现A不等于此时内存地址V中的值11，提交失败
+5）线程1尝试重新获取内存地址V的当前值，并重新计算想要修改的值，对线程1来说，此时旧的预期值A=11，要修改的新值B=12，这个重新尝试的过程叫做自旋
+6）这一次比较幸运，没有其他线程更改内存地址V中的值，线程1进行compare，发现A和内存地址V中的值相同
+7）线程1进行Swap，把内存地址V中的值替换为B，也就是12
+这个过程涉及到以下几个问题：
+问题1：如何保证获取的当前值是内存中的最新值？（如果每次获得的当前值不是内存中的最新值，那么CAS机制将毫无意义）
+用volatile关键字修饰变量，使得每次对变量的修改操作完成后一定会先写回内存，保证了每次获取到值都是内存中的最新值！
+问题2：如何保证Compare和Swap过程中的原子性（如果Compare和Swap过程不是原子性操作，那么CAS机制也毫无意义）？
+Compare和Swap过程的原子性是通过unsafe类来实现的，unsafe类为我们提供了硬件级别的原子操作！
+总结一下：从思想上来说，Synchorized属于悲观锁，悲观的认为程序中的并发多，所以严防死守，CAS机制属于乐观锁，乐观的认为程序中并发少，让线程不断的去尝试更新
+那么现在又有一个问题来了，CAS机制有什么缺点呢？
+CAS机制的缺点：
+1.CPU开销过大：在并发量比较高的情况下，如果许多线程反复尝试去更新一个变量，却又一直更新失败，循环往复，会消耗CPU很多资源
+2.ABA问题：假设在内存中有一个值为A的变量储存在内存地址V当中，此时有三个线程使用CAS机制更新这个变量的值，每个线程的执行时间都略有偏差，线程1和线程2已经获取当前值，线程3还没有获取当前值。接下来线程1先一步执行成功，把当前值成功从A更新为B，同时线程2因为某种原因被阻塞，没有做更新操作，线程3在线程1更新成功之后获取了当前值B，再之后线程2仍然阻塞，线程3继续执行，成功将当前值更新为A，最后，线程2终于恢复了运行状态，由于线程2之前获取了“当前值A”并且经过了Compare检测，内存地址中的实际值也是A，所以线程2最后把变量A更新成了B，在这个过程中，线程2获取的当前值是一个旧值，尽管和当前值一模一样，但是内存地址中V中的变量已经经历了A-&gt;B-&gt;A的改变
+表面看没有什么影响，但是如果实际中理由CAS机制从取款机上取钱，假如账户开始有100元，在取款机上取走50，取款机出现问题一共提交了两次请求（线程1，线程2），第二次请求（线程2）在执行时因为某种原因被阻塞了，这时候有人往你的账户打了50元，线程2恢复了可执行状态，这个时候就会出现问题，原本线程2应该执行失败的，但是比较后仍然与旧值一致，这样就造成了账户实际上扣款了两次！
+ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存中的值，还比较两个比较变量的版本号是否一致，只有当版本号一致才进行后续操作，这样就完美的解决了ABA问题！
+3.不能保证代码块的原子性：CAS机制保证的是一个变量的原子性操作，若要保证多个变量的原子性操作，可以封装在一起，但是这样得不偿失，开销太大，还不如直接采用synchorized同步锁]]></description>
+</item><item>
     <title>并发编程</title>
     <link>https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
     <pubDate>Sat, 22 Jan 2022 19:22:20 &#43;0800</pubDate>

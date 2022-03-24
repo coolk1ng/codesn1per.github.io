@@ -4,9 +4,46 @@
         <link>https://codesn1per.github.io/</link>
         <description>This is My New Hugo Site</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</lastBuildDate>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Thu, 24 Mar 2022 18:05:17 &#43;0800</lastBuildDate>
             <atom:link href="https://codesn1per.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>线程安全之CAS操作</title>
+    <link>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</link>
+    <pubDate>Thu, 24 Mar 2022 18:05:17 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</guid>
+    <description><![CDATA[背景介绍：假设现在有一个线程共享的变量c=0，让两个线程分别对c进行c++操作100次，那么我们最后得到的结果是200吗？
+**1.在线程不安全的方式下:**结果可能小于200，比如当前线程A取得c的值为3，然后线程A阻塞了，线程B取得的c的值也是3，然后线程B也阻塞了，现在线程A被唤醒执行了++操作使得c=4，结果写回c值内存，线程A执行结束，线程B被唤醒执行了++操作使得3++=4，也写回了c值内存，现在问题来了，两个线程分别进行了一次++操作，最后c值却为4而不是5，所以c值最后的结果肯定是小于200的，产生这种情况的原因就是线程不安全！，两个线程在同一时间读取了c值，然后又没有各种先执行完++操作而被阻塞（就是没有同步）
+**2.在线程安全的方式下:**比如++操作加上synchronized同步锁，结果一定是200，因为这样使得读取c值和++操作是一个原子性操作，不能被打断，所以线程是安全的，保证了同步
+现在问题来了，我们要保证线程安全只有加synchorized同步锁这一种办法吗？synchorized同步锁又有什么缺点呢?
+当然不仅只有synchorized这一种方法，还有原子操作类，关于原子操作类我们等下再说，先说说synchorized的缺点：
+syschorized缺点：
+synchorized的缺点关键在于性能！我们知道synchorized关键字会让没有得到锁资源的线程进入Blocked状态，而在得到锁的资源恢复为Runnable状态，这个过程涉及到操作系统用户模式和内核模式的切换，代价比较高！
+现在我们来说说原子操作类，顾名思义，就是保证某个操作的原子性，那它是怎么实现的呢？这个我们就要垃圾原子操作类的底层：CAS机制了
+CAS机制的英文缩写是Compare and Swap，翻译一下就是比较和交换
+CAS机制中使用3个基本操作数：内存地址V，旧的预期值A，要修改的新值B，更新一个变量的时候，只有当变量的旧的预期值A和内存地址V中的值相同的时候，才会将内存地址V中的值更新为新值B
+下面举个栗子：
+1）内存地址V中存放着值为10的变量
+2）此时线程1要把变量值加1，对线程1来说，旧的预期值A=10，要修改的新值B=11
+3）在线程1提交更新之前，另外一个线程2提前一步将内存地址V中的变量值率先更新成了11
+4）线程1此时开始提交更新，首先进行A和内存地址V中的值比较，发现A不等于此时内存地址V中的值11，提交失败
+5）线程1尝试重新获取内存地址V的当前值，并重新计算想要修改的值，对线程1来说，此时旧的预期值A=11，要修改的新值B=12，这个重新尝试的过程叫做自旋
+6）这一次比较幸运，没有其他线程更改内存地址V中的值，线程1进行compare，发现A和内存地址V中的值相同
+7）线程1进行Swap，把内存地址V中的值替换为B，也就是12
+这个过程涉及到以下几个问题：
+问题1：如何保证获取的当前值是内存中的最新值？（如果每次获得的当前值不是内存中的最新值，那么CAS机制将毫无意义）
+用volatile关键字修饰变量，使得每次对变量的修改操作完成后一定会先写回内存，保证了每次获取到值都是内存中的最新值！
+问题2：如何保证Compare和Swap过程中的原子性（如果Compare和Swap过程不是原子性操作，那么CAS机制也毫无意义）？
+Compare和Swap过程的原子性是通过unsafe类来实现的，unsafe类为我们提供了硬件级别的原子操作！
+总结一下：从思想上来说，Synchorized属于悲观锁，悲观的认为程序中的并发多，所以严防死守，CAS机制属于乐观锁，乐观的认为程序中并发少，让线程不断的去尝试更新
+那么现在又有一个问题来了，CAS机制有什么缺点呢？
+CAS机制的缺点：
+1.CPU开销过大：在并发量比较高的情况下，如果许多线程反复尝试去更新一个变量，却又一直更新失败，循环往复，会消耗CPU很多资源
+2.ABA问题：假设在内存中有一个值为A的变量储存在内存地址V当中，此时有三个线程使用CAS机制更新这个变量的值，每个线程的执行时间都略有偏差，线程1和线程2已经获取当前值，线程3还没有获取当前值。接下来线程1先一步执行成功，把当前值成功从A更新为B，同时线程2因为某种原因被阻塞，没有做更新操作，线程3在线程1更新成功之后获取了当前值B，再之后线程2仍然阻塞，线程3继续执行，成功将当前值更新为A，最后，线程2终于恢复了运行状态，由于线程2之前获取了“当前值A”并且经过了Compare检测，内存地址中的实际值也是A，所以线程2最后把变量A更新成了B，在这个过程中，线程2获取的当前值是一个旧值，尽管和当前值一模一样，但是内存地址中V中的变量已经经历了A-&gt;B-&gt;A的改变
+表面看没有什么影响，但是如果实际中理由CAS机制从取款机上取钱，假如账户开始有100元，在取款机上取走50，取款机出现问题一共提交了两次请求（线程1，线程2），第二次请求（线程2）在执行时因为某种原因被阻塞了，这时候有人往你的账户打了50元，线程2恢复了可执行状态，这个时候就会出现问题，原本线程2应该执行失败的，但是比较后仍然与旧值一致，这样就造成了账户实际上扣款了两次！
+ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存中的值，还比较两个比较变量的版本号是否一致，只有当版本号一致才进行后续操作，这样就完美的解决了ABA问题！
+3.不能保证代码块的原子性：CAS机制保证的是一个变量的原子性操作，若要保证多个变量的原子性操作，可以封装在一起，但是这样得不偿失，开销太大，还不如直接采用synchorized同步锁]]></description>
+</item><item>
     <title>Aop</title>
     <link>https://codesn1per.github.io/aop/</link>
     <pubDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</pubDate>
@@ -73,7 +110,9 @@ Object[] args: 目标类中的方法的参数,jdk提供
     <pubDate>Thu, 10 Mar 2022 16:57:05 &#43;0800</pubDate>
     <author>Author</author>
     <guid>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
-    <description><![CDATA[springmvc执行流程 数据参数在handler处理 mybatis 分页插件如何实现 动态sql如何写 方法和sql如何绑定 先namespace 线程 进程关系 线程的状态 6种 interipped notify all区别 线程安全 写 锁机制 new创建字符串 syn锁升级 反射可以获取私有信息吗 需要设置一下setaccess 自定义注解 多态的理解 封装 treeset如何去重 compareto 数组链表区别 序列化 反序列化 Spring如何为我们创建对象 动态代理 Springbean生命周期 init aware 对象作用域 threadlocal 私有化 线程隔离 底层机制 threallocalmap k v Spring 如何解决循环依赖 三级缓存 linux的常用 ps -ef 进程号 kill 全局找一个文件 find 动态查看日志 tail f 动态 n 末尾多少行 数据库隔离级别 读未提交 读以提交 可重复读 串行化 存储引擎 sql语句执行过程 先执行from]]></description>
+    <description><![CDATA[springmvc执行流程 数据参数在handler处理 mybatis 分页插件如何实现 动态sql如何写 方法和sql如何绑定 先namespace 线程 进程关系 线程的状态 6种 interipped notify all区别 线程安全 写 锁机制 new创建字符串 syn锁升级 反射可以获取私有信息吗 需要设置一下setaccess 自定义注解 多态的理解 封装 treeset如何去重 compareto 数组链表区别 序列化 反序列化 Spring如何为我们创建对象 动态代理 Springbean生命周期 init aware 对象作用域 threadlocal 私有化 线程隔离 底层机制 threallocalmap k v Spring 如何解决循环依赖 三级缓存 linux的常用 ps -ef 进程号 kill 全局找一个文件 find 动态查看日志 tail f 动态 n 末尾多少行 数据库隔离级别 读未提交 读以提交 可重复读 串行化 存储引擎 sql语句执行过程 先执行from
+hashmap循环链表
+1.你怎么理解线程的优先级？ 2.线程之间是如何通信的？ 3.线程池怎么配置的？ 4、并发编程的三要素是什么？ 5、hashmap的底层原理？ 6、ArrayList和 LinkedList 的区别在哪里？ 7、我们常说spring全家桶，他包含哪些部分？ 8、能说一下基于XML配置方式的搭建SSM框架的步骤嘛？ 9、如果数据库表锁了，数据插入不了，怎么办？ 10、 mysql 的存储引擎有哪些，区别是什么 11、maven有哪些优缺点，如何解决jar包的冲突？ 12、能说一下常用的linux部署命令嘛？]]></description>
 </item><item>
     <title>MySQL高级</title>
     <link>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
@@ -112,12 +151,5 @@ Object[] args: 目标类中的方法的参数,jdk提供
     <author>Author</author>
     <guid>https://codesn1per.github.io/tree/</guid>
     <description><![CDATA[1. 二叉查找树 二叉树结点类API的设计:    类名 Node&lt;Key,Value&gt;     构造方法 Node(Key key,Value value,Node left,Node right):创建Node对象   成员变量 1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值    代码实现: public class Node&lt;Key,Value&gt; { //存储键  public Key key; //存储值  public Value value; //存储左子结点  public Node left; //存储右子结点  public Node right; public Node(Key key, Value value, Node left, Node right) { this.]]></description>
-</item><item>
-    <title>Mybatis</title>
-    <link>https://codesn1per.github.io/mybatis/</link>
-    <pubDate>Tue, 18 Feb 2020 22:05:34 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/mybatis/</guid>
-    <description><![CDATA[Mybatis配置 1. 搭建实验数据库  创建一个MyBatis实验数据库,并创建一个user表  2. Idea新建项目,连接数据库  新建一个普通的maven项目 pom.xml中导入相关的maven依赖  Mysql驱动 Mybatis驱动 junit驱动    &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.21&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.5&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;  连接我们的Mysql  解决时区问题    3. 编写MyBatis核心配置文件  创建一个子模块mybatis-01 在该模块下的resource目录下,新建mybatis-config.xml文件,这是MyBatis的核心配置文件  &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!DOCTYPE configuration PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34; &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt; &lt;configuration&gt; &lt;environments default=&#34;development&#34;&gt; &lt;environment id=&#34;development&#34;&gt; &lt;transactionManager type=&#34;JDBC&#34;/&gt; &lt;dataSource type=&#34;POOLED&#34;&gt; &lt;property name=&#34;driver&#34; value=&#34;com.]]></description>
 </item></channel>
 </rss>

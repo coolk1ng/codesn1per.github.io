@@ -297,7 +297,7 @@ public class ThreadRunSameTime {
 
 > * 线程优先级会提示(hint)调度器优先级调度该线程,但他仅仅是一个提示,调度器可以忽略他
 >
-> * 如果cpu比较忙,name优先级高的线程会获得更多的时间片,但cpu闲时,优先级几乎没有用
+> * 如果cpu比较忙,那么优先级高的线程会获得更多的时间片,但cpu闲时,优先级几乎没有用
 
 ```java
 public class Priority {
