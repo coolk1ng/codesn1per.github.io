@@ -102,6 +102,40 @@
         alt="/avatar.png"
         title="/avatar.png" /></a></div><h2 class="home-subtitle"><div id="id-3" class="typeit"></div></h2><div class="links"><a href="https://github.com/xxxx" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://twitter.com/xxxx" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.instagram.com/xxxx" title="Instagram" target="_blank" rel="noopener noreffer me"><i class="fab fa-instagram fa-fw"></i></a><a href="https://facebook.com/xxxx" title="facebook" target="_blank" rel="noopener noreffer me"><i class="fab fa-facebook fa-fw"></i></a><a href="https://t.me/xxxx" title="Telegram" target="_blank" rel="noopener noreffer me"><i class="fab fa-telegram-plane fa-fw"></i></a><a href="mailto:xxxx@xxxx.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/">Spring事务失效情况</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-27">2022-03-27</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div><div class="content">1. 抛出检查异常导致事务不能正确回滚  **原因: **Srping默认只会回滚非检查异常
+  解法: 配置rollbackFor属性
+ 2. 业务方法内自己try-catch异常导致事务不能正确回滚  原因: 事务通知只有捕捉到了目标抛出的异常,才能进行后续的回滚处理,如果目标自己处理异常,事务通知无法获悉
+  解法: 1. 异常原样抛出; 2. 手动设置TransactionStatus.setRollbackOnly();
+ 3. aop切面顺序导致事务不能正确回滚  原因: 事务切面优先级最低,但如果自定义的切面优先级和他一样,则还是自定义切面在内层,这时若自定义切面没有抛出异常
+  解法: 同情况2
+ 4. 非public方法导致的事务失效  原因: Spring为方法创建代理,添加事务通知,前提条件都是该方法是public
+  解法: 改为public方法
+ 5. 父子容器导致的事务失效  原因: 子容器扫描范围过大,把未加事务配置的service扫描进来
+  解法: 1. 各扫描各的,不要图简便; 2. 不要用父子容器,所有bean放在同一容器
+ 6. 调用本类方法导致传播行为失效  原因: 奔雷方法调用不经过代理,因此无法增强
+  **解法: **1. 依赖注入自己(代理)来调用; 2. 通过AopContext拿到代理对象,来调用; 3. 通过CTW,LTW实现功能增强</div><div class="post-footer">
+        <a href="/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/spring/">Spring</a>,&nbsp;<a href="/tags/%E4%BA%8B%E5%8A%A1/">事务</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">SpringBean的生命周期</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-27">2022-03-27</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div><div class="content">阶段一: 处理名称,检查缓存 阶段二: 检查父工厂 阶段三: 检查DependsOn 阶段四: 按Scope创建bean  创建singleton 创建prototype 创建其他scope   阶段五: 创建bean  创建bean实例 依赖注入 初始化 登记可销毁bean   阶段六: 类型转换 阶段七: 销毁bean  阶段一: 处理名称,检查缓存  先把别名解析为实际名称,再进行后续处理 若要FactoryBean本身,需要使用&amp;名称获取 singletonObjects是一级缓存,放单例成品对象 singletonFactories是三级缓存,放单例工厂 earlySingletonObjects是耳机缓存,放单例工厂的产品,可成为提前单例对象  阶段二: 处理父子容器 阶段三: 阶段四: 按Scope创建bean  scope理解为从xxx范围内找到bean更加贴切 singleton scope表示从单例池范围获取bean,如果没有,则创建并放入单例池 prototype scope表示从不缓存bean,每次都创建新的 request scope表示从request对象范围内获取bean,如果没有,则创建并放入request  阶段五: 创建bean 1. 创建bean实例   FactoryMethod方式创建bean实例
+ 分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
+ 优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造</div><div class="post-footer">
+        <a href="/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/spring/">Spring</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/mysql%E7%B4%A2%E5%BC%95/">MySQL索引</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-26">2022-03-26</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div><div class="content">1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
+缺点:
+ 利用hash存储的话需要将所有数据文件添加到内存,比较耗费内存空间 如果所有的查询都是等值查询,那么hash确实很快,但是使用范围查找情况更多,因此hash就不太适合了    2. 二叉树的索引形式
+缺点:
+ 无论是二叉树还是红黑树,都会因为树的深度过深而造成io次数变多,影响数据读取效率    3. B树的索引形式
+特点:
+ 所有键值分布在整棵树上 搜索有可能在非叶子节点结束,在关键字全集内做一次查找,性能逼近二次查找 每个节点最多拥有m个子树 根节点至少有两个子树 分支节点至少拥有m/2棵子树(除根节点和叶子节点都是分支节点) 所有叶子节点都在同一层,每个节点最多可以又m-1个key,并且以升序排列   </div><div class="post-footer">
+        <a href="/mysql%E7%B4%A2%E5%BC%95/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">MySQL</a>,&nbsp;<a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/">线程安全之CAS操作</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-24">2022-03-24</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="far fa-folder fa-fw"></i>并发编程</a></span></div><div class="content">背景介绍：假设现在有一个线程共享的变量c=0，让两个线程分别对c进行c++操作100次，那么我们最后得到的结果是200吗？
 **1.在线程不安全的方式下:**结果可能小于200，比如当前线程A取得c的值为3，然后线程A阻塞了，线程B取得的c的值也是3，然后线程B也阻塞了，现在线程A被唤醒执行了++操作使得c=4，结果写回c值内存，线程A执行结束，线程B被唤醒执行了++操作使得3++=4，也写回了c值内存，现在问题来了，两个线程分别进行了一次++操作，最后c值却为4而不是5，所以c值最后的结果肯定是小于200的，产生这种情况的原因就是线程不安全！，两个线程在同一时间读取了c值，然后又没有各种先执行完++操作而被阻塞（就是没有同步）
@@ -166,43 +200,6 @@ Object[] args: 目标类中的方法的参数,jdk提供
  核心的对象,创建的代理对象,之前创建对象都是用new类的构造方法(),现在使用Proxy类的方法,代替new的使用 静态方法:newProxyInstance(),创建代理对象 参数:  classLoader loader: 类加载器,负责向内存中加载对象的.使用反射获取对象的ClassLoader Class&lt;?&gt;[] interfaces: 接口,目标对象实现的接口,也是反射获取的 InvocationHander h: 我们自己写的,代理类要完成的功能     </div><div class="post-footer">
         <a href="/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%8F%8D%E5%B0%84/">反射</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/spring%E4%BA%8B%E5%8A%A1/">Spring事务</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-15">2022-03-15</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div><div class="content">1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
-  通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
-  2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 隔离性是指在并发操作中,不同事务之间应该隔离开来,使每个并发的事务不会相干扰 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
-事务A读取了事务B中尚未提交的数据,如果事务B回滚,则A读取使用了错误的数据
-  不可重复读(读取了提交的新事物,指更新操作)
-不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
-  幻读(读取了提交的新事物,指增删操作)
-  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
-  第一类事务丢失(回滚丢失)
-对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
-  第二类事务丢失(覆盖丢失)
-  ​	对于第二类事务丢失,也称为覆盖丢失,就是A和B一起执行一个数据,两个同时取一个数据,然后B事务首先提交,但是A事务接下来又提交,这样就覆盖了B事务
- Read uncommitted
-读未提交,就是一个事务可以读取另一个未提交事务的数据,会产生脏读
-  Read committed
-读已提交,就是一个事务要等到另一个事务提交后才能读取数据,会产生不可重复读
-  Repeatable read
-重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
-  Serializable
-最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以毕淼脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- </div><div class="post-footer">
-        <a href="/spring%E4%BA%8B%E5%8A%A1/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/spring/">Spring</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-10">2022-03-10</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%9D%A2%E8%AF%95/"><i class="far fa-folder fa-fw"></i>面试</a></span></div><div class="content">springmvc执行流程 数据参数在handler处理 mybatis 分页插件如何实现 动态sql如何写 方法和sql如何绑定 先namespace 线程 进程关系 线程的状态 6种 interipped notify all区别 线程安全 写 锁机制 new创建字符串 syn锁升级 反射可以获取私有信息吗 需要设置一下setaccess 自定义注解 多态的理解 封装 treeset如何去重 compareto 数组链表区别 序列化 反序列化 Spring如何为我们创建对象 动态代理 Springbean生命周期 init aware 对象作用域 threadlocal 私有化 线程隔离 底层机制 threallocalmap k v Spring 如何解决循环依赖 三级缓存 linux的常用 ps -ef 进程号 kill 全局找一个文件 find 动态查看日志 tail f 动态 n 末尾多少行 数据库隔离级别 读未提交 读以提交 可重复读 串行化 存储引擎 sql语句执行过程 先执行from
-hashmap循环链表
-1.你怎么理解线程的优先级？ 2.线程之间是如何通信的？ 3.线程池怎么配置的？ 4、并发编程的三要素是什么？ 5、hashmap的底层原理？ 6、ArrayList和 LinkedList 的区别在哪里？ 7、我们常说spring全家桶，他包含哪些部分？ 8、能说一下基于XML配置方式的搭建SSM框架的步骤嘛？ 9、如果数据库表锁了，数据插入不了，怎么办？ 10、 mysql 的存储引擎有哪些，区别是什么 11、maven有哪些优缺点，如何解决jar包的冲突？ 12、能说一下常用的linux部署命令嘛？</div><div class="post-footer">
-        <a href="/%E9%9D%A2%E8%AF%95%E9%A2%98/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/mysql%E9%AB%98%E7%BA%A7/">MySQL高级</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-02-19">2022-02-19</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div><div class="content">1. 存储引擎 1.1. 对比MyISAM和InnoDB    对比项 MyISAM InnoDB     主外键 不支持 支持   事务 不支持 支持   行表锁 表锁,即使操作一条记录也会锁住整个表,不适合高并发的操作 行锁,操作时只锁一行,不对其他行有影响,适合高并发的操作   缓存 只缓存索引,不缓存真实数据 不仅缓存索引还要缓存真实数据,对内存要求较高,而且内存大小对性能有决定性的影响   表空间 小 大   关注点 性能 事务   默认安装 Y Y    1.2. 阿里巴巴,淘宝用哪个?    产品 价格 目标 主要功能 是否可投入生产     PerCona Server 免费 提供XtraDB存储引擎的包装器和其他分析工具 XtraDB 是   MariaDB 免费 拓展MySQL以包含XtraDB和其他性能改进 XtraDB 是   Drizzle 免费 提供比MySQL更强大的可拓展性和性能改进 高可用性 是     Percona为MySQL数据库服务器进行了改进,在功能和性能上较MySQL有着很显著的提升.</div><div class="post-footer">
-        <a href="/mysql%E9%AB%98%E7%BA%A7/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">MySQL</a></div></div>
 </article><ul class="pagination"><li class="page-item active">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -210,6 +207,10 @@ hashmap循环链表
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/2/">2</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/3/">3</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

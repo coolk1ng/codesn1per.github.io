@@ -4,9 +4,49 @@
         <link>https://codesn1per.github.io/</link>
         <description>This is My New Hugo Site</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Thu, 24 Mar 2022 18:05:17 &#43;0800</lastBuildDate>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</lastBuildDate>
             <atom:link href="https://codesn1per.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Spring事务失效情况</title>
+    <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
+    <pubDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</guid>
+    <description><![CDATA[1. 抛出检查异常导致事务不能正确回滚  **原因: **Srping默认只会回滚非检查异常
+  解法: 配置rollbackFor属性
+ 2. 业务方法内自己try-catch异常导致事务不能正确回滚  原因: 事务通知只有捕捉到了目标抛出的异常,才能进行后续的回滚处理,如果目标自己处理异常,事务通知无法获悉
+  解法: 1. 异常原样抛出; 2. 手动设置TransactionStatus.setRollbackOnly();
+ 3. aop切面顺序导致事务不能正确回滚  原因: 事务切面优先级最低,但如果自定义的切面优先级和他一样,则还是自定义切面在内层,这时若自定义切面没有抛出异常
+  解法: 同情况2
+ 4. 非public方法导致的事务失效  原因: Spring为方法创建代理,添加事务通知,前提条件都是该方法是public
+  解法: 改为public方法
+ 5. 父子容器导致的事务失效  原因: 子容器扫描范围过大,把未加事务配置的service扫描进来
+  解法: 1. 各扫描各的,不要图简便; 2. 不要用父子容器,所有bean放在同一容器
+ 6. 调用本类方法导致传播行为失效  原因: 奔雷方法调用不经过代理,因此无法增强
+  **解法: **1. 依赖注入自己(代理)来调用; 2. 通过AopContext拿到代理对象,来调用; 3. 通过CTW,LTW实现功能增强]]></description>
+</item><item>
+    <title>SpringBean的生命周期</title>
+    <link>https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
+    <pubDate>Sun, 27 Mar 2022 13:14:08 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</guid>
+    <description><![CDATA[阶段一: 处理名称,检查缓存 阶段二: 检查父工厂 阶段三: 检查DependsOn 阶段四: 按Scope创建bean  创建singleton 创建prototype 创建其他scope   阶段五: 创建bean  创建bean实例 依赖注入 初始化 登记可销毁bean   阶段六: 类型转换 阶段七: 销毁bean  阶段一: 处理名称,检查缓存  先把别名解析为实际名称,再进行后续处理 若要FactoryBean本身,需要使用&amp;名称获取 singletonObjects是一级缓存,放单例成品对象 singletonFactories是三级缓存,放单例工厂 earlySingletonObjects是耳机缓存,放单例工厂的产品,可成为提前单例对象  阶段二: 处理父子容器 阶段三: 阶段四: 按Scope创建bean  scope理解为从xxx范围内找到bean更加贴切 singleton scope表示从单例池范围获取bean,如果没有,则创建并放入单例池 prototype scope表示从不缓存bean,每次都创建新的 request scope表示从request对象范围内获取bean,如果没有,则创建并放入request  阶段五: 创建bean 1. 创建bean实例   FactoryMethod方式创建bean实例
+ 分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
+ 优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造]]></description>
+</item><item>
+    <title>MySQL索引</title>
+    <link>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
+    <pubDate>Sat, 26 Mar 2022 15:28:31 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
+    <description><![CDATA[1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
+缺点:
+ 利用hash存储的话需要将所有数据文件添加到内存,比较耗费内存空间 如果所有的查询都是等值查询,那么hash确实很快,但是使用范围查找情况更多,因此hash就不太适合了    2. 二叉树的索引形式
+缺点:
+ 无论是二叉树还是红黑树,都会因为树的深度过深而造成io次数变多,影响数据读取效率    3. B树的索引形式
+特点:
+ 所有键值分布在整棵树上 搜索有可能在非叶子节点结束,在关键字全集内做一次查找,性能逼近二次查找 每个节点最多拥有m个子树 根节点至少有两个子树 分支节点至少拥有m/2棵子树(除根节点和叶子节点都是分支节点) 所有叶子节点都在同一层,每个节点最多可以又m-1个key,并且以升序排列   ]]></description>
+</item><item>
     <title>线程安全之CAS操作</title>
     <link>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</link>
     <pubDate>Thu, 24 Mar 2022 18:05:17 &#43;0800</pubDate>
@@ -127,29 +167,5 @@ hashmap循环链表
     <author>Author</author>
     <guid>https://codesn1per.github.io/springcloud/</guid>
     <description><![CDATA[SpringCloud 1. Eureka 1. 提供者与消费者  服务提供者: 一次业务中,被其他服务调用的服务(提供接口给其他服务) 服务消费者: 一次业务中,调用其他服务的服务(调用其他服务提供的接口) 提供者与消费者角色是相对 一个服务可以同时是服务提供者和服务消费者  2. Eureka注册中心  注册服务信息 拉取服务 负载均衡 远程调用 心跳续约 30s/次  1. Eureka的作用  消费者该如何获取服务提供者的具体信息?  服务提供者启动时向eureka注册自己的信息 eureka保存这些信息 消费者根据服务名称想eureka拉取提供者信息   如果有多个服务提供者,消费者该如何选择?  服务消费者利用负载均衡算法,从服务列表中挑选一个   消费者如何感知服务提供者健康状态?  服务提供者会每隔30s向eurekaServer发送心跳请求,报告健康状态 eureka会更新记录服务列表信息,心跳不正常会被剔除 消费者就可以拉取最新的信息    2. 服务注册  引入eureka-client依赖 在application.yml中配置eureka地址  2. Ribbon 1. Ribbon负载均衡规则  规则接口是IRule 默认实现是ZoneAvoidanceRule,根据zone选择服务列表,然后轮询  2. 负载均衡自定义方式  代码方式: 配置灵活,但修改时需要重新打包发布 配置方式: 直观,方便,无需重新打包发布,但是无法做全局配置  3. 饥饿加载  开启饥饿加载 eager-load 指定饥饿加载的服务名称  3.]]></description>
-</item><item>
-    <title>并发编程</title>
-    <link>https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
-    <pubDate>Sat, 22 Jan 2022 19:22:20 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
-    <description><![CDATA[1. 进程与线程 1.1 进程与线程 1.1.1 进程   程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的. 当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程. 进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.   1.1.2 线程   一个进程之内可以分一到多个线程. 一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行 Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.   1.1.3 二者对比  进程基本上相互独立,线程在进程内,是进程的一个子集. 进程拥有共享的资源,如内存空间等,供内部的线程共享. 进程间通信较为复杂  同一台计算机的进程通信成为IPC 不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.   线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量 线程更轻量,线程上下文切换成本一般要比进程上下文切换低.  1.2 并行与并发   单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的. 一般会将这种线程轮流使用cpu的做法成为并发. 多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.     并发: 同一时间应对多件事情的能力. 并行: 同一时间动手做多件事情的能力.   1.3 应用 1.3.1 异步调用案例  从方法调用角度来说:
- 需要等地啊结果返回,才能继续运行就是同步 不需要等待结果返回,就能继续运行就是异步  注意: 同步在多线程中海油另外一层的意思,是让多个线程步调一致
-设计: 多线程可以让方法执行变为异步的,比如说读取磁盘文件时,假设读取操作话费了5s,如果没有线程调度机制,这5s调用者什么都做不了,其代码都得暂停.
-结论:  比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程. tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程   1.]]></description>
-</item><item>
-    <title>Sort</title>
-    <link>https://codesn1per.github.io/sort/</link>
-    <pubDate>Thu, 18 Feb 2021 22:36:00 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/sort/</guid>
-    <description><![CDATA[1. comparable接口 代码测试: package Sort.comparable; public class student implements Comparable&lt;student&gt;{ private String username; private int age; public student() { } public student(String username, int age) { this.username = username; this.age = age; } public String getUsername() { return username; } public void setUsername(String username) { this.username = username; } public int getAge() { return age; } public void setAge(int age) { this.age = age; } @Override public String toString() { return &#34;student{&#34; + &#34;username=&#39;&#34; + username + &#39;\&#39;&#39; + &#34;, age=&#34; + age + &#39;}&#39;; } @Override public int compareTo(student o) { return this.]]></description>
-</item><item>
-    <title>Tree</title>
-    <link>https://codesn1per.github.io/tree/</link>
-    <pubDate>Sun, 17 Jan 2021 22:43:20 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/tree/</guid>
-    <description><![CDATA[1. 二叉查找树 二叉树结点类API的设计:    类名 Node&lt;Key,Value&gt;     构造方法 Node(Key key,Value value,Node left,Node right):创建Node对象   成员变量 1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值    代码实现: public class Node&lt;Key,Value&gt; { //存储键  public Key key; //存储值  public Value value; //存储左子结点  public Node left; //存储右子结点  public Node right; public Node(Key key, Value value, Node left, Node right) { this.]]></description>
 </item></channel>
 </rss>

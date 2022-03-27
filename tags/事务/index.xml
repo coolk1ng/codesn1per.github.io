@@ -1,0 +1,26 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>事务 - Tag - CodeSniper&#39; Blog</title>
+        <link>https://codesn1per.github.io/tags/%E4%BA%8B%E5%8A%A1/</link>
+        <description>事务 - Tag - CodeSniper&#39; Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/%E4%BA%8B%E5%8A%A1/" rel="self" type="application/rss+xml" /><item>
+    <title>Spring事务失效情况</title>
+    <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
+    <pubDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</guid>
+    <description><![CDATA[1. 抛出检查异常导致事务不能正确回滚  **原因: **Srping默认只会回滚非检查异常
+  解法: 配置rollbackFor属性
+ 2. 业务方法内自己try-catch异常导致事务不能正确回滚  原因: 事务通知只有捕捉到了目标抛出的异常,才能进行后续的回滚处理,如果目标自己处理异常,事务通知无法获悉
+  解法: 1. 异常原样抛出; 2. 手动设置TransactionStatus.setRollbackOnly();
+ 3. aop切面顺序导致事务不能正确回滚  原因: 事务切面优先级最低,但如果自定义的切面优先级和他一样,则还是自定义切面在内层,这时若自定义切面没有抛出异常
+  解法: 同情况2
+ 4. 非public方法导致的事务失效  原因: Spring为方法创建代理,添加事务通知,前提条件都是该方法是public
+  解法: 改为public方法
+ 5. 父子容器导致的事务失效  原因: 子容器扫描范围过大,把未加事务配置的service扫描进来
+  解法: 1. 各扫描各的,不要图简便; 2. 不要用父子容器,所有bean放在同一容器
+ 6. 调用本类方法导致传播行为失效  原因: 奔雷方法调用不经过代理,因此无法增强
+  **解法: **1. 依赖注入自己(代理)来调用; 2. 通过AopContext拿到代理对象,来调用; 3. 通过CTW,LTW实现功能增强]]></description>
+</item></channel>
+</rss>

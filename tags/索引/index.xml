@@ -1,0 +1,21 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>索引 - Tag - CodeSniper&#39; Blog</title>
+        <link>https://codesn1per.github.io/tags/%E7%B4%A2%E5%BC%95/</link>
+        <description>索引 - Tag - CodeSniper&#39; Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 26 Mar 2022 15:28:31 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/%E7%B4%A2%E5%BC%95/" rel="self" type="application/rss+xml" /><item>
+    <title>MySQL索引</title>
+    <link>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
+    <pubDate>Sat, 26 Mar 2022 15:28:31 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
+    <description><![CDATA[1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
+缺点:
+ 利用hash存储的话需要将所有数据文件添加到内存,比较耗费内存空间 如果所有的查询都是等值查询,那么hash确实很快,但是使用范围查找情况更多,因此hash就不太适合了    2. 二叉树的索引形式
+缺点:
+ 无论是二叉树还是红黑树,都会因为树的深度过深而造成io次数变多,影响数据读取效率    3. B树的索引形式
+特点:
+ 所有键值分布在整棵树上 搜索有可能在非叶子节点结束,在关键字全集内做一次查找,性能逼近二次查找 每个节点最多拥有m个子树 根节点至少有两个子树 分支节点至少拥有m/2棵子树(除根节点和叶子节点都是分支节点) 所有叶子节点都在同一层,每个节点最多可以又m-1个key,并且以升序排列   ]]></description>
+</item></channel>
+</rss>
