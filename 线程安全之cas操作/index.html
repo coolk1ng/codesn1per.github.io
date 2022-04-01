@@ -39,8 +39,8 @@ ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存�
 3.不能保证代码块的原子性：CAS机制保证的是一个变量的原子性操作，若要保证多个变量的原子性操作，可以封装在一起，但是这样得不偿失，开销太大，还不如直接采用synchorized同步锁" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-03-24T18:05:17&#43;08:00" />
-<meta property="article:modified_time" content="2022-03-24T18:05:17&#43;08:00" />
+<meta property="article:published_time" content="2022-02-24T18:05:17&#43;08:00" />
+<meta property="article:modified_time" content="2022-02-24T18:05:17&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
@@ -80,7 +80,7 @@ ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存�
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/" /><link rel="prev" href="https://codesn1per.github.io/aop/" /><link rel="next" href="https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/" /><link rel="prev" href="https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/" /><link rel="next" href="https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -90,7 +90,7 @@ ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存�
             "@type": "WebPage",
             "@id": "https:\/\/codesn1per.github.io\/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C\/"
         },"genre": "posts","keywords": "并发, 多线程","wordcount":  33 ,
-        "url": "https:\/\/codesn1per.github.io\/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C\/","datePublished": "2022-03-24T18:05:17+08:00","dateModified": "2022-03-24T18:05:17+08:00","publisher": {
+        "url": "https:\/\/codesn1per.github.io\/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C\/","datePublished": "2022-02-24T18:05:17+08:00","dateModified": "2022-02-24T18:05:17+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -166,7 +166,7 @@ ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存�
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">线程安全之CAS操作</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="far fa-folder fa-fw"></i>并发编程</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-24">2022-03-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;33 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;33 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -209,7 +209,7 @@ ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存�
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-03-24</span>
+                <span>Updated on 2022-02-24</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -230,7 +230,7 @@ ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存�
         </section>
     </div>
 
-    <div class="post-nav"><a href="/aop/" class="prev" rel="prev" title="Aop"><i class="fas fa-angle-left fa-fw"></i>Aop</a>
+    <div class="post-nav"><a href="/mysql%E9%AB%98%E7%BA%A7/" class="prev" rel="prev" title="MySQL高级"><i class="fas fa-angle-left fa-fw"></i>MySQL高级</a>
             <a href="/mysql%E7%B4%A2%E5%BC%95/" class="next" rel="next" title="MySQL索引">MySQL索引<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"></div></article></div>

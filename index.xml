@@ -4,9 +4,21 @@
         <link>https://codesn1per.github.io/</link>
         <description>This is My New Hugo Site</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</lastBuildDate>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</lastBuildDate>
             <atom:link href="https://codesn1per.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>MySQL锁机制</title>
+    <link>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</link>
+    <pubDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</guid>
+    <description><![CDATA[1. 锁的分类  共享锁 Share Lock (简称S锁,属于行锁) 排它锁 Exclusive Locks (简称X锁,属于行锁) 意向共享锁 Intention Shared Locks (简称IS锁,属于表锁) 意向排他锁 Intention Exclusive Locks (简称IX锁,属于表锁) 自增锁 AUTO-INC Locks  2. 共享锁  共享锁就是多个事务对同一数据可以共享一把锁,都能访问到数据库,但是只能读不能修改
+  事务A: select * from student where id = 1 lock in share mode;
+事务B: select * from student where id = 1 (读数据没有问题)
+事务B: update student set name = &ldquo;haha&rdquo; where id = 1
+注意: 无法修改会卡死,当事务A提交事务之后,会立刻修改成功
+ 3. 排它锁  排它锁不能与其他锁并存,如一个事务获取了一个数据行的排它锁,其他事务就不能再获取该行的锁,只有当前获取了排它锁的事务可以对数据进行读取和修改]]></description>
+</item><item>
     <title>Spring事务失效情况</title>
     <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
     <pubDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</pubDate>
@@ -34,9 +46,36 @@
  分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
  优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造]]></description>
 </item><item>
+    <title>Aop</title>
+    <link>https://codesn1per.github.io/aop/</link>
+    <pubDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/aop/</guid>
+    <description><![CDATA[AOP是什么   AOP(Aspect Oriented Programming),意味面向切面编程,可以通过预编译方式和运行期动态代理实现在不修改源代码的情况下给程序动态同一添加功能的一种技术.
+  AOP的编程思想就是把很多类对象的横切问题点,从业务逻辑中分离出来,从而达到解耦的目的,增加代码的重用性,提高开发效率
+  AOP应用场景  日志记录 异常处理 权限验证 缓存处理 事务处理 数据持久化 效率检查 内容分发  Aspect概念  aspect:切面,切面有切点和通知组成,即包括横切逻辑的定义也包括连接点的定义 pointcut: 切点,每个类都拥有多个连接点,可以理解是连接点的集合 joinpoint: 连接点,程序执行的某个特定位置,如某个方法调用前后等 weaving: 织入,将增强添加到目标类的具体连接点的过程 advice: 通知,是织入到目标类连接点上的一段代码,就是增强到什么地方?增强什么内容? target: 目标对象,通知织入的目标类 aop Proxy: 代理对象,即增强后产生的对象  Spring AOP底层实现,是通过JDK动态代理或CGlib代理在运行时期在对象初始化阶段织入代码的
+   Before advice
+前置通知,即在目标方法调用之前执行.注意: 无论方法是否遇到异常都执行
+  After returning advice
+后置通知,在目标方法执行后执行,前提是目标方法没有遇到异常,如果有异常则不执行通知
+  After throwing advice
+异常通知,在目标方法抛出异常时执行,可以获取异常信息
+  After finally advice
+最终通知,在目标方法执行后执行,无论是否是异常执行
+  Around advice]]></description>
+</item><item>
+    <title>面试题</title>
+    <link>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <pubDate>Thu, 10 Mar 2022 16:57:05 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <description><![CDATA[springmvc执行流程 数据参数在handler处理 mybatis 分页插件如何实现 动态sql如何写 方法和sql如何绑定 先namespace 线程 进程关系 线程的状态 6种 interipped notify all区别 线程安全 写 锁机制 new创建字符串 syn锁升级 反射可以获取私有信息吗 需要设置一下setaccess 自定义注解 多态的理解 封装 treeset如何去重 compareto 数组链表区别 序列化 反序列化 Spring如何为我们创建对象 动态代理 Springbean生命周期 init aware 对象作用域 threadlocal 私有化 线程隔离 底层机制 threallocalmap k v Spring 如何解决循环依赖 三级缓存 linux的常用 ps -ef 进程号 kill 全局找一个文件 find 动态查看日志 tail f 动态 n 末尾多少行 数据库隔离级别 读未提交 读以提交 可重复读 串行化 存储引擎 sql语句执行过程 先执行from
+hashmap循环链表
+1.你怎么理解线程的优先级？ 2.线程之间是如何通信的？ 3.线程池怎么配置的？ 4、并发编程的三要素是什么？ 5、hashmap的底层原理？ 6、ArrayList和 LinkedList 的区别在哪里？ 7、我们常说spring全家桶，他包含哪些部分？ 8、能说一下基于XML配置方式的搭建SSM框架的步骤嘛？ 9、如果数据库表锁了，数据插入不了，怎么办？ 10、 mysql 的存储引擎有哪些，区别是什么 11、maven有哪些优缺点，如何解决jar包的冲突？ 12、能说一下常用的linux部署命令嘛？]]></description>
+</item><item>
     <title>MySQL索引</title>
     <link>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
-    <pubDate>Sat, 26 Mar 2022 15:28:31 &#43;0800</pubDate>
+    <pubDate>Sat, 26 Feb 2022 15:28:31 &#43;0800</pubDate>
     <author>Author</author>
     <guid>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
     <description><![CDATA[1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
@@ -45,11 +84,20 @@
 缺点:
  无论是二叉树还是红黑树,都会因为树的深度过深而造成io次数变多,影响数据读取效率    3. B树的索引形式
 特点:
- 所有键值分布在整棵树上 搜索有可能在非叶子节点结束,在关键字全集内做一次查找,性能逼近二次查找 每个节点最多拥有m个子树 根节点至少有两个子树 分支节点至少拥有m/2棵子树(除根节点和叶子节点都是分支节点) 所有叶子节点都在同一层,每个节点最多可以又m-1个key,并且以升序排列   ]]></description>
+ 所有键值分布在整棵树上 搜索有可能在非叶子节点结束,在关键字全集内做一次查找,性能逼近二次查找 每个节点最多拥有m个子树 根节点至少有两个子树 分支节点至少拥有m/2棵子树(除根节点和叶子节点都是分支节点) 所有叶子节点都在同一层,每个节点最多可以又m-1个key,并且以升序排列   2. 索引分类(InnoDB)   主键索引
+设定为主键后数据库会自动建立索引,innodb为聚簇索引,主键索引索引列值不能有空
+  单值索引 单列索引 普通索引
+即一个索引只包含单个列,一个表可以有单列索引
+  唯一索引
+索引列的值必须唯一,但允许有空值
+  复合索引
+一个索引包含多个列
+  全文索引(5.7之后)
+全文索引类型为FULL TEXT,在定义索引的列上支持值的全文查找,允许在这些所偶遇列中插入重复值和空值,全文索引可以在CHAR,VARCHAR上创建]]></description>
 </item><item>
     <title>线程安全之CAS操作</title>
     <link>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</link>
-    <pubDate>Thu, 24 Mar 2022 18:05:17 &#43;0800</pubDate>
+    <pubDate>Thu, 24 Feb 2022 18:05:17 &#43;0800</pubDate>
     <author>Author</author>
     <guid>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</guid>
     <description><![CDATA[背景介绍：假设现在有一个线程共享的变量c=0，让两个线程分别对c进行c++操作100次，那么我们最后得到的结果是200吗？
@@ -84,76 +132,6 @@ CAS机制的缺点：
 ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存中的值，还比较两个比较变量的版本号是否一致，只有当版本号一致才进行后续操作，这样就完美的解决了ABA问题！
 3.不能保证代码块的原子性：CAS机制保证的是一个变量的原子性操作，若要保证多个变量的原子性操作，可以封装在一起，但是这样得不偿失，开销太大，还不如直接采用synchorized同步锁]]></description>
 </item><item>
-    <title>Aop</title>
-    <link>https://codesn1per.github.io/aop/</link>
-    <pubDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/aop/</guid>
-    <description><![CDATA[AOP是什么   AOP(Aspect Oriented Programming),意味面向切面编程,可以通过预编译方式和运行期动态代理实现在不修改源代码的情况下给程序动态同一添加功能的一种技术.
-  AOP的编程思想就是把很多类对象的横切问题点,从业务逻辑中分离出来,从而达到解耦的目的,增加代码的重用性,提高开发效率
-  AOP应用场景  日志记录 异常处理 权限验证 缓存处理 事务处理 数据持久化 效率检查 内容分发  Aspect概念  aspect:切面,切面有切点和通知组成,即包括横切逻辑的定义也包括连接点的定义 pointcut: 切点,每个类都拥有多个连接点,可以理解是连接点的集合 joinpoint: 连接点,程序执行的某个特定位置,如某个方法调用前后等 weaving: 织入,将增强添加到目标类的具体连接点的过程 advice: 通知,是织入到目标类连接点上的一段代码,就是增强到什么地方?增强什么内容? target: 目标对象,通知织入的目标类 aop Proxy: 代理对象,即增强后产生的对象  Spring AOP底层实现,是通过JDK动态代理或CGlib代理在运行时期在对象初始化阶段织入代码的
-   Before advice
-前置通知,即在目标方法调用之前执行.注意: 无论方法是否遇到异常都执行
-  After returning advice
-后置通知,在目标方法执行后执行,前提是目标方法没有遇到异常,如果有异常则不执行通知
-  After throwing advice
-异常通知,在目标方法抛出异常时执行,可以获取异常信息
-  After finally advice
-最终通知,在目标方法执行后执行,无论是否是异常执行
-  Around advice]]></description>
-</item><item>
-    <title>动态代理</title>
-    <link>https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</link>
-    <pubDate>Wed, 16 Mar 2022 12:57:14 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</guid>
-    <description><![CDATA[1. 动态代理的实现 1. jdk动态代理:   使用java反射包中的类和接口实现动态代理的功能 反射包 java.lang.reflect,里面有三个类:InvocationHandler,Method,Proxy   2. cglib动态代理   cglib是第三方的工具库,创建代理对象. cglib的原理是继承,cglib通过继承目标类,创建他的子类,在子类中重写父类中同名的方法,实现功能的修改. 因为cglib是继承,重写方法,所以要求目标类不能是final的,方法也不能是final的   2. jdk动态代理 1. 反射,Method类,表示方法,类中的方法.通过Method可以执行某个方法. 2. jdk动态代理的实现  InvocationHandler
-  就一个方法invoke()
-  invoke():表示代理对象要执行的功能代码,你的代理类要完成的功能卸载invoke()方法中.
-  方法原型:
-参数: Object proxy: jdk创建的代理对象,无需赋值
-Method method: 目标类中的方法,jdk提供method对象的
-Object[] args: 目标类中的方法的参数,jdk提供
-    Method
- 表示方法的,确切的说是目标类中的方法 通过Mehtod可以执行某一个目标类的方法,Method.invoke()    Proxy
- 核心的对象,创建的代理对象,之前创建对象都是用new类的构造方法(),现在使用Proxy类的方法,代替new的使用 静态方法:newProxyInstance(),创建代理对象 参数:  classLoader loader: 类加载器,负责向内存中加载对象的.使用反射获取对象的ClassLoader Class&lt;?&gt;[] interfaces: 接口,目标对象实现的接口,也是反射获取的 InvocationHander h: 我们自己写的,代理类要完成的功能     ]]></description>
-</item><item>
-    <title>Spring事务</title>
-    <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1/</link>
-    <pubDate>Tue, 15 Mar 2022 12:55:53 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1/</guid>
-    <description><![CDATA[1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
-  通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
-  2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 隔离性是指在并发操作中,不同事务之间应该隔离开来,使每个并发的事务不会相干扰 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
-事务A读取了事务B中尚未提交的数据,如果事务B回滚,则A读取使用了错误的数据
-  不可重复读(读取了提交的新事物,指更新操作)
-不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
-  幻读(读取了提交的新事物,指增删操作)
-  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
-  第一类事务丢失(回滚丢失)
-对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
-  第二类事务丢失(覆盖丢失)
-  ​	对于第二类事务丢失,也称为覆盖丢失,就是A和B一起执行一个数据,两个同时取一个数据,然后B事务首先提交,但是A事务接下来又提交,这样就覆盖了B事务
- Read uncommitted
-读未提交,就是一个事务可以读取另一个未提交事务的数据,会产生脏读
-  Read committed
-读已提交,就是一个事务要等到另一个事务提交后才能读取数据,会产生不可重复读
-  Repeatable read
-重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
-  Serializable
-最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以毕淼脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- ]]></description>
-</item><item>
-    <title>面试题</title>
-    <link>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
-    <pubDate>Thu, 10 Mar 2022 16:57:05 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
-    <description><![CDATA[springmvc执行流程 数据参数在handler处理 mybatis 分页插件如何实现 动态sql如何写 方法和sql如何绑定 先namespace 线程 进程关系 线程的状态 6种 interipped notify all区别 线程安全 写 锁机制 new创建字符串 syn锁升级 反射可以获取私有信息吗 需要设置一下setaccess 自定义注解 多态的理解 封装 treeset如何去重 compareto 数组链表区别 序列化 反序列化 Spring如何为我们创建对象 动态代理 Springbean生命周期 init aware 对象作用域 threadlocal 私有化 线程隔离 底层机制 threallocalmap k v Spring 如何解决循环依赖 三级缓存 linux的常用 ps -ef 进程号 kill 全局找一个文件 find 动态查看日志 tail f 动态 n 末尾多少行 数据库隔离级别 读未提交 读以提交 可重复读 串行化 存储引擎 sql语句执行过程 先执行from
-hashmap循环链表
-1.你怎么理解线程的优先级？ 2.线程之间是如何通信的？ 3.线程池怎么配置的？ 4、并发编程的三要素是什么？ 5、hashmap的底层原理？ 6、ArrayList和 LinkedList 的区别在哪里？ 7、我们常说spring全家桶，他包含哪些部分？ 8、能说一下基于XML配置方式的搭建SSM框架的步骤嘛？ 9、如果数据库表锁了，数据插入不了，怎么办？ 10、 mysql 的存储引擎有哪些，区别是什么 11、maven有哪些优缺点，如何解决jar包的冲突？ 12、能说一下常用的linux部署命令嘛？]]></description>
-</item><item>
     <title>MySQL高级</title>
     <link>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
     <pubDate>Sat, 19 Feb 2022 15:25:53 &#43;0800</pubDate>
@@ -167,5 +145,15 @@ hashmap循环链表
     <author>Author</author>
     <guid>https://codesn1per.github.io/springcloud/</guid>
     <description><![CDATA[SpringCloud 1. Eureka 1. 提供者与消费者  服务提供者: 一次业务中,被其他服务调用的服务(提供接口给其他服务) 服务消费者: 一次业务中,调用其他服务的服务(调用其他服务提供的接口) 提供者与消费者角色是相对 一个服务可以同时是服务提供者和服务消费者  2. Eureka注册中心  注册服务信息 拉取服务 负载均衡 远程调用 心跳续约 30s/次  1. Eureka的作用  消费者该如何获取服务提供者的具体信息?  服务提供者启动时向eureka注册自己的信息 eureka保存这些信息 消费者根据服务名称想eureka拉取提供者信息   如果有多个服务提供者,消费者该如何选择?  服务消费者利用负载均衡算法,从服务列表中挑选一个   消费者如何感知服务提供者健康状态?  服务提供者会每隔30s向eurekaServer发送心跳请求,报告健康状态 eureka会更新记录服务列表信息,心跳不正常会被剔除 消费者就可以拉取最新的信息    2. 服务注册  引入eureka-client依赖 在application.yml中配置eureka地址  2. Ribbon 1. Ribbon负载均衡规则  规则接口是IRule 默认实现是ZoneAvoidanceRule,根据zone选择服务列表,然后轮询  2. 负载均衡自定义方式  代码方式: 配置灵活,但修改时需要重新打包发布 配置方式: 直观,方便,无需重新打包发布,但是无法做全局配置  3. 饥饿加载  开启饥饿加载 eager-load 指定饥饿加载的服务名称  3.]]></description>
+</item><item>
+    <title>并发编程</title>
+    <link>https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+    <pubDate>Sat, 22 Jan 2022 19:22:20 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+    <description><![CDATA[1. 进程与线程 1.1 进程与线程 1.1.1 进程   程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的. 当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程. 进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.   1.1.2 线程   一个进程之内可以分一到多个线程. 一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行 Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.   1.1.3 二者对比  进程基本上相互独立,线程在进程内,是进程的一个子集. 进程拥有共享的资源,如内存空间等,供内部的线程共享. 进程间通信较为复杂  同一台计算机的进程通信成为IPC 不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.   线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量 线程更轻量,线程上下文切换成本一般要比进程上下文切换低.  1.2 并行与并发   单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的. 一般会将这种线程轮流使用cpu的做法成为并发. 多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.     并发: 同一时间应对多件事情的能力. 并行: 同一时间动手做多件事情的能力.   1.3 应用 1.3.1 异步调用案例  从方法调用角度来说:
+ 需要等地啊结果返回,才能继续运行就是同步 不需要等待结果返回,就能继续运行就是异步  注意: 同步在多线程中海油另外一层的意思,是让多个线程步调一致
+设计: 多线程可以让方法执行变为异步的,比如说读取磁盘文件时,假设读取操作话费了5s,如果没有线程调度机制,这5s调用者什么都做不了,其代码都得暂停.
+结论:  比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程. tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程   1.]]></description>
 </item></channel>
 </rss>

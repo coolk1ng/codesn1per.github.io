@@ -4,10 +4,22 @@
         <link>https://codesn1per.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
         <description>数据库 - Category - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 26 Mar 2022 15:28:31 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
+    <title>MySQL锁机制</title>
+    <link>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</link>
+    <pubDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</guid>
+    <description><![CDATA[1. 锁的分类  共享锁 Share Lock (简称S锁,属于行锁) 排它锁 Exclusive Locks (简称X锁,属于行锁) 意向共享锁 Intention Shared Locks (简称IS锁,属于表锁) 意向排他锁 Intention Exclusive Locks (简称IX锁,属于表锁) 自增锁 AUTO-INC Locks  2. 共享锁  共享锁就是多个事务对同一数据可以共享一把锁,都能访问到数据库,但是只能读不能修改
+  事务A: select * from student where id = 1 lock in share mode;
+事务B: select * from student where id = 1 (读数据没有问题)
+事务B: update student set name = &ldquo;haha&rdquo; where id = 1
+注意: 无法修改会卡死,当事务A提交事务之后,会立刻修改成功
+ 3. 排它锁  排它锁不能与其他锁并存,如一个事务获取了一个数据行的排它锁,其他事务就不能再获取该行的锁,只有当前获取了排它锁的事务可以对数据进行读取和修改]]></description>
+</item><item>
     <title>MySQL索引</title>
     <link>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
-    <pubDate>Sat, 26 Mar 2022 15:28:31 &#43;0800</pubDate>
+    <pubDate>Sat, 26 Feb 2022 15:28:31 &#43;0800</pubDate>
     <author>Author</author>
     <guid>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
     <description><![CDATA[1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
@@ -16,7 +28,16 @@
 缺点:
  无论是二叉树还是红黑树,都会因为树的深度过深而造成io次数变多,影响数据读取效率    3. B树的索引形式
 特点:
- 所有键值分布在整棵树上 搜索有可能在非叶子节点结束,在关键字全集内做一次查找,性能逼近二次查找 每个节点最多拥有m个子树 根节点至少有两个子树 分支节点至少拥有m/2棵子树(除根节点和叶子节点都是分支节点) 所有叶子节点都在同一层,每个节点最多可以又m-1个key,并且以升序排列   ]]></description>
+ 所有键值分布在整棵树上 搜索有可能在非叶子节点结束,在关键字全集内做一次查找,性能逼近二次查找 每个节点最多拥有m个子树 根节点至少有两个子树 分支节点至少拥有m/2棵子树(除根节点和叶子节点都是分支节点) 所有叶子节点都在同一层,每个节点最多可以又m-1个key,并且以升序排列   2. 索引分类(InnoDB)   主键索引
+设定为主键后数据库会自动建立索引,innodb为聚簇索引,主键索引索引列值不能有空
+  单值索引 单列索引 普通索引
+即一个索引只包含单个列,一个表可以有单列索引
+  唯一索引
+索引列的值必须唯一,但允许有空值
+  复合索引
+一个索引包含多个列
+  全文索引(5.7之后)
+全文索引类型为FULL TEXT,在定义索引的列上支持值的全文查找,允许在这些所偶遇列中插入重复值和空值,全文索引可以在CHAR,VARCHAR上创建]]></description>
 </item><item>
     <title>MySQL高级</title>
     <link>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>

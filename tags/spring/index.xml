@@ -31,32 +31,5 @@
     <description><![CDATA[阶段一: 处理名称,检查缓存 阶段二: 检查父工厂 阶段三: 检查DependsOn 阶段四: 按Scope创建bean  创建singleton 创建prototype 创建其他scope   阶段五: 创建bean  创建bean实例 依赖注入 初始化 登记可销毁bean   阶段六: 类型转换 阶段七: 销毁bean  阶段一: 处理名称,检查缓存  先把别名解析为实际名称,再进行后续处理 若要FactoryBean本身,需要使用&amp;名称获取 singletonObjects是一级缓存,放单例成品对象 singletonFactories是三级缓存,放单例工厂 earlySingletonObjects是耳机缓存,放单例工厂的产品,可成为提前单例对象  阶段二: 处理父子容器 阶段三: 阶段四: 按Scope创建bean  scope理解为从xxx范围内找到bean更加贴切 singleton scope表示从单例池范围获取bean,如果没有,则创建并放入单例池 prototype scope表示从不缓存bean,每次都创建新的 request scope表示从request对象范围内获取bean,如果没有,则创建并放入request  阶段五: 创建bean 1. 创建bean实例   FactoryMethod方式创建bean实例
  分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
  优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造]]></description>
-</item><item>
-    <title>Spring事务</title>
-    <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1/</link>
-    <pubDate>Tue, 15 Mar 2022 12:55:53 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1/</guid>
-    <description><![CDATA[1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
-  通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
-  2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 隔离性是指在并发操作中,不同事务之间应该隔离开来,使每个并发的事务不会相干扰 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
-事务A读取了事务B中尚未提交的数据,如果事务B回滚,则A读取使用了错误的数据
-  不可重复读(读取了提交的新事物,指更新操作)
-不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
-  幻读(读取了提交的新事物,指增删操作)
-  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
-  第一类事务丢失(回滚丢失)
-对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
-  第二类事务丢失(覆盖丢失)
-  ​	对于第二类事务丢失,也称为覆盖丢失,就是A和B一起执行一个数据,两个同时取一个数据,然后B事务首先提交,但是A事务接下来又提交,这样就覆盖了B事务
- Read uncommitted
-读未提交,就是一个事务可以读取另一个未提交事务的数据,会产生脏读
-  Read committed
-读已提交,就是一个事务要等到另一个事务提交后才能读取数据,会产生不可重复读
-  Repeatable read
-重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
-  Serializable
-最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以毕淼脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- ]]></description>
 </item></channel>
 </rss>

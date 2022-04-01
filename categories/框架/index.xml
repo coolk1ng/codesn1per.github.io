@@ -32,14 +32,21 @@
  分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
  优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造]]></description>
 </item><item>
-    <title>Spring事务</title>
-    <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1/</link>
-    <pubDate>Tue, 15 Mar 2022 12:55:53 &#43;0800</pubDate>
+    <title>SpringCloud</title>
+    <link>https://codesn1per.github.io/springcloud/</link>
+    <pubDate>Fri, 18 Feb 2022 20:13:04 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1/</guid>
+    <guid>https://codesn1per.github.io/springcloud/</guid>
+    <description><![CDATA[SpringCloud 1. Eureka 1. 提供者与消费者  服务提供者: 一次业务中,被其他服务调用的服务(提供接口给其他服务) 服务消费者: 一次业务中,调用其他服务的服务(调用其他服务提供的接口) 提供者与消费者角色是相对 一个服务可以同时是服务提供者和服务消费者  2. Eureka注册中心  注册服务信息 拉取服务 负载均衡 远程调用 心跳续约 30s/次  1. Eureka的作用  消费者该如何获取服务提供者的具体信息?  服务提供者启动时向eureka注册自己的信息 eureka保存这些信息 消费者根据服务名称想eureka拉取提供者信息   如果有多个服务提供者,消费者该如何选择?  服务消费者利用负载均衡算法,从服务列表中挑选一个   消费者如何感知服务提供者健康状态?  服务提供者会每隔30s向eurekaServer发送心跳请求,报告健康状态 eureka会更新记录服务列表信息,心跳不正常会被剔除 消费者就可以拉取最新的信息    2. 服务注册  引入eureka-client依赖 在application.yml中配置eureka地址  2. Ribbon 1. Ribbon负载均衡规则  规则接口是IRule 默认实现是ZoneAvoidanceRule,根据zone选择服务列表,然后轮询  2. 负载均衡自定义方式  代码方式: 配置灵活,但修改时需要重新打包发布 配置方式: 直观,方便,无需重新打包发布,但是无法做全局配置  3. 饥饿加载  开启饥饿加载 eager-load 指定饥饿加载的服务名称  3.]]></description>
+</item><item>
+    <title>MySQL事务</title>
+    <link>https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</link>
+    <pubDate>Sat, 15 Jan 2022 12:55:53 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</guid>
     <description><![CDATA[1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
   通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
-  2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 隔离性是指在并发操作中,不同事务之间应该隔离开来,使每个并发的事务不会相干扰 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
+  2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 并发执行的事务不会互相影响,其对数据库的影响和他们串行执行时一样.比如多个用户同时往一个账户转账,最后账户的结果应该和他们按先后次序转账的记过一样 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
 事务A读取了事务B中尚未提交的数据,如果事务B回滚,则A读取使用了错误的数据
   不可重复读(读取了提交的新事物,指更新操作)
 不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
@@ -56,15 +63,8 @@
   Repeatable read
 重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
   Serializable
-最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以毕淼脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- ]]></description>
-</item><item>
-    <title>SpringCloud</title>
-    <link>https://codesn1per.github.io/springcloud/</link>
-    <pubDate>Fri, 18 Feb 2022 20:13:04 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/springcloud/</guid>
-    <description><![CDATA[SpringCloud 1. Eureka 1. 提供者与消费者  服务提供者: 一次业务中,被其他服务调用的服务(提供接口给其他服务) 服务消费者: 一次业务中,调用其他服务的服务(调用其他服务提供的接口) 提供者与消费者角色是相对 一个服务可以同时是服务提供者和服务消费者  2. Eureka注册中心  注册服务信息 拉取服务 负载均衡 远程调用 心跳续约 30s/次  1. Eureka的作用  消费者该如何获取服务提供者的具体信息?  服务提供者启动时向eureka注册自己的信息 eureka保存这些信息 消费者根据服务名称想eureka拉取提供者信息   如果有多个服务提供者,消费者该如何选择?  服务消费者利用负载均衡算法,从服务列表中挑选一个   消费者如何感知服务提供者健康状态?  服务提供者会每隔30s向eurekaServer发送心跳请求,报告健康状态 eureka会更新记录服务列表信息,心跳不正常会被剔除 消费者就可以拉取最新的信息    2. 服务注册  引入eureka-client依赖 在application.yml中配置eureka地址  2. Ribbon 1. Ribbon负载均衡规则  规则接口是IRule 默认实现是ZoneAvoidanceRule,根据zone选择服务列表,然后轮询  2. 负载均衡自定义方式  代码方式: 配置灵活,但修改时需要重新打包发布 配置方式: 直观,方便,无需重新打包发布,但是无法做全局配置  3. 饥饿加载  开启饥饿加载 eager-load 指定饥饿加载的服务名称  3.]]></description>
+最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
+ 4.]]></description>
 </item><item>
     <title>Mybatis</title>
     <link>https://codesn1per.github.io/mybatis/</link>

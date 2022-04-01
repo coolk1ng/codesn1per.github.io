@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>MySQL事务 - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="MySQL事务" />
+<meta property="og:description" content="1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
+  通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
+  2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 并发执行的事务不会互相影响,其对数据库的影响和他们串行执行时一样.比如多个用户同时往一个账户转账,最后账户的结果应该和他们按先后次序转账的记过一样 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
+事务A读取了事务B中尚未提交的数据,如果事务B回滚,则A读取使用了错误的数据
+  不可重复读(读取了提交的新事物,指更新操作)
+不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
+  幻读(读取了提交的新事物,指增删操作)
+  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
+  第一类事务丢失(回滚丢失)
+对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
+  第二类事务丢失(覆盖丢失)
+  ​	对于第二类事务丢失,也称为覆盖丢失,就是A和B一起执行一个数据,两个同时取一个数据,然后B事务首先提交,但是A事务接下来又提交,这样就覆盖了B事务
+ Read uncommitted
+读未提交,就是一个事务可以读取另一个未提交事务的数据,会产生脏读
+  Read committed
+读已提交,就是一个事务要等到另一个事务提交后才能读取数据,会产生不可重复读
+  Repeatable read
+重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
+  Serializable
+最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
+ 4." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-15T12:55:53&#43;08:00" />
+<meta property="article:modified_time" content="2022-01-15T12:55:53&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
+
+<meta name="twitter:title" content="MySQL事务"/>
+<meta name="twitter:description" content="1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
+  通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
+  2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 并发执行的事务不会互相影响,其对数据库的影响和他们串行执行时一样.比如多个用户同时往一个账户转账,最后账户的结果应该和他们按先后次序转账的记过一样 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
+事务A读取了事务B中尚未提交的数据,如果事务B回滚,则A读取使用了错误的数据
+  不可重复读(读取了提交的新事物,指更新操作)
+不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
+  幻读(读取了提交的新事物,指增删操作)
+  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
+  第一类事务丢失(回滚丢失)
+对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
+  第二类事务丢失(覆盖丢失)
+  ​	对于第二类事务丢失,也称为覆盖丢失,就是A和B一起执行一个数据,两个同时取一个数据,然后B事务首先提交,但是A事务接下来又提交,这样就覆盖了B事务
+ Read uncommitted
+读未提交,就是一个事务可以读取另一个未提交事务的数据,会产生脏读
+  Read committed
+读已提交,就是一个事务要等到另一个事务提交后才能读取数据,会产生不可重复读
+  Repeatable read
+重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
+  Serializable
+最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
+ 4."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" /><link rel="prev" href="https://codesn1per.github.io/sort/" /><link rel="next" href="https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MySQL事务",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/codesn1per.github.io\/mysql%E4%BA%8B%E5%8A%A1\/"
+        },"genre": "posts","keywords": "MySQL, 事务","wordcount":  104 ,
+        "url": "https:\/\/codesn1per.github.io\/mysql%E4%BA%8B%E5%8A%A1\/","datePublished": "2022-01-15T12:55:53+08:00","dateModified": "2022-01-15T12:55:53+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "CodeSniper"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="CodeSniper&#39; Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 博客 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="CodeSniper&#39; Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">博客</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">MySQL事务</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-15">2022-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;104 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-基本概念">1. 基本概念</a></li>
+        <li><a href="#2-事务的四大特性">2. 事务的四大特性</a></li>
+        <li><a href="#3-事务的隔离级别">3. 事务的隔离级别</a></li>
+        <li><a href="#4-事务的实现原理">4. 事务的实现原理</a></li>
+        <li><a href="#5-故障及故障恢复">5. 故障及故障恢复</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="1-基本概念">1. 基本概念</h3>
+<ul>
+<li>
+<p>事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合</p>
+</li>
+<li>
+<p>通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)</p>
+</li>
+</ul>
+<h3 id="2-事务的四大特性">2. 事务的四大特性</h3>
+<ol>
+<li>原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败</li>
+<li>一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的</li>
+<li>隔离性(Isolation): 并发执行的事务不会互相影响,其对数据库的影响和他们串行执行时一样.比如多个用户同时往一个账户转账,最后账户的结果应该和他们按先后次序转账的记过一样</li>
+<li>持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据</li>
+</ol>
+<h3 id="3-事务的隔离级别">3. 事务的隔离级别</h3>
+<ul>
+<li>
+<p>脏读(读取了未提交的数据,然后被回滚了)</p>
+<p>事务A读取了事务B中尚未提交的数据,如果事务B回滚,则A读取使用了错误的数据</p>
+</li>
+<li>
+<p>不可重复读(读取了提交的新事物,指更新操作)</p>
+<p>不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了</p>
+</li>
+<li>
+<p>幻读(读取了提交的新事物,指增删操作)</p>
+</li>
+</ul>
+<p>​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致</p>
+<ul>
+<li>
+<p>第一类事务丢失(回滚丢失)</p>
+<p>对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了</p>
+</li>
+<li>
+<p>第二类事务丢失(覆盖丢失)</p>
+</li>
+</ul>
+<p>​	对于第二类事务丢失,也称为覆盖丢失,就是A和B一起执行一个数据,两个同时取一个数据,然后B事务首先提交,但是A事务接下来又提交,这样就覆盖了B事务</p>
+<blockquote>
+<p>Read uncommitted</p>
+<p>读未提交,就是一个事务可以读取另一个未提交事务的数据,会产生脏读</p>
+</blockquote>
+<blockquote>
+<p>Read committed</p>
+<p>读已提交,就是一个事务要等到另一个事务提交后才能读取数据,会产生不可重复读</p>
+</blockquote>
+<blockquote>
+<p>Repeatable read</p>
+<p>重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读</p>
+</blockquote>
+<blockquote>
+<p>Serializable</p>
+<p>最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用</p>
+</blockquote>
+<h3 id="4-事务的实现原理">4. 事务的实现原理</h3>
+<ul>
+<li>
+<p>原子性是通过undo log来实现</p>
+<blockquote>
+<ul>
+<li>Undo Log是为了实现事务的原子性,在MySQL数据库InnoDB存储引擎中,Undo Log来实现多版本并发控制(MVCC)</li>
+<li>在操作任何数据之前,首先将数据备份到一个地方(Undo log).然后进行数据的修改.如果出现错误或者用户执行了ROLLBACK语句,系统可以利用Undo Log中的备份将数据恢复到事务开始之前的状态</li>
+<li>Undo Log是逻辑日志,可以理解为:
+<ul>
+<li>当delete一条记录时,Undo Log中会记录一条对应的insert记录</li>
+<li>当insert一条记录时,会记录一条对应的delete记录</li>
+<li>update一条记录时,他记录一套对应相反的update记录</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>持久性通过redo log来实现</p>
+<blockquote>
+<ul>
+<li>和Undo Log相反,Redo Log记录的是新数据的备份.在事务提交前,只要将Redo Log持久化即可,不需要将数据持久化.当系统崩溃时,虽然数据没有持久化,但是Redo Log已经持久化.系统可以根据Redo Log的内容,将所有数据恢复到最新的状态</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>隔离性是通过(读写锁 + MVCC)来实现</p>
+<blockquote>
+<ul>
+<li>事务具有隔离性,理论上来说事务之间的执行不应该相互产生影响,其对数据库的影响应该和他们串行执行时一样</li>
+<li>然而完全的隔离性会导致系统并发性能很低,降低对资源的利用率,因而实际上对隔离性的要求会有所放宽,这也会一定程度造成对数据库一致性要求降低</li>
+<li>SQL标准为事务定义了不同的隔离级别,从低到高一次是
+<ul>
+<li>读未提交(READ UNCOMMITTED): 对事务处理的读取没有任何限制,不推荐</li>
+<li>读已提交(READ COMMITTED)</li>
+<li>可重复度(REPEATABLE READ)</li>
+<li>串行化(SERIALIZABLE)</li>
+</ul>
+</li>
+<li><strong>在MySQL中,锁可以分为两类</strong>
+<ul>
+<li>共享锁: 共享锁定是将对象数据变为只读形式,不能进行更新,所以也成为读取锁定</li>
+<li>排它锁: 排它锁定时当执行INSERT/UPDATE/DELETE的时候,其他事务不能读取该数据</li>
+</ul>
+</li>
+<li>锁定粒度: 锁定对象的大小是锁的粒度
+<ul>
+<li>记录</li>
+<li>表</li>
+<li>数据库</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>一致性是通过原子性,持久性,隔离性来实现的</p>
+</li>
+</ul>
+<h3 id="5-故障及故障恢复">5. 故障及故障恢复</h3>
+<ul>
+<li>事务的执行流程如下
+<ul>
+<li>系统会为每个事务开辟一个私有工作区</li>
+<li>事务读操作将从磁盘中拷贝数据项到工作区,在执行写操作前所有的更新都作用于工作区中的拷贝</li>
+<li>事务的写操作将把数据输出到内存的缓冲区中,等到合适的时间在由缓冲区管理器将数据写入到磁盘</li>
+</ul>
+</li>
+<li>由于数据库存在立即修改和延迟修改,所以在事务执行过程中可能存在以下情况:
+<ul>
+<li>在事务提交前出现故障,但是事务对数据库的部分修改已经写入磁盘数据库中,这导致了事务的原子性被破坏</li>
+<li>在系统崩溃前事务已经提交,但数据还在内存缓冲区中,没有写入磁盘.系统恢复时将丢失此次已提交的修改.这是对事务持久性的破坏</li>
+</ul>
+</li>
+<li>撤销事务undo: 将事务更新的所有数据项恢复为日志中的旧值</li>
+<li>重做事务redo: 将事务更新的所有数据项恢复为日志中的新值</li>
+<li>事务正常回滚/因事务故障中止将进行redo</li>
+<li>系统从崩溃中恢复时将先进行redo在进行undo</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-01-15</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/mysql%E4%BA%8B%E5%8A%A1/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" data-title="MySQL事务" data-via="xxxx" data-hashtags="MySQL,事务"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" data-hashtag="MySQL"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" data-title="MySQL事务" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" data-title="MySQL事务"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" data-title="MySQL事务"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" data-title="MySQL事务" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" data-title="MySQL事务" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" data-title="MySQL事务"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">MySQL</a>,&nbsp;<a href="/tags/%E4%BA%8B%E5%8A%A1/">事务</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/sort/" class="prev" rel="prev" title="Sort"><i class="fas fa-angle-left fa-fw"></i>Sort</a>
+            <a href="/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" class="next" rel="next" title="动态代理">动态代理<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.84.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">CodeSniper</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"CodeSniper' Blog","id-2":"CodeSniper' Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
