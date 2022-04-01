@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>SpringMVC - Tag - CodeSniper&#39; Blog</title>
-        <link>https://coden1per.github.io/tags/springmvc/</link>
+        <link>https://codesn1per.github.io/tags/springmvc/</link>
         <description>SpringMVC - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Tue, 02 Feb 2021 02:03:22 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/springmvc/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Tue, 02 Feb 2021 02:03:22 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/springmvc/" rel="self" type="application/rss+xml" /><item>
     <title>SpringMVC</title>
-    <link>https://coden1per.github.io/springmvc/</link>
+    <link>https://codesn1per.github.io/springmvc/</link>
     <pubDate>Tue, 02 Feb 2021 02:03:22 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/springmvc/</guid>
+    <guid>https://codesn1per.github.io/springmvc/</guid>
     <description><![CDATA[1. SpringMVC组件 2. 请求方式 3. 处理器方法的参数 处理器方法可以包含一下四类参数,这些参数会在系统调用时由系统自动赋值,即程序员可在方法内直接使用;
  HttpServletRequest HttpServletResponse HttpServletSession 请求中所携带的请求参数  3.1 逐个参数接收 逐个接收:请求中的参数名和控制器方法的形参名一样;
 接受参数的问题:

@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>IO流 - Tag - CodeSniper&#39; Blog</title>
-        <link>https://coden1per.github.io/tags/io%E6%B5%81/</link>
+        <link>https://codesn1per.github.io/tags/io%E6%B5%81/</link>
         <description>IO流 - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Fri, 02 Apr 2021 02:00:09 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/io%E6%B5%81/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Fri, 02 Apr 2021 02:00:09 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/io%E6%B5%81/" rel="self" type="application/rss+xml" /><item>
     <title>IO流</title>
-    <link>https://coden1per.github.io/io%E6%B5%81/</link>
+    <link>https://codesn1per.github.io/io%E6%B5%81/</link>
     <pubDate>Fri, 02 Apr 2021 02:00:09 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/io%E6%B5%81/</guid>
+    <guid>https://codesn1per.github.io/io%E6%B5%81/</guid>
     <description><![CDATA[1. 文件 1. 什么是文件? 保存数据的地方
 2. 文件流 文件在程序中是以流的形式来操作的
 流: 数据在数据源(文件)和程序(内存)之间经历的路径
