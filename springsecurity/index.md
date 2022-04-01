@@ -19,7 +19,7 @@
 
    1. 通过配置文件
 
-      ``` pro
+      ``` properties
       server.port=5555
       spring.security.user.name=root
       spring.security.user.password=123456
@@ -64,7 +64,6 @@
               auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
           }
       }
-      
       ```
 
       ```java
@@ -298,27 +297,27 @@ Oauth协议为用户资源的授权提供了安全的,开放而简易的标准.�
 
 ### 2.1 授权码模式(Authorization Code)
 
-![image-20210829221743207](../../static/image-20210829221743207.png)
+![image-20210829221743207](/image-20210829221743207.png)
 
 ### 2.2 简化授权模式
 
-![image-20210829221809041](../../static/image-20210829221809041.png)
+![image-20210829221809041](/image-20210829221809041.png)
 
 ### 2.3 密码模式
 
 ### 2.4 客户端模式
 
-![image-20210829222019351](../../static/image-20210829222019351.png)
+![image-20210829222019351](/image-20210829222019351.png)
 
 ### 2.5 刷新令牌
 
-![image-20210829222049642](../../static/image-20210829222049642.png)
+![image-20210829222049642](/image-20210829222049642.png)
 
 # Spring Security Oauth2
 
 ## 1.1 授权服务器
 
-![image-20210829222318609](../../static/image-20210829222318609.png)
+![image-20210829222318609](/image-20210829222318609.png)
 
 * Authorize Endpoint: 授权端点,进行授权
 * Token Endpoint: 令牌端点,经过授权拿到对应的Token

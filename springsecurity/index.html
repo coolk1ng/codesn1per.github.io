@@ -202,10 +202,10 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
 <ol>
 <li>
 <p>通过配置文件</p>
-<div class="highlight"><pre class="chroma"><code class="language-pro" data-lang="pro"><span class="s">server</span><span class="p">.</span><span class="s">port</span><span class="o">=</span><span class="mi">5555</span>
-<span class="s">spring</span><span class="p">.</span><span class="s">security</span><span class="p">.</span><span class="s">user</span><span class="p">.</span><span class="s">name</span><span class="o">=</span><span class="s">root</span>
-<span class="s">spring</span><span class="p">.</span><span class="s">security</span><span class="p">.</span><span class="s">user</span><span class="p">.</span><span class="s">password</span><span class="o">=</span><span class="mi">123456</span>
-</code></pre></div></li>
+<pre><code class="language-properties" data-lang="properties">server.port=5555
+spring.security.user.name=root
+spring.security.user.password=123456
+</code></pre></li>
 <li>
 <p>通过配置类</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Configuration</span>
@@ -240,7 +240,6 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
         <span class="n">auth</span><span class="o">.</span><span class="na">userDetailsService</span><span class="o">(</span><span class="n">userDetailsService</span><span class="o">).</span><span class="na">passwordEncoder</span><span class="o">(</span><span class="n">passwordEncoder</span><span class="o">());</span>
     <span class="o">}</span>
 <span class="o">}</span>
-
 </code></pre></div><div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Service</span><span class="o">(</span><span class="s">&#34;userDetailsService&#34;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyUserDetailService</span> <span class="kd">implements</span> <span class="n">UserDetailsService</span> <span class="o">{</span>
     <span class="nd">@Override</span>
@@ -427,48 +426,48 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="../../static/image-20210829221743207.png"
-        data-srcset="../../static/image-20210829221743207.png, ../../static/image-20210829221743207.png 1.5x, ../../static/image-20210829221743207.png 2x"
+        data-src="/image-20210829221743207.png"
+        data-srcset="/image-20210829221743207.png, /image-20210829221743207.png 1.5x, /image-20210829221743207.png 2x"
         data-sizes="auto"
-        alt="../../static/image-20210829221743207.png"
+        alt="/image-20210829221743207.png"
         title="image-20210829221743207" /></p>
 <h3 id="22-简化授权模式">2.2 简化授权模式</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="../../static/image-20210829221809041.png"
-        data-srcset="../../static/image-20210829221809041.png, ../../static/image-20210829221809041.png 1.5x, ../../static/image-20210829221809041.png 2x"
+        data-src="/image-20210829221809041.png"
+        data-srcset="/image-20210829221809041.png, /image-20210829221809041.png 1.5x, /image-20210829221809041.png 2x"
         data-sizes="auto"
-        alt="../../static/image-20210829221809041.png"
+        alt="/image-20210829221809041.png"
         title="image-20210829221809041" /></p>
 <h3 id="23-密码模式">2.3 密码模式</h3>
 <h3 id="24-客户端模式">2.4 客户端模式</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="../../static/image-20210829222019351.png"
-        data-srcset="../../static/image-20210829222019351.png, ../../static/image-20210829222019351.png 1.5x, ../../static/image-20210829222019351.png 2x"
+        data-src="/image-20210829222019351.png"
+        data-srcset="/image-20210829222019351.png, /image-20210829222019351.png 1.5x, /image-20210829222019351.png 2x"
         data-sizes="auto"
-        alt="../../static/image-20210829222019351.png"
+        alt="/image-20210829222019351.png"
         title="image-20210829222019351" /></p>
 <h3 id="25-刷新令牌">2.5 刷新令牌</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="../../static/image-20210829222049642.png"
-        data-srcset="../../static/image-20210829222049642.png, ../../static/image-20210829222049642.png 1.5x, ../../static/image-20210829222049642.png 2x"
+        data-src="/image-20210829222049642.png"
+        data-srcset="/image-20210829222049642.png, /image-20210829222049642.png 1.5x, /image-20210829222049642.png 2x"
         data-sizes="auto"
-        alt="../../static/image-20210829222049642.png"
+        alt="/image-20210829222049642.png"
         title="image-20210829222049642" /></p>
 <h1 id="spring-security-oauth2">Spring Security Oauth2</h1>
 <h2 id="11-授权服务器">1.1 授权服务器</h2>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="../../static/image-20210829222318609.png"
-        data-srcset="../../static/image-20210829222318609.png, ../../static/image-20210829222318609.png 1.5x, ../../static/image-20210829222318609.png 2x"
+        data-src="/image-20210829222318609.png"
+        data-srcset="/image-20210829222318609.png, /image-20210829222318609.png 1.5x, /image-20210829222318609.png 2x"
         data-sizes="auto"
-        alt="../../static/image-20210829222318609.png"
+        alt="/image-20210829222318609.png"
         title="image-20210829222318609" /></p>
 <ul>
 <li>Authorize Endpoint: 授权端点,进行授权</li>
