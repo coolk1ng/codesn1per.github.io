@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>IO流 - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="IO流" />
+<meta property="og:description" content="1. 文件 1. 什么是文件? 保存数据的地方
+2. 文件流 文件在程序中是以流的形式来操作的
+流: 数据在数据源(文件)和程序(内存)之间经历的路径
+输入流: 数据从数据源(文件)到程序(内存)的路径
+输出流: 数据从程序(内存)到数据源(文件)的路径
+3. 常用文件操作  new File(String pathname) //根据路径创建一个File对象 new File(File parent,String child) //根据父目录文件&#43;子路径创建 new File(String parent,String child) //根据父目录&#43;子路径构建 createNewFile 创建文件 getName,getAbsoutePath,getParent,length,exists,isFile,isDirectory mkdir:创建一级目录,mkdirs: 创建多级目录,delete:删除空目录或文件  2. IO流原理及流的分类 1. io流原理  I/O是input/output的缩写,I/O技术是非常实用的技术,用于处理数据传输,如读写文件,网络通信等; java程序中,对于数据的输入/输出操作以流(stream)的方式进行; java.io包下提供各种&quot;流&quot;类和接口,用以获取不同种类的数据,并通过方法输入或输出数据; 输入input:读取外部数据(磁盘,光盘等存储设备的数据)到程序(内存)中; 输出output:将程序数据输出到磁盘,光盘等存储设备中;  2. 流的分类   按操作数据单位不同分为: 字节流(8bit) 二进制文件,字符流(按字符) 文本文件;
+  按数据流的流向不同分为: 输入流,输出流
+  按流的角色的不同分为: 节点流,处理流/包装流
+ java的IO流共设计40多个类,实际上非常规则,都是从如上4个抽象基类派生的. 由这四个类派生出来的子类名称都是以其父类作为子类名后缀;    3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://coden1per.github.io/io%E6%B5%81/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-02T02:00:09&#43;08:00" />
+<meta property="article:modified_time" content="2021-04-02T02:00:09&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+
+<meta name="twitter:title" content="IO流"/>
+<meta name="twitter:description" content="1. 文件 1. 什么是文件? 保存数据的地方
+2. 文件流 文件在程序中是以流的形式来操作的
+流: 数据在数据源(文件)和程序(内存)之间经历的路径
+输入流: 数据从数据源(文件)到程序(内存)的路径
+输出流: 数据从程序(内存)到数据源(文件)的路径
+3. 常用文件操作  new File(String pathname) //根据路径创建一个File对象 new File(File parent,String child) //根据父目录文件&#43;子路径创建 new File(String parent,String child) //根据父目录&#43;子路径构建 createNewFile 创建文件 getName,getAbsoutePath,getParent,length,exists,isFile,isDirectory mkdir:创建一级目录,mkdirs: 创建多级目录,delete:删除空目录或文件  2. IO流原理及流的分类 1. io流原理  I/O是input/output的缩写,I/O技术是非常实用的技术,用于处理数据传输,如读写文件,网络通信等; java程序中,对于数据的输入/输出操作以流(stream)的方式进行; java.io包下提供各种&quot;流&quot;类和接口,用以获取不同种类的数据,并通过方法输入或输出数据; 输入input:读取外部数据(磁盘,光盘等存储设备的数据)到程序(内存)中; 输出output:将程序数据输出到磁盘,光盘等存储设备中;  2. 流的分类   按操作数据单位不同分为: 字节流(8bit) 二进制文件,字符流(按字符) 文本文件;
+  按数据流的流向不同分为: 输入流,输出流
+  按流的角色的不同分为: 节点流,处理流/包装流
+ java的IO流共设计40多个类,实际上非常规则,都是从如上4个抽象基类派生的. 由这四个类派生出来的子类名称都是以其父类作为子类名后缀;    3."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/io%E6%B5%81/" /><link rel="prev" href="https://coden1per.github.io/sort/" /><link rel="next" href="https://coden1per.github.io/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "IO流",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/coden1per.github.io\/io%E6%B5%81\/"
+        },"genre": "posts","keywords": "IO流","wordcount":  197 ,
+        "url": "https:\/\/coden1per.github.io\/io%E6%B5%81\/","datePublished": "2021-04-02T02:00:09+08:00","dateModified": "2021-04-02T02:00:09+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "CodeSniper"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="CodeSniper&#39; Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 博客 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="CodeSniper&#39; Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">博客</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">IO流</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/javase/"><i class="far fa-folder fa-fw"></i>JavaSE</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-02">2021-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;197 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-文件">1. 文件</a>
+      <ul>
+        <li><a href="#1-什么是文件">1. 什么是文件?</a></li>
+        <li><a href="#2-文件流">2. 文件流</a></li>
+        <li><a href="#3-常用文件操作">3. 常用文件操作</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-io流原理及流的分类">2. IO流原理及流的分类</a>
+      <ul>
+        <li><a href="#1-io流原理">1. io流原理</a></li>
+        <li><a href="#2-流的分类">2. 流的分类</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-io流常用的类">3. IO流常用的类</a>
+      <ul>
+        <li><a href="#1-fileinputstreamfileoutstream">1. FileInputStream/FileOutStream</a></li>
+        <li><a href="#2-filereaderfilewriter">2. FileReader/FileWriter</a></li>
+        <li><a href="#3-节点流和处理流">3. 节点流和处理流</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-properties类">3. Properties类</a>
+      <ul>
+        <li><a href="#1-基本介绍-2">1. 基本介绍</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="1-文件">1. 文件</h2>
+<h3 id="1-什么是文件">1. 什么是文件?</h3>
+<p><strong>保存数据的地方</strong></p>
+<h3 id="2-文件流">2. 文件流</h3>
+<p>文件在程序中是以流的形式来操作的</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210710181321189.png"
+        data-srcset="/image-20210710181321189.png, /image-20210710181321189.png 1.5x, /image-20210710181321189.png 2x"
+        data-sizes="auto"
+        alt="/image-20210710181321189.png"
+        title="image-20210710181321189" /></p>
+<p>流: 数据在数据源(文件)和程序(内存)之间经历的路径</p>
+<p>输入流: 数据从数据源(文件)到程序(内存)的路径</p>
+<p>输出流: 数据从程序(内存)到数据源(文件)的路径</p>
+<h3 id="3-常用文件操作">3. 常用文件操作</h3>
+<ul>
+<li>new File(String pathname) //根据路径创建一个File对象</li>
+<li>new File(File parent,String child) //根据父目录文件+子路径创建</li>
+<li>new File(String parent,String child) //根据父目录+子路径构建</li>
+<li>createNewFile 创建文件</li>
+<li>getName,getAbsoutePath,getParent,length,exists,isFile,isDirectory</li>
+<li>mkdir:创建一级目录,mkdirs: 创建多级目录,delete:删除空目录或文件</li>
+</ul>
+<h2 id="2-io流原理及流的分类">2. IO流原理及流的分类</h2>
+<h3 id="1-io流原理">1. io流原理</h3>
+<ol>
+<li>I/O是input/output的缩写,I/O技术是非常实用的技术,用于处理数据传输,如读写文件,网络通信等;</li>
+<li>java程序中,对于数据的输入/输出操作以流(stream)的方式进行;</li>
+<li>java.io包下提供各种&quot;流&quot;类和接口,用以获取不同种类的数据,并通过方法输入或输出数据;</li>
+<li>输入input:读取外部数据(磁盘,光盘等存储设备的数据)到程序(内存)中;</li>
+<li>输出output:将程序数据输出到磁盘,光盘等存储设备中;</li>
+</ol>
+<h3 id="2-流的分类">2. 流的分类</h3>
+<ol>
+<li>
+<p>按操作数据单位不同分为: 字节流(8bit) 二进制文件,字符流(按字符) 文本文件;</p>
+</li>
+<li>
+<p>按数据流的流向不同分为: 输入流,输出流</p>
+</li>
+<li>
+<p>按流的角色的不同分为: 节点流,处理流/包装流</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210710225844363.png"
+        data-srcset="/image-20210710225844363.png, /image-20210710225844363.png 1.5x, /image-20210710225844363.png 2x"
+        data-sizes="auto"
+        alt="/image-20210710225844363.png"
+        title="image-20210710225844363" /></p>
+<ol>
+<li>java的IO流共设计40多个类,实际上非常规则,都是从如上4个抽象基类派生的.</li>
+<li>由这四个类派生出来的子类名称都是以其父类作为子类名后缀;</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-io流常用的类">3. IO流常用的类</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210710230634863.png"
+        data-srcset="/image-20210710230634863.png, /image-20210710230634863.png 1.5x, /image-20210710230634863.png 2x"
+        data-sizes="auto"
+        alt="/image-20210710230634863.png"
+        title="image-20210710230634863" /></p>
+<h3 id="1-fileinputstreamfileoutstream">1. FileInputStream/FileOutStream</h3>
+<h3 id="2-filereaderfilewriter">2. FileReader/FileWriter</h3>
+<p>是字符流,按照字符来操作io</p>
+<p><strong>FileReader相关方法:</strong></p>
+<ul>
+<li>new FileReader(File/String)</li>
+<li>read: 每次读取单个字符,返回该字符,如果到文件末尾返回-1;</li>
+<li>read(char[]): 批量读取多个字符到数组,返回读取到的字符数,如果到文件末尾返回-1;</li>
+<li>new String(char[]): 将char[]转换成String</li>
+<li>new String(char[],off,len): 将char[]的指定部分转换成String</li>
+</ul>
+<p><strong>FileWriter相关方法:</strong></p>
+<ul>
+<li>new FileWriter(File/String): 覆盖模式,相当于流的指针在首端</li>
+<li>new FileWriter(File/String,true): 追加模式,相当于流的指针在末尾</li>
+<li>write(int) : 写入单个字符</li>
+<li>write(char[]):写入指定数组</li>
+<li>write(char[],off,len): 写入指定数组的指定部分</li>
+<li>write(string):写入整个字符串</li>
+<li>write(string,off,len): 写入字符串的指定部分</li>
+<li>toCharArray:将String转换成char[]</li>
+</ul>
+<p><strong>注意:FileWriter使用后,必须要关闭或刷新,否则写入不到指定的文件</strong></p>
+<h3 id="3-节点流和处理流">3. 节点流和处理流</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210711205024120.png"
+        data-srcset="/image-20210711205024120.png, /image-20210711205024120.png 1.5x, /image-20210711205024120.png 2x"
+        data-sizes="auto"
+        alt="/image-20210711205024120.png"
+        title="image-20210711205024120" /></p>
+<h4 id="1-基本介绍">1. 基本介绍</h4>
+<ol>
+<li>
+<p>节点流可以从一个特定的数据源读写数据,如FileReader,FileWriter</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210711163537911.png"
+        data-srcset="/image-20210711163537911.png, /image-20210711163537911.png 1.5x, /image-20210711163537911.png 2x"
+        data-sizes="auto"
+        alt="/image-20210711163537911.png"
+        title="image-20210711163537911" /></p>
+</li>
+<li>
+<p>处理流(也叫包装流)是&quot;连接&quot;在已存在的流(节点流或处理流)之上,为程序提供更为强大读写功能,如BufferedReader,BufferedWreter</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210711163726284.png"
+        data-srcset="/image-20210711163726284.png, /image-20210711163726284.png 1.5x, /image-20210711163726284.png 2x"
+        data-sizes="auto"
+        alt="/image-20210711163726284.png"
+        title="image-20210711163726284" /></p>
+</li>
+</ol>
+<h4 id="2-节点流和处理流的区别和联系">2. 节点流和处理流的区别和联系</h4>
+<ol>
+<li>节点流是底层流/低级流,直接跟数据源相接;</li>
+<li>处理流(包装流)包装节点流,既可以消除不同节点流的实现差异,也可以提供更方便的方法来完成输入输出;</li>
+<li>处理流对节点流进行包装,使用了修饰器设计模式,不会直接与数据源相连;</li>
+</ol>
+<h4 id="3-处理流的功能主要提现在以下两个方面">3. 处理流的功能主要提现在以下两个方面:</h4>
+<ol>
+<li>性能的提高: 主要以增加缓冲的方式来提高输入输出的效率;</li>
+<li>操作的编写: 处理流可以提供一系列便捷的方法来一次输入输出大批量的数据,使用更加灵活方便;</li>
+</ol>
+<h4 id="4-处理流-bufferedreader和bufferedwriter">4. 处理流-BufferedReader和BufferedWriter</h4>
+<ol>
+<li>BufferedReader和BufferedWriter属于字符流,是按照字符来读取数据的;</li>
+<li>关闭时,只需要关闭外层流即可;</li>
+</ol>
+<h4 id="5-处理流-bufferedinputstream和bufferedoutputstream">5. 处理流-BufferedInputStream和BufferedOutputStream</h4>
+<ol>
+<li>
+<p>BufferedInputStream是字节流,在创建BufferedInputStream时,会创建一个内部缓冲区数组;</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210711230300043.png"
+        data-srcset="/image-20210711230300043.png, /image-20210711230300043.png 1.5x, /image-20210711230300043.png 2x"
+        data-sizes="auto"
+        alt="/image-20210711230300043.png"
+        title="image-20210711230300043" /></p>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210711230331714.png"
+        data-srcset="/image-20210711230331714.png, /image-20210711230331714.png 1.5x, /image-20210711230331714.png 2x"
+        data-sizes="auto"
+        alt="/image-20210711230331714.png"
+        title="image-20210711230331714" /></p>
+<h4 id="6-对象流-obectinputstream和objectoutputstream">6. 对象流-ObectInputStream和ObjectOutputStream</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210712161641079.png"
+        data-srcset="/image-20210712161641079.png, /image-20210712161641079.png 1.5x, /image-20210712161641079.png 2x"
+        data-sizes="auto"
+        alt="/image-20210712161641079.png"
+        title="image-20210712161641079" /></p>
+<p><strong>序列化和反序列化</strong></p>
+<ol>
+<li>序列化就是在保存数据时,保存数据的值和数据类型</li>
+<li>反序列化就是在恢复数据时,恢复数据的值和数据类型</li>
+<li>需要让某个对象支持序列化机制,则必须让其类是可序列化的,为了让某个类是可序列化的,该类必须实现如下两个接口之一;
+<ol>
+<li>Serializable //这是标记接口,没有方法</li>
+<li>Externalizable //该接口有方法实现,所以一般使用Serializable</li>
+</ol>
+</li>
+</ol>
+<h5 id="1-基本介绍-1">1. 基本介绍</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210712162251276.png"
+        data-srcset="/image-20210712162251276.png, /image-20210712162251276.png 1.5x, /image-20210712162251276.png 2x"
+        data-sizes="auto"
+        alt="/image-20210712162251276.png"
+        title="image-20210712162251276" /></p>
+<ol>
+<li>功能: 提供了对基本类型或对象类型的序列化和反序列化的方法</li>
+<li>ObjectOutputStream提供序列化功能</li>
+<li>ObjectInputStream提供反序列化功能</li>
+</ol>
+<p><strong>调用对象的方法,需要向下转型</strong></p>
+<h5 id="2-注意事项和细节说明">2. 注意事项和细节说明</h5>
+<ol>
+<li>读写顺序要一致</li>
+<li>要求序列化或反序列化对象,需要实现Serializable</li>
+<li>序列化的类中建议添加SerialVersionUID,为了提高版本的兼容性,private static final long serialVersionUID=1L;</li>
+<li>序列化对象时,默认将里面所有属性都进行序列化,但除了static或transient修饰的成员</li>
+<li>序列化对象时,要求里面属性的类型也需要实现序列化接口</li>
+<li>序列化具备可继承性,也就是如果某类已经实现了序列化,则他的所有子类也已经 默认实现了序列化</li>
+</ol>
+<h4 id="7-标准输入输出流">7. 标准输入输出流</h4>
+<h5 id="1-介绍">1. 介绍</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210712170338174.png"
+        data-srcset="/image-20210712170338174.png, /image-20210712170338174.png 1.5x, /image-20210712170338174.png 2x"
+        data-sizes="auto"
+        alt="/image-20210712170338174.png"
+        title="image-20210712170338174" /></p>
+<h5 id="2-systemin">2. System.in</h5>
+<ul>
+<li>编译类型 InputStream</li>
+<li>运行类型 BufferedInputStream</li>
+<li>标准输入 :键盘</li>
+</ul>
+<h5 id="3-systemout">3. System.out</h5>
+<ul>
+<li>编译类型 ,运行类型 PrintStream</li>
+</ul>
+<h4 id="8-转换流-inputstreamreader和outputstreamwriter">8. 转换流-InputStreamReader和OutputStreamWriter</h4>
+<h5 id="1-介绍-1">1. 介绍</h5>
+<ol>
+<li>InputStreamReader: Reader的子类,可以将InputStream(字节流)包装成(转换成)Reader(字符流)</li>
+<li>OutputStreamWriter: Writer的子类,实现将OutputStream(字节流)包装成Writer(字符流)</li>
+<li>当处理纯文本数据时,如果使用字符流效率更高,并且可以有效解决中文问题,所以讲义将字节转换成字符流</li>
+<li>可以在使用时指定编码格式(比如utf-8,gbk,gb2312)</li>
+</ol>
+<h4 id="9-打印流-printstream和printwriter">9. 打印流-PrintStream和PrintWriter</h4>
+<h2 id="3-properties类">3. Properties类</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210712220156466.png"
+        data-srcset="/image-20210712220156466.png, /image-20210712220156466.png 1.5x, /image-20210712220156466.png 2x"
+        data-sizes="auto"
+        alt="/image-20210712220156466.png"
+        title="image-20210712220156466" /></p>
+<h3 id="1-基本介绍-2">1. 基本介绍</h3>
+<ol>
+<li>
+<p>专门用于读写配置文件的集合类</p>
+</li>
+<li>
+<p>配置文件的格式: 键=值</p>
+<p>注意: 键值对不需要有空格,值不需要用引号,默认类型是String</p>
+</li>
+<li>
+<p>Properties的常见方法</p>
+<ul>
+<li>load: 加载配置文件的键值对到Properties对象</li>
+<li>list: 将数据显示到指定设备</li>
+<li>getProperty(key): 根据键获取值</li>
+<li>getProperty(key,value): 设置键值对到Properties对象</li>
+<li>store: 将Properties中的键值对存储到配置文件,在idea中,保存信息到配置文件,如果含有中文,会存储为unicode码</li>
+</ul>
+</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-04-02</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/io%E6%B5%81/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://coden1per.github.io/io%E6%B5%81/" data-title="IO流" data-via="xxxx" data-hashtags="IO流"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://coden1per.github.io/io%E6%B5%81/" data-hashtag="IO流"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://coden1per.github.io/io%E6%B5%81/" data-title="IO流" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://coden1per.github.io/io%E6%B5%81/" data-title="IO流"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://coden1per.github.io/io%E6%B5%81/" data-title="IO流"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://coden1per.github.io/io%E6%B5%81/" data-title="IO流" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://coden1per.github.io/io%E6%B5%81/" data-title="IO流" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://coden1per.github.io/io%E6%B5%81/" data-title="IO流"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/io%E6%B5%81/">IO流</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/sort/" class="prev" rel="prev" title="Sort"><i class="fas fa-angle-left fa-fw"></i>Sort</a>
+            <a href="/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" class="next" rel="next" title="Linux基本命令">Linux基本命令<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.84.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">CodeSniper</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"CodeSniper' Blog","id-2":"CodeSniper' Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

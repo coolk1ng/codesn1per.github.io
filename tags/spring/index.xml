@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Spring - Tag - CodeSniper&#39; Blog</title>
-        <link>https://codesn1per.github.io/tags/spring/</link>
+        <link>https://coden1per.github.io/tags/spring/</link>
         <description>Spring - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/spring/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/spring/" rel="self" type="application/rss+xml" /><item>
     <title>Spring事务失效情况</title>
-    <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
+    <link>https://coden1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
     <pubDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</guid>
+    <guid>https://coden1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</guid>
     <description><![CDATA[1. 抛出检查异常导致事务不能正确回滚  **原因: **Srping默认只会回滚非检查异常
   解法: 配置rollbackFor属性
  2. 业务方法内自己try-catch异常导致事务不能正确回滚  原因: 事务通知只有捕捉到了目标抛出的异常,才能进行后续的回滚处理,如果目标自己处理异常,事务通知无法获悉
@@ -24,12 +24,38 @@
   **解法: **1. 依赖注入自己(代理)来调用; 2. 通过AopContext拿到代理对象,来调用; 3. 通过CTW,LTW实现功能增强]]></description>
 </item><item>
     <title>SpringBean的生命周期</title>
-    <link>https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
+    <link>https://coden1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
     <pubDate>Sun, 27 Mar 2022 13:14:08 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</guid>
+    <guid>https://coden1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</guid>
     <description><![CDATA[阶段一: 处理名称,检查缓存 阶段二: 检查父工厂 阶段三: 检查DependsOn 阶段四: 按Scope创建bean  创建singleton 创建prototype 创建其他scope   阶段五: 创建bean  创建bean实例 依赖注入 初始化 登记可销毁bean   阶段六: 类型转换 阶段七: 销毁bean  阶段一: 处理名称,检查缓存  先把别名解析为实际名称,再进行后续处理 若要FactoryBean本身,需要使用&amp;名称获取 singletonObjects是一级缓存,放单例成品对象 singletonFactories是三级缓存,放单例工厂 earlySingletonObjects是耳机缓存,放单例工厂的产品,可成为提前单例对象  阶段二: 处理父子容器 阶段三: 阶段四: 按Scope创建bean  scope理解为从xxx范围内找到bean更加贴切 singleton scope表示从单例池范围获取bean,如果没有,则创建并放入单例池 prototype scope表示从不缓存bean,每次都创建新的 request scope表示从request对象范围内获取bean,如果没有,则创建并放入request  阶段五: 创建bean 1. 创建bean实例   FactoryMethod方式创建bean实例
  分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
  优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造]]></description>
+</item><item>
+    <title>SpringMVC</title>
+    <link>https://coden1per.github.io/springmvc/</link>
+    <pubDate>Tue, 02 Feb 2021 02:03:22 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://coden1per.github.io/springmvc/</guid>
+    <description><![CDATA[1. SpringMVC组件 2. 请求方式 3. 处理器方法的参数 处理器方法可以包含一下四类参数,这些参数会在系统调用时由系统自动赋值,即程序员可在方法内直接使用;
+ HttpServletRequest HttpServletResponse HttpServletSession 请求中所携带的请求参数  3.1 逐个参数接收 逐个接收:请求中的参数名和控制器方法的形参名一样;
+接受参数的问题:
+ 参数最好使用包装类型,例如Integer,能接收空值情况,接收的是null post请求中有乱码问题,使用字符集过滤器  3.2 请求中参数名和形参名不一样,使用@RequestParam @RequestParam: 解决名称不一样的问题
+  属性: value 请求中的参数名称
+​	required: boolean类型的,默认是true
+​	true: 请求中必须有此参数
+​	false:请求中可以没有此参数
+  位置: 在形参定义的前面
+  3.3 对象接收 对象接收: 在控制器方法的形参是java对象,使用java对象的属性接收请求中的参数值
+要求: java对象的属性名和请求中的参数名一样
+4. SpringMVC执行流程 SpringMVC内部请求的处理过程:
+  用户发起请求给DispatcherServlet
+  DispatcherServlet把请求(request)交给处理器映射器
+处理器映射器:springmvc框架中的对象,需要实现HandlerMapping接口
+映射器作用: 从springmvc容器中,获取控制器对象,把找到的控制器和拦截器对象都放到处理器执行链对象中,保存,并返回给中央调度器;
+  DispatcherServlet把获取到的处理器执行链中的控制器对象,交给处理器适配器;
+处理器适配器: 是springmvc框架中的实现.实现HandlerAdapter接口
+适配器作用: 执行控制器的方法,得到结果ModelAndView;
+  DispatcherServlet把控制器执行结果交给了视图解析器]]></description>
 </item></channel>
 </rss>

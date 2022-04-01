@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>反射 - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="反射" />
+<meta property="og:description" content="1. 反射机制 1. 介绍  反射机制允许程序在执行期借助ReflectionAPI取得任何类的内部信息(比如成员变量,构造方法,成员方法等等),并能操作对象的属性及方法.反射在设计模式和框架底层都会用到; 加载完类后,在堆中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象包含了类的完整结构信息.通过这个对象得到类的结构.这个对象就像一面镜子,透过这个镜子看到类的结构,所以,形象的称为反射;  2. 原理示意图 3. 反射机制作用  在运行时判断任意一个对象所属的类 在运行时构造任意一个类的对象 在运行时得到任意一个类所具有的成员变量和方法 在运行时调用任意一个对象的成员变量和方法 生成动态代理  4. 反射相关的主要类 5. 反射的有点和缺点  优点: 可以动态的创建和使用对象(也是框架底层核心),使用灵活,没有反射机制,框架技术就失去底层支撑; 缺点: 使用反射基本是解释执行,对执行速度有影响;  6. 反射调用优化-关闭访问检查  Method和Field,Constructor对象都有setAccessible()方法; setAccessible作用是启动和禁用访问安全检查的开关; 参数值为true表示反射的对象在使用时取消访问检查,提高反射的效率,参数值为false则表示反射的对象执行访问检查;  2. Class类 1. 基本介绍   Class也是类,因此也继承Object类;
+  Class类对象不是new出来的,而是系统创建的;
+  对于某个类的Class类对象,在内存中只有一份,因为类只加载一次;
+  每个类的实例都会记得自己是由哪个Class实例所生成;
+  通过Class可以完整的得到一个类的完整结构,通过一系列API
+  Class对象时存放在堆的
+  类的字节码二进制数据,是放在方法区的,有点地方称为类的元数据;
+  2. 获取Class类对象 1. Class.forName()  前提:已知一个类的全类名,且该类路径下,可通过Class类的静态方法forName()获取,可能抛出ClassNotFoundException 应用场景:多用于配置文件,读取类全路径,加载类;  2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-11-02T02:09:50&#43;08:00" />
+<meta property="article:modified_time" content="2020-11-02T02:09:50&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+
+<meta name="twitter:title" content="反射"/>
+<meta name="twitter:description" content="1. 反射机制 1. 介绍  反射机制允许程序在执行期借助ReflectionAPI取得任何类的内部信息(比如成员变量,构造方法,成员方法等等),并能操作对象的属性及方法.反射在设计模式和框架底层都会用到; 加载完类后,在堆中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象包含了类的完整结构信息.通过这个对象得到类的结构.这个对象就像一面镜子,透过这个镜子看到类的结构,所以,形象的称为反射;  2. 原理示意图 3. 反射机制作用  在运行时判断任意一个对象所属的类 在运行时构造任意一个类的对象 在运行时得到任意一个类所具有的成员变量和方法 在运行时调用任意一个对象的成员变量和方法 生成动态代理  4. 反射相关的主要类 5. 反射的有点和缺点  优点: 可以动态的创建和使用对象(也是框架底层核心),使用灵活,没有反射机制,框架技术就失去底层支撑; 缺点: 使用反射基本是解释执行,对执行速度有影响;  6. 反射调用优化-关闭访问检查  Method和Field,Constructor对象都有setAccessible()方法; setAccessible作用是启动和禁用访问安全检查的开关; 参数值为true表示反射的对象在使用时取消访问检查,提高反射的效率,参数值为false则表示反射的对象执行访问检查;  2. Class类 1. 基本介绍   Class也是类,因此也继承Object类;
+  Class类对象不是new出来的,而是系统创建的;
+  对于某个类的Class类对象,在内存中只有一份,因为类只加载一次;
+  每个类的实例都会记得自己是由哪个Class实例所生成;
+  通过Class可以完整的得到一个类的完整结构,通过一系列API
+  Class对象时存放在堆的
+  类的字节码二进制数据,是放在方法区的,有点地方称为类的元数据;
+  2. 获取Class类对象 1. Class.forName()  前提:已知一个类的全类名,且该类路径下,可通过Class类的静态方法forName()获取,可能抛出ClassNotFoundException 应用场景:多用于配置文件,读取类全路径,加载类;  2."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" /><link rel="prev" href="https://coden1per.github.io/mybatis/" /><link rel="next" href="https://coden1per.github.io/tree/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "反射",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/coden1per.github.io\/%E5%8F%8D%E5%B0%84\/"
+        },"genre": "posts","keywords": "反射","wordcount":  151 ,
+        "url": "https:\/\/coden1per.github.io\/%E5%8F%8D%E5%B0%84\/","datePublished": "2020-11-02T02:09:50+08:00","dateModified": "2020-11-02T02:09:50+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "CodeSniper"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="CodeSniper&#39; Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 博客 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="CodeSniper&#39; Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">博客</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">反射</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/javase/"><i class="far fa-folder fa-fw"></i>JavaSE</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-02">2020-11-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;151 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-反射机制">1. 反射机制</a>
+      <ul>
+        <li><a href="#1-介绍">1. 介绍</a></li>
+        <li><a href="#2-原理示意图">2. 原理示意图</a></li>
+        <li><a href="#3-反射机制作用">3. 反射机制作用</a></li>
+        <li><a href="#4-反射相关的主要类">4. 反射相关的主要类</a></li>
+        <li><a href="#5-反射的有点和缺点">5. 反射的有点和缺点</a></li>
+        <li><a href="#6-反射调用优化-关闭访问检查">6. 反射调用优化-关闭访问检查</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-class类">2. Class类</a>
+      <ul>
+        <li><a href="#1-基本介绍">1. 基本介绍</a></li>
+        <li><a href="#2-获取class类对象">2. 获取Class类对象</a></li>
+        <li><a href="#3-哪些类型有class对象">3. 哪些类型有Class对象</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-类加载">3. 类加载</a>
+      <ul>
+        <li><a href="#1-基本说明">1. 基本说明</a></li>
+        <li><a href="#2-类加载时机">2. 类加载时机</a></li>
+        <li><a href="#3-类加载过程">3. 类加载过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-通过反射获取类的结构信息">4. 通过反射获取类的结构信息</a></li>
+    <li><a href="#5-通过反射创建对象">5. 通过反射创建对象</a></li>
+    <li><a href="#6-通过反射访问类中的成员">6. 通过反射访问类中的成员</a>
+      <ul>
+        <li><a href="#1-访问属性">1. 访问属性</a></li>
+        <li><a href="#2-访问方法">2. 访问方法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="1-反射机制">1. 反射机制</h2>
+<h3 id="1-介绍">1. 介绍</h3>
+<ul>
+<li>反射机制允许程序在执行期借助ReflectionAPI取得任何类的内部信息(比如成员变量,构造方法,成员方法等等),并能操作对象的属性及方法.反射在设计模式和框架底层都会用到;</li>
+<li>加载完类后,在堆中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象包含了类的完整结构信息.通过这个对象得到类的结构.这个对象就像一面镜子,透过这个镜子看到类的结构,所以,形象的称为反射;</li>
+</ul>
+<h3 id="2-原理示意图">2. 原理示意图</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210722175047402.png"
+        data-srcset="/image-20210722175047402.png, /image-20210722175047402.png 1.5x, /image-20210722175047402.png 2x"
+        data-sizes="auto"
+        alt="/image-20210722175047402.png"
+        title="image-20210722175047402" /></p>
+<h3 id="3-反射机制作用">3. 反射机制作用</h3>
+<ul>
+<li>在运行时判断任意一个对象所属的类</li>
+<li>在运行时构造任意一个类的对象</li>
+<li>在运行时得到任意一个类所具有的成员变量和方法</li>
+<li>在运行时调用任意一个对象的成员变量和方法</li>
+<li>生成动态代理</li>
+</ul>
+<h3 id="4-反射相关的主要类">4. 反射相关的主要类</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210722175839719.png"
+        data-srcset="/image-20210722175839719.png, /image-20210722175839719.png 1.5x, /image-20210722175839719.png 2x"
+        data-sizes="auto"
+        alt="/image-20210722175839719.png"
+        title="image-20210722175839719" /></p>
+<h3 id="5-反射的有点和缺点">5. 反射的有点和缺点</h3>
+<ol>
+<li>优点: 可以动态的创建和使用对象(也是框架底层核心),使用灵活,没有反射机制,框架技术就失去底层支撑;</li>
+<li>缺点: 使用反射基本是解释执行,对执行速度有影响;</li>
+</ol>
+<h3 id="6-反射调用优化-关闭访问检查">6. 反射调用优化-关闭访问检查</h3>
+<ol>
+<li>Method和Field,Constructor对象都有setAccessible()方法;</li>
+<li>setAccessible作用是启动和禁用访问安全检查的开关;</li>
+<li>参数值为true表示反射的对象在使用时取消访问检查,提高反射的效率,参数值为false则表示反射的对象执行访问检查;</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723000032740.png"
+        data-srcset="/image-20210723000032740.png, /image-20210723000032740.png 1.5x, /image-20210723000032740.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723000032740.png"
+        title="image-20210723000032740" /></p>
+<h2 id="2-class类">2. Class类</h2>
+<h3 id="1-基本介绍">1. 基本介绍</h3>
+<ol>
+<li>
+<p>Class也是类,因此也继承Object类;</p>
+</li>
+<li>
+<p>Class类对象不是new出来的,而是系统创建的;</p>
+</li>
+<li>
+<p>对于某个类的Class类对象,在内存中只有一份,因为类只加载一次;</p>
+</li>
+<li>
+<p>每个类的实例都会记得自己是由哪个Class实例所生成;</p>
+</li>
+<li>
+<p>通过Class可以完整的得到一个类的完整结构,通过一系列API</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723001418115.png"
+        data-srcset="/image-20210723001418115.png, /image-20210723001418115.png 1.5x, /image-20210723001418115.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723001418115.png"
+        title="image-20210723001418115" /></p>
+</li>
+<li>
+<p>Class对象时存放在堆的</p>
+</li>
+<li>
+<p>类的字节码二进制数据,是放在方法区的,有点地方称为类的元数据;</p>
+</li>
+</ol>
+<h3 id="2-获取class类对象">2. 获取Class类对象</h3>
+<h4 id="1-classforname">1. Class.forName()</h4>
+<ol>
+<li>前提:已知一个类的全类名,且该类路径下,可通过Class类的静态方法forName()获取,可能抛出ClassNotFoundException</li>
+<li>应用场景:多用于配置文件,读取类全路径,加载类;</li>
+</ol>
+<h4 id="2-类名class">2. 类名.class</h4>
+<ol>
+<li>前提:若已知具体的类,通过类的class获取,该方式最为安全可靠,程序性能最高;</li>
+<li>应用场景:多用于参数传递,比如通过反射得到对应构造器对象;</li>
+</ol>
+<h4 id="3-对象getclass">3. 对象.getClass()</h4>
+<ol>
+<li>前提:已知某个类的实例,调用该实例的getClass()方法获取Class对象</li>
+<li>应用场景:通过创建好的对象,获取Class对象;</li>
+</ol>
+<h4 id="4-其他方式">4. 其他方式</h4>
+<p>ClassLoader cl=对象.getClass().getClassLoader();</p>
+<p>Class clazz=cl.loadClass(&ldquo;类的全类名&rdquo;);</p>
+<h4 id="5-基本数据类型">5. 基本数据类型</h4>
+<p>Class clazz=基本数据类型.class</p>
+<h4 id="6-基本数据类型对应的包装类可以通过type得到class类对象">6. 基本数据类型对应的包装类,可以通过.TYPE得到Class类对象</h4>
+<p>Class clazz=包装类.TYPE</p>
+<h3 id="3-哪些类型有class对象">3. 哪些类型有Class对象</h3>
+<ol>
+<li>外部类,成员内部类,静态内部类,局部内部类,匿名内部类</li>
+<li>interface</li>
+<li>数组</li>
+<li>enum</li>
+<li>annotation</li>
+<li>基本数据类型</li>
+<li>void</li>
+</ol>
+<h2 id="3-类加载">3. 类加载</h2>
+<h3 id="1-基本说明">1. 基本说明</h3>
+<p><strong>反射机制是java实现动态语言的关键,也就是通过反射实现类动态加载</strong></p>
+<ol>
+<li>静态加载:编译时加载相关的类,如果没有则报错,依赖性太强;</li>
+<li>动态加载:运行时加载需要的类,如果运行时不用该类,则不报错,降低了依赖性;</li>
+</ol>
+<h3 id="2-类加载时机">2. 类加载时机</h3>
+<ol>
+<li>当创建对象时(new)</li>
+<li>当子类被加载时</li>
+<li>调用类中的静态成员时</li>
+<li>通过反射</li>
+</ol>
+<h3 id="3-类加载过程">3. 类加载过程</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723024506187.png"
+        data-srcset="/image-20210723024506187.png, /image-20210723024506187.png 1.5x, /image-20210723024506187.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723024506187.png"
+        title="image-20210723024506187" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723024601749.png"
+        data-srcset="/image-20210723024601749.png, /image-20210723024601749.png 1.5x, /image-20210723024601749.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723024601749.png"
+        title="image-20210723024601749" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723024846841.png"
+        data-srcset="/image-20210723024846841.png, /image-20210723024846841.png 1.5x, /image-20210723024846841.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723024846841.png"
+        title="image-20210723024846841" /></p>
+<h4 id="1-加载阶段">1. 加载阶段</h4>
+<ol>
+<li>JVM在该阶段的主要目的是将字节码从不同的数据源转化为二进制字节流加载到内存中,并生成一个代表该类的Class对象;</li>
+</ol>
+<h4 id="2-连接阶段-验证">2. 连接阶段-验证</h4>
+<ol>
+<li>目的是为了确保Class文件的字节流中包含的信息符合当前虚拟机的要求,并且不会危害虚拟机自身的安全</li>
+<li>包括:文件格式验证,元数据验证,字节码验证和符号引用验证</li>
+<li>可以考虑使用-Xverify:none 参数来关闭大部分的类验证措施,缩短虚拟机类加载的时间</li>
+</ol>
+<h4 id="3-连接阶段-准备">3. 连接阶段-准备</h4>
+<ol>
+<li>JVM会在该阶段对静态变量,分配内存并默认初始化(对应数据类型的默认初始值);这些变量所使用的内存都将在方法区中进行分配;</li>
+</ol>
+<h4 id="4-连接阶段-解析">4. 连接阶段-解析</h4>
+<ol>
+<li>虚拟机将常量池内的符号引用替换为直接引用的过程</li>
+</ol>
+<h4 id="5-initialization初始化">5. initialization(初始化)</h4>
+<ol>
+<li>到初始化阶段,才真正开始执行类中定义的Java程序代码,此阶段是执行<!-- raw HTML omitted -->()方法的过程</li>
+<li><!-- raw HTML omitted -->()方法是由编译器按语句在源文件中出现的顺序,一次自动手机类中的所有静态变量的复制动作和静态代码块中的语句,并进行合并</li>
+<li>虚拟机会保证一个类的<!-- raw HTML omitted -->()方法在多线程环境中被正确的加锁,同步,如果多个线程同时去初始化一个类,name之后有一个线程去执行这个类<!-- raw HTML omitted -->()方法,其他线程都需要阻塞等待,知道活动线程执行<!-- raw HTML omitted -->()方法完毕;</li>
+</ol>
+<h2 id="4-通过反射获取类的结构信息">4. 通过反射获取类的结构信息</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723190333263.png"
+        data-srcset="/image-20210723190333263.png, /image-20210723190333263.png 1.5x, /image-20210723190333263.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723190333263.png"
+        title="image-20210723190333263" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723190414207.png"
+        data-srcset="/image-20210723190414207.png, /image-20210723190414207.png 1.5x, /image-20210723190414207.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723190414207.png"
+        title="image-20210723190414207" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723190304259.png"
+        data-srcset="/image-20210723190304259.png, /image-20210723190304259.png 1.5x, /image-20210723190304259.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723190304259.png"
+        title="image-20210723190304259" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20210723190532963.png"
+        data-srcset="/image-20210723190532963.png, /image-20210723190532963.png 1.5x, /image-20210723190532963.png 2x"
+        data-sizes="auto"
+        alt="/image-20210723190532963.png"
+        title="image-20210723190532963" /></p>
+<h2 id="5-通过反射创建对象">5. 通过反射创建对象</h2>
+<ol>
+<li>方式一: 调用类中的public修饰的无参构造器</li>
+<li>方式二: 调用类中的指定构造器</li>
+<li>Class类相关方法
+<ol>
+<li>newInstance:调用类中的无参构造器,获取对应类的对象</li>
+<li>getConstructor(Class&hellip;clazz):根据参数列表,获取对应的构造器对象</li>
+<li>getDecalaredConstructor(Class..clazz):根据参数列表,获取对应的构造器对象</li>
+</ol>
+</li>
+<li>Constructor类相关对象
+<ol>
+<li>setAccessible:爆破</li>
+<li>newInstance(Object&hellip;obj):调用构造器</li>
+</ol>
+</li>
+</ol>
+<h2 id="6-通过反射访问类中的成员">6. 通过反射访问类中的成员</h2>
+<h3 id="1-访问属性">1. 访问属性</h3>
+<ol>
+<li>
+<p>根据属性名获取Field对象</p>
+<p>Field f= clazz对象.getDeclaredFidld(属性名)</p>
+</li>
+<li>
+<p>爆破:f.setAccessible(true);</p>
+</li>
+<li>
+<p>访问</p>
+<p>f.set(对象,值) f.get(对象)</p>
+</li>
+<li>
+<p>注意:如果是静态属性,则set和get中的对象可以写成null;</p>
+</li>
+</ol>
+<h3 id="2-访问方法">2. 访问方法</h3>
+<ol>
+<li>
+<p>根据方法名和参数列表获取Method方法对象:</p>
+<p>Method m=clazz.getDeclaredMethod(方法名,xx.class);</p>
+</li>
+<li>
+<p>获取对象:Object o=clazz.newInstance();</p>
+</li>
+<li>
+<p>爆破:m.setAccessible(true);</p>
+</li>
+<li>
+<p>访问:Object returnValue=m.invoke(对象,实参列表);</p>
+</li>
+<li>
+<p>注意:如果是静态方法,则invoke的对象,可以写成null;</p>
+</li>
+</ol>
+<p><strong>在反射中,如果方法有返回值,同一返回Object</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-11-02</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%8F%8D%E5%B0%84/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" data-title="反射" data-via="xxxx" data-hashtags="反射"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" data-hashtag="反射"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" data-title="反射" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" data-title="反射"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" data-title="反射"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" data-title="反射" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" data-title="反射" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://coden1per.github.io/%E5%8F%8D%E5%B0%84/" data-title="反射"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%8F%8D%E5%B0%84/">反射</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mybatis/" class="prev" rel="prev" title="Mybatis"><i class="fas fa-angle-left fa-fw"></i>Mybatis</a>
+            <a href="/tree/" class="next" rel="next" title="Tree">Tree<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.84.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">CodeSniper</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"CodeSniper' Blog","id-2":"CodeSniper' Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

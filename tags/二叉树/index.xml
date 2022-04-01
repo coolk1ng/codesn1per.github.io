@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>二叉树 - Tag - CodeSniper&#39; Blog</title>
-        <link>https://codesn1per.github.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
+        <link>https://coden1per.github.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
         <description>二叉树 - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sun, 17 Jan 2021 22:43:20 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sun, 17 Jan 2021 22:43:20 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="self" type="application/rss+xml" /><item>
     <title>Tree</title>
-    <link>https://codesn1per.github.io/tree/</link>
+    <link>https://coden1per.github.io/tree/</link>
     <pubDate>Sun, 17 Jan 2021 22:43:20 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/tree/</guid>
+    <guid>https://coden1per.github.io/tree/</guid>
     <description><![CDATA[1. 二叉查找树 二叉树结点类API的设计:    类名 Node&lt;Key,Value&gt;     构造方法 Node(Key key,Value value,Node left,Node right):创建Node对象   成员变量 1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值    代码实现: public class Node&lt;Key,Value&gt; { //存储键  public Key key; //存储值  public Value value; //存储左子结点  public Node left; //存储右子结点  public Node right; public Node(Key key, Value value, Node left, Node right) { this.]]></description>
 </item></channel>
 </rss>

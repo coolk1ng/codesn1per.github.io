@@ -1,0 +1,34 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>SpringMVC - Tag - CodeSniper&#39; Blog</title>
+        <link>https://coden1per.github.io/tags/springmvc/</link>
+        <description>SpringMVC - Tag - CodeSniper&#39; Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Tue, 02 Feb 2021 02:03:22 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/springmvc/" rel="self" type="application/rss+xml" /><item>
+    <title>SpringMVC</title>
+    <link>https://coden1per.github.io/springmvc/</link>
+    <pubDate>Tue, 02 Feb 2021 02:03:22 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://coden1per.github.io/springmvc/</guid>
+    <description><![CDATA[1. SpringMVC组件 2. 请求方式 3. 处理器方法的参数 处理器方法可以包含一下四类参数,这些参数会在系统调用时由系统自动赋值,即程序员可在方法内直接使用;
+ HttpServletRequest HttpServletResponse HttpServletSession 请求中所携带的请求参数  3.1 逐个参数接收 逐个接收:请求中的参数名和控制器方法的形参名一样;
+接受参数的问题:
+ 参数最好使用包装类型,例如Integer,能接收空值情况,接收的是null post请求中有乱码问题,使用字符集过滤器  3.2 请求中参数名和形参名不一样,使用@RequestParam @RequestParam: 解决名称不一样的问题
+  属性: value 请求中的参数名称
+​	required: boolean类型的,默认是true
+​	true: 请求中必须有此参数
+​	false:请求中可以没有此参数
+  位置: 在形参定义的前面
+  3.3 对象接收 对象接收: 在控制器方法的形参是java对象,使用java对象的属性接收请求中的参数值
+要求: java对象的属性名和请求中的参数名一样
+4. SpringMVC执行流程 SpringMVC内部请求的处理过程:
+  用户发起请求给DispatcherServlet
+  DispatcherServlet把请求(request)交给处理器映射器
+处理器映射器:springmvc框架中的对象,需要实现HandlerMapping接口
+映射器作用: 从springmvc容器中,获取控制器对象,把找到的控制器和拦截器对象都放到处理器执行链对象中,保存,并返回给中央调度器;
+  DispatcherServlet把获取到的处理器执行链中的控制器对象,交给处理器适配器;
+处理器适配器: 是springmvc框架中的实现.实现HandlerAdapter接口
+适配器作用: 执行控制器的方法,得到结果ModelAndView;
+  DispatcherServlet把控制器执行结果交给了视图解析器]]></description>
+</item></channel>
+</rss>

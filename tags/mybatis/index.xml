@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Mybatis - Tag - CodeSniper&#39; Blog</title>
-        <link>https://codesn1per.github.io/tags/mybatis/</link>
+        <link>https://coden1per.github.io/tags/mybatis/</link>
         <description>Mybatis - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Tue, 18 Feb 2020 22:05:34 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/mybatis/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Tue, 18 Feb 2020 22:05:34 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/mybatis/" rel="self" type="application/rss+xml" /><item>
     <title>Mybatis</title>
-    <link>https://codesn1per.github.io/mybatis/</link>
+    <link>https://coden1per.github.io/mybatis/</link>
     <pubDate>Tue, 18 Feb 2020 22:05:34 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/mybatis/</guid>
+    <guid>https://coden1per.github.io/mybatis/</guid>
     <description><![CDATA[Mybatis配置 1. 搭建实验数据库  创建一个MyBatis实验数据库,并创建一个user表  2. Idea新建项目,连接数据库  新建一个普通的maven项目 pom.xml中导入相关的maven依赖  Mysql驱动 Mybatis驱动 junit驱动    &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.21&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.5&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;  连接我们的Mysql  解决时区问题    3. 编写MyBatis核心配置文件  创建一个子模块mybatis-01 在该模块下的resource目录下,新建mybatis-config.xml文件,这是MyBatis的核心配置文件  &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!DOCTYPE configuration PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34; &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt; &lt;configuration&gt; &lt;environments default=&#34;development&#34;&gt; &lt;environment id=&#34;development&#34;&gt; &lt;transactionManager type=&#34;JDBC&#34;/&gt; &lt;dataSource type=&#34;POOLED&#34;&gt; &lt;property name=&#34;driver&#34; value=&#34;com.]]></description>
 </item></channel>
 </rss>

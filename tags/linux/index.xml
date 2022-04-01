@@ -1,0 +1,26 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Linux - Tag - CodeSniper&#39; Blog</title>
+        <link>https://coden1per.github.io/tags/linux/</link>
+        <description>Linux - Tag - CodeSniper&#39; Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 02 Jun 2021 02:07:14 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>Linux基本命令</title>
+    <link>https://coden1per.github.io/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</link>
+    <pubDate>Wed, 02 Jun 2021 02:07:14 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://coden1per.github.io/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</guid>
+    <description><![CDATA[Linux 1. Linux的应用领域   服务器领域
+linux在服务器领域的应用是最强的;
+linux免费,稳定,高效等特点在这里得到了很好的提现,尤其砸一些高端领域尤为广泛(c/c++/php/java/python/go);
+  嵌入式领域
+linxu运行稳定,对网络的良好支持性,低成本,且可以根据需要进行软件裁剪,内核最小可以达到几百KB等特点,使其近年来在嵌入式领域的应用得到非常大的提高
+主要应用: 机顶盒,数字电视,网络电话,程控交换机,手机,智能家居
+  2. Linux介绍   Linux是一个开源,免费的操作系统,其稳定性,安全性,处理多并发已经得到业界的认可,目前很多企业级的项目都会部署到linux服务器上;
+  Linux
+  Linux之父: Linus Torvalds
+Git创作者,世界著名黑客
+  Linux主要的发行版: Ubuntu ,RedHat ,CentOS ,Debain ,Fedora ,SuSE
+  3. Linux目录结构 1. 基本介绍  linux的文件系统是采用层级式的目录结构,在此结构中的最上层是根目录&quot;/&quot;,然后再此目录下载创建其他的目录; 深刻理解linux梳妆目录是非常重要的,这里我给大家说明一下; 记住一句经典的话: 在Linux世界里,一切皆为文件!  2. 具体目录结构 4. 远程登录Linux 1. 为什么要远程登录  Linux服务器是开发小组共享 正式上线的项目是运行在公网 因此程序员需要远程登录到Linux进行项目管理或者开发  5. Vim快捷键 6. 关机&amp;重启命令 1. 基本介绍  shutdown -h now : 立刻进行关机 shutdown -h 1: 一分钟后关机 shutdown -r now : 现在重新启动计算机 halt: 关机,作用和上面一样 reboot: 现在重新启动计算机 sync: 把内存的数据同步到磁盘  2.]]></description>
+</item></channel>
+</rss>
