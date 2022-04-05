@@ -59,3 +59,24 @@ hashmap循环链表
 11、maven有哪些优缺点，如何解决jar包的冲突？
 12、能说一下常用的linux部署命令嘛？
 
+
+
+
+
+concurrenthashmap
+
+synchronized锁
+
+jvm内存模型
+
+事务传播特性
+
+循环依赖
+
+spring bean生命周期
+
+springmvc执行流程
+
+gc
+
+

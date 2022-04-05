@@ -102,6 +102,20 @@
         alt="/art.png"
         title="/art.png" /></a></div><h2 class="home-subtitle"><div id="id-3" class="typeit"></div></h2></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">动态代理</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-16">2022-01-16</time></span>&nbsp;<span class="post-category">included in <a href="/categories/spring/"><i class="far fa-folder fa-fw"></i>Spring</a></span></div><div class="content">1. 动态代理的实现 1. jdk动态代理:   使用java反射包中的类和接口实现动态代理的功能 反射包 java.lang.reflect,里面有三个类:InvocationHandler,Method,Proxy   2. cglib动态代理   cglib是第三方的工具库,创建代理对象. cglib的原理是继承,cglib通过继承目标类,创建他的子类,在子类中重写父类中同名的方法,实现功能的修改. 因为cglib是继承,重写方法,所以要求目标类不能是final的,方法也不能是final的   2. jdk动态代理 1. 反射,Method类,表示方法,类中的方法.通过Method可以执行某个方法. 2. jdk动态代理的实现  InvocationHandler
+  就一个方法invoke()
+  invoke():表示代理对象要执行的功能代码,你的代理类要完成的功能卸载invoke()方法中.
+  方法原型:
+参数: Object proxy: jdk创建的代理对象,无需赋值
+Method method: 目标类中的方法,jdk提供method对象的
+Object[] args: 目标类中的方法的参数,jdk提供
+    Method
+ 表示方法的,确切的说是目标类中的方法 通过Mehtod可以执行某一个目标类的方法,Method.invoke()    Proxy
+ 核心的对象,创建的代理对象,之前创建对象都是用new类的构造方法(),现在使用Proxy类的方法,代替new的使用 静态方法:newProxyInstance(),创建代理对象 参数:  classLoader loader: 类加载器,负责向内存中加载对象的.使用反射获取对象的ClassLoader Class&lt;?&gt;[] interfaces: 接口,目标对象实现的接口,也是反射获取的 InvocationHander h: 我们自己写的,代理类要完成的功能     </div><div class="post-footer">
+        <a href="/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%8F%8D%E5%B0%84/">反射</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/mysql%E4%BA%8B%E5%8A%A1/">MySQL事务</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-15">2022-01-15</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div><div class="content">1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
   通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
@@ -174,30 +188,6 @@ Git创作者,世界著名黑客
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-02-18">2021-02-18</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="far fa-folder fa-fw"></i>算法与数据结构</a></span></div><div class="content">1. comparable接口 代码测试: package Sort.comparable; public class student implements Comparable&lt;student&gt;{ private String username; private int age; public student() { } public student(String username, int age) { this.username = username; this.age = age; } public String getUsername() { return username; } public void setUsername(String username) { this.username = username; } public int getAge() { return age; } public void setAge(int age) { this.age = age; } @Override public String toString() { return &#34;student{&#34; + &#34;username=&#39;&#34; + username + &#39;\&#39;&#39; + &#34;, age=&#34; + age + &#39;}&#39;; } @Override public int compareTo(student o) { return this.</div><div class="post-footer">
         <a href="/sort/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%8E%92%E5%BA%8F/">排序</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/springmvc/">SpringMVC</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-02-02">2021-02-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div><div class="content">1. SpringMVC组件 2. 请求方式 3. 处理器方法的参数 处理器方法可以包含一下四类参数,这些参数会在系统调用时由系统自动赋值,即程序员可在方法内直接使用;
- HttpServletRequest HttpServletResponse HttpServletSession 请求中所携带的请求参数  3.1 逐个参数接收 逐个接收:请求中的参数名和控制器方法的形参名一样;
-接受参数的问题:
- 参数最好使用包装类型,例如Integer,能接收空值情况,接收的是null post请求中有乱码问题,使用字符集过滤器  3.2 请求中参数名和形参名不一样,使用@RequestParam @RequestParam: 解决名称不一样的问题
-  属性: value 请求中的参数名称
-​	required: boolean类型的,默认是true
-​	true: 请求中必须有此参数
-​	false:请求中可以没有此参数
-  位置: 在形参定义的前面
-  3.3 对象接收 对象接收: 在控制器方法的形参是java对象,使用java对象的属性接收请求中的参数值
-要求: java对象的属性名和请求中的参数名一样
-4. SpringMVC执行流程 SpringMVC内部请求的处理过程:
-  用户发起请求给DispatcherServlet
-  DispatcherServlet把请求(request)交给处理器映射器
-处理器映射器:springmvc框架中的对象,需要实现HandlerMapping接口
-映射器作用: 从springmvc容器中,获取控制器对象,把找到的控制器和拦截器对象都放到处理器执行链对象中,保存,并返回给中央调度器;
-  DispatcherServlet把获取到的处理器执行链中的控制器对象,交给处理器适配器;
-处理器适配器: 是springmvc框架中的实现.实现HandlerAdapter接口
-适配器作用: 执行控制器的方法,得到结果ModelAndView;
-  DispatcherServlet把控制器执行结果交给了视图解析器</div><div class="post-footer">
-        <a href="/springmvc/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/spring/">Spring</a>,&nbsp;<a href="/tags/springmvc/">SpringMVC</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>

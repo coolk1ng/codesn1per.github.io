@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Hashtable - Tag - CodeSniper&#39; Blog</title>
+        <link>https://codesn1per.github.io/tags/hashtable/</link>
+        <description>Hashtable - Tag - CodeSniper&#39; Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Tue, 08 Mar 2022 17:49:05 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/hashtable/" rel="self" type="application/rss+xml" /><item>
+    <title>Hashtable和ConcurrentHashMap</title>
+    <link>https://codesn1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/</link>
+    <pubDate>Tue, 08 Mar 2022 17:49:05 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/</guid>
+    <description><![CDATA[1. 两者对比  Hashtable与ConcurrentHashMap都是线程安全的Map集合 Hashtable并发度低,整个Hashtable对应一把锁,同一时刻,只能有一个线程操作它 1.8之前ConcurrentHashMap使用了Segment+数组+链表的结构,每个Segment对应一把锁,如果多个线程访问不同的Segment,则不会冲突 1.8开始ConcurrentHashMap将数组的每个头结点作为锁,如果多个线程访问的头结点不同,则不会冲突  ]]></description>
+</item></channel>
+</rss>

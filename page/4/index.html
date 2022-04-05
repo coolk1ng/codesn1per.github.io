@@ -102,6 +102,30 @@
         alt="/art.png"
         title="/art.png" /></a></div><h2 class="home-subtitle"><div id="id-3" class="typeit"></div></h2></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/springmvc/">SpringMVC</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-02-02">2021-02-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div><div class="content">1. SpringMVC组件 2. 请求方式 3. 处理器方法的参数 处理器方法可以包含一下四类参数,这些参数会在系统调用时由系统自动赋值,即程序员可在方法内直接使用;
+ HttpServletRequest HttpServletResponse HttpServletSession 请求中所携带的请求参数  3.1 逐个参数接收 逐个接收:请求中的参数名和控制器方法的形参名一样;
+接受参数的问题:
+ 参数最好使用包装类型,例如Integer,能接收空值情况,接收的是null post请求中有乱码问题,使用字符集过滤器  3.2 请求中参数名和形参名不一样,使用@RequestParam @RequestParam: 解决名称不一样的问题
+  属性: value 请求中的参数名称
+​	required: boolean类型的,默认是true
+​	true: 请求中必须有此参数
+​	false:请求中可以没有此参数
+  位置: 在形参定义的前面
+  3.3 对象接收 对象接收: 在控制器方法的形参是java对象,使用java对象的属性接收请求中的参数值
+要求: java对象的属性名和请求中的参数名一样
+4. SpringMVC执行流程 SpringMVC内部请求的处理过程:
+  用户发起请求给DispatcherServlet
+  DispatcherServlet把请求(request)交给处理器映射器
+处理器映射器:springmvc框架中的对象,需要实现HandlerMapping接口
+映射器作用: 从springmvc容器中,获取控制器对象,把找到的控制器和拦截器对象都放到处理器执行链对象中,保存,并返回给中央调度器;
+  DispatcherServlet把获取到的处理器执行链中的控制器对象,交给处理器适配器;
+处理器适配器: 是springmvc框架中的实现.实现HandlerAdapter接口
+适配器作用: 执行控制器的方法,得到结果ModelAndView;
+  DispatcherServlet把控制器执行结果交给了视图解析器</div><div class="post-footer">
+        <a href="/springmvc/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/spring/">Spring</a>,&nbsp;<a href="/tags/springmvc/">SpringMVC</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/tree/">Tree</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-01-17">2021-01-17</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="far fa-folder fa-fw"></i>算法与数据结构</a></span></div><div class="content">1. 二叉查找树 二叉树结点类API的设计:    类名 Node&lt;Key,Value&gt;     构造方法 Node(Key key,Value value,Node left,Node right):创建Node对象   成员变量 1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值    代码实现: public class Node&lt;Key,Value&gt; { //存储键  public Key key; //存储值  public Value value; //存储左子结点  public Node left; //存储右子结点  public Node right; public Node(Key key, Value value, Node left, Node right) { this.</div><div class="post-footer">
         <a href="/tree/">Read More</a><div class="post-tags">

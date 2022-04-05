@@ -102,6 +102,11 @@
         alt="/art.png"
         title="/art.png" /></a></div><h2 class="home-subtitle"><div id="id-3" class="typeit"></div></h2></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/hashtable%E5%92%8Cconcurrenthashmap/">Hashtable和ConcurrentHashMap</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-08">2022-03-08</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%9B%86%E5%90%88/"><i class="far fa-folder fa-fw"></i>集合</a></span></div><div class="content">1. 两者对比  Hashtable与ConcurrentHashMap都是线程安全的Map集合 Hashtable并发度低,整个Hashtable对应一把锁,同一时刻,只能有一个线程操作它 1.8之前ConcurrentHashMap使用了Segment+数组+链表的结构,每个Segment对应一把锁,如果多个线程访问不同的Segment,则不会冲突 1.8开始ConcurrentHashMap将数组的每个头结点作为锁,如果多个线程访问的头结点不同,则不会冲突  </div><div class="post-footer">
+        <a href="/hashtable%E5%92%8Cconcurrenthashmap/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/concurrenthashmap/">ConcurrentHashMap</a>,&nbsp;<a href="/tags/hashtable/">Hashtable</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/mysql%E7%B4%A2%E5%BC%95/">MySQL索引</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-02-26">2022-02-26</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div><div class="content">1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
 缺点:
@@ -174,20 +179,6 @@ ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存�
 结论:  比如在项目中,视频文件需要转换格式等操作比较费时,这时开一个新线程处理视频转换,避免阻塞主线程. tomcat的异步servlet也是类似的目的,让用户线程处理耗时比较长的操作,避免阻塞tomcat的工作线程   1.</div><div class="post-footer">
         <a href="/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>,&nbsp;<a href="/tags/%E5%B9%B6%E5%8F%91/">并发</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">动态代理</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-16">2022-01-16</time></span>&nbsp;<span class="post-category">included in <a href="/categories/spring/"><i class="far fa-folder fa-fw"></i>Spring</a></span></div><div class="content">1. 动态代理的实现 1. jdk动态代理:   使用java反射包中的类和接口实现动态代理的功能 反射包 java.lang.reflect,里面有三个类:InvocationHandler,Method,Proxy   2. cglib动态代理   cglib是第三方的工具库,创建代理对象. cglib的原理是继承,cglib通过继承目标类,创建他的子类,在子类中重写父类中同名的方法,实现功能的修改. 因为cglib是继承,重写方法,所以要求目标类不能是final的,方法也不能是final的   2. jdk动态代理 1. 反射,Method类,表示方法,类中的方法.通过Method可以执行某个方法. 2. jdk动态代理的实现  InvocationHandler
-  就一个方法invoke()
-  invoke():表示代理对象要执行的功能代码,你的代理类要完成的功能卸载invoke()方法中.
-  方法原型:
-参数: Object proxy: jdk创建的代理对象,无需赋值
-Method method: 目标类中的方法,jdk提供method对象的
-Object[] args: 目标类中的方法的参数,jdk提供
-    Method
- 表示方法的,确切的说是目标类中的方法 通过Mehtod可以执行某一个目标类的方法,Method.invoke()    Proxy
- 核心的对象,创建的代理对象,之前创建对象都是用new类的构造方法(),现在使用Proxy类的方法,代替new的使用 静态方法:newProxyInstance(),创建代理对象 参数:  classLoader loader: 类加载器,负责向内存中加载对象的.使用反射获取对象的ClassLoader Class&lt;?&gt;[] interfaces: 接口,目标对象实现的接口,也是反射获取的 InvocationHander h: 我们自己写的,代理类要完成的功能     </div><div class="post-footer">
-        <a href="/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%8F%8D%E5%B0%84/">反射</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
