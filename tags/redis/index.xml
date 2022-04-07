@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Redis - Tag - CodeSniper&#39; Blog</title>
-        <link>https://codesn1per.github.io/tags/redis/</link>
+        <link>https://coden1per.github.io/tags/redis/</link>
         <description>Redis - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Fri, 02 Jul 2021 02:05:19 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/redis/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Fri, 02 Jul 2021 02:05:19 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/redis/" rel="self" type="application/rss+xml" /><item>
     <title>Redis基础</title>
-    <link>https://codesn1per.github.io/redis%E5%9F%BA%E7%A1%80/</link>
+    <link>https://coden1per.github.io/redis%E5%9F%BA%E7%A1%80/</link>
     <pubDate>Fri, 02 Jul 2021 02:05:19 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/redis%E5%9F%BA%E7%A1%80/</guid>
+    <guid>https://coden1per.github.io/redis%E5%9F%BA%E7%A1%80/</guid>
     <description><![CDATA[1. NoSQL数据库概述 NoSQL泛指非关系型数据库.NoSQL不依赖业务逻辑方式存储,而已简单的key_value模式存储.因此大大增加了数据库的拓展能力;
  不遵循SQL标准 不支持ACID 远超于SQL的性能  2. NoSQL使用场景  对数据高并发的读写 海量数据的读写 对数据高可拓展性的  3. NoSQL不适用场景  需要事务支持 基于sql的结构查询存储,处理复杂的关系,需要即席查询 用不着sql和用了sql也不行的情况,考虑用NoSQL  4. 常见NoSQL数据库  Memcache Redis MongoDB  2. Redis概述安装   Redis是一个开源的key-value存储系统
   和Memcached类似,他支持存储的value类型相对更对,包括string,list,set,zset(sorted set&ndash;有序集合)和hash

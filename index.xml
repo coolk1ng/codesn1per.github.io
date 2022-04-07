@@ -1,17 +1,37 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>CodeSniper&#39; Blog</title>
-        <link>https://codesn1per.github.io/</link>
+        <link>https://coden1per.github.io/</link>
         <description>This is My New Hugo Site</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 02:12:28 &#43;0800</lastBuildDate>
-            <atom:link href="https://codesn1per.github.io/index.xml" rel="self" type="application/rss+xml" />
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 06 Apr 2022 15:35:22 &#43;0800</lastBuildDate>
+            <atom:link href="https://coden1per.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>面试题目整理</title>
+    <link>https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/</link>
+    <pubDate>Wed, 06 Apr 2022 15:35:22 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/</guid>
+    <description><![CDATA[1. JavaSE 2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
+  Spring中比较核心的是IOC(控制反转)和AOP(面向切面编程)
+   IOC可以帮助我们维护对象与对象之间的依赖关系,降低了对象之间的耦合度,DI是依赖注入的意思,他是IOC实现的方式,指应用运行过程中,对象之间的关系不再需要对象的使用者来维护,而是被IOC容器进行管理注入 AOP是面向切面编程,是对OOP的补充,可以同一解决一批组件的共性需求(如权限检查,记录日志,事务管理等).我们可以将解决共性需求的代码独立出来,通过配置的方式,声明这些代码在什么地方,什么时机调用.满足调用条件,AOP会将业务代码织入到我们指定的位置,从而同一解决问题,不需要修改这一批组件的代码  BeanFactory和ApplicationContext有什么区别?  ApplicationContext是BeanFacotry的子接口 ApplicationContext提供更完整的功能:  继承MessageSource,支持国际化 同一的资源文件访问方式 提供在监听器中注册bean的事件 同时加载多个配置文件   BeanFactory采用延迟加载形式来注入Bean的,即只有使用某个Bean时,才对该Bean进行加载实例化.如果Bean的某一个属性没有注入,BeanFactory加载后,知道第一次使用这个Bean才会抛出异常 ApplicationContext是在容器启动时,一次性创建所有的bean,在启动时就可以发现spring中存在的配置问题,这样有利于检查所依赖属性是否注入.  两者都都支持BeanPostProcessor,BeanFactoryPostProcessor的使用,但两者的区别是:BeanFactory需要手动注册,而ApplicationContext则是自动注册    SpringBean的生命周期?   Spring中的bean的生命主要包含四个阶段:实例化Bean-&gt;Bean属性填充-&gt;初始化Bean-&gt;销毁Bean
+  首先是实例化Bean,当客户端想容器请求一个尚未初始化的bean时,或初始化bean的时候需要注入另一个尚未初始化的bean的依赖时,容器就会调用doCreatebean()方法进行实例化,实际上就是通过反射的方式创建出一个bean对象
+  Bean实例创建出来后,接着就是给这个bean对象进行属性填充,也就是注入这个bean依赖的其他bean对象
+  属性填充完成后,进行初始化Bean操作,初始化阶段可以分为几个步骤
+  执行Aware接口的方法
+Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口,可以让我们拿到Spring容器的一些资源.如实现BeanNameAware接口可以获取到BeanName,实现BeanFactoryAware接口可以获取工厂对象BeanFactory等等
+  执行BeanPostProcessor的前置处理方法PostProcessbeforeInitiaization(),对bean进行一些自定义的前置处理
+  判断bean是否实现了initializingBean接口,如果实现了,将会执行initializingBean的afterPropertiesSet()初始化方法
+  执行用户自定义的初始化方法,如init-method等
+  执行BeanPostProcessor的后置处理方法postProcessAfterInitialization()
+    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作
+ 首先判断bean是否实现了DestructionAwarebeanPostProcessor接口,如果实现了,则会执行DestructionAwareBeanPostProcessor后置处理器的销毁回调方法 其次会判断Bean是否实现了DisposableBean接口,如果实现了将会调用其实现destroy方法 最后判断这个bean是否配置了destroy-method等自定义的销毁方法,如果有的话,则会自动调用其配置的销毁方法    Spring的作用域?]]></description>
+</item><item>
     <title>SpringSecurity</title>
-    <link>https://codesn1per.github.io/springsecurity/</link>
+    <link>https://coden1per.github.io/springsecurity/</link>
     <pubDate>Sat, 02 Apr 2022 02:12:28 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/springsecurity/</guid>
+    <guid>https://coden1per.github.io/springsecurity/</guid>
     <description><![CDATA[1.过滤器 security本质是一个过滤器链
   FilterSecurityInterceptor:是一个方法级的权限过滤器,基本位于过滤器链的最底部;
   ExceptionTranslationFilter:是一个异常过滤器,用来处理在认证授权过程中抛出的异常;
@@ -23,10 +43,10 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
 @Configuration public class SecurityConfigTest extends WebSecurityConfigurerAdapter { @Autowired private UserDetailsService userDetailsService; @Bean PasswordEncoder passwordEncoder(){ return new BCryptPasswordEncoder(); } @Override protected void configure(AuthenticationManagerBuilder auth) throws Exception { auth.]]></description>
 </item><item>
     <title>MySQL锁机制</title>
-    <link>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</link>
+    <link>https://coden1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</link>
     <pubDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</guid>
+    <guid>https://coden1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</guid>
     <description><![CDATA[1. 锁的分类  共享锁 Share Lock (简称S锁,属于行锁) 排它锁 Exclusive Locks (简称X锁,属于行锁) 意向共享锁 Intention Shared Locks (简称IS锁,属于表锁) 意向排他锁 Intention Exclusive Locks (简称IX锁,属于表锁) 自增锁 AUTO-INC Locks  2. 共享锁  共享锁就是多个事务对同一数据可以共享一把锁,都能访问到数据库,但是只能读不能修改
   事务A: select * from student where id = 1 lock in share mode;
 事务B: select * from student where id = 1 (读数据没有问题)
@@ -35,10 +55,10 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
  3. 排它锁  排它锁不能与其他锁并存,如一个事务获取了一个数据行的排它锁,其他事务就不能再获取该行的锁,只有当前获取了排它锁的事务可以对数据进行读取和修改]]></description>
 </item><item>
     <title>Spring事务失效情况</title>
-    <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
+    <link>https://coden1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
     <pubDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</guid>
+    <guid>https://coden1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</guid>
     <description><![CDATA[1. 抛出检查异常导致事务不能正确回滚  **原因: **Srping默认只会回滚非检查异常
   解法: 配置rollbackFor属性
  2. 业务方法内自己try-catch异常导致事务不能正确回滚  原因: 事务通知只有捕捉到了目标抛出的异常,才能进行后续的回滚处理,如果目标自己处理异常,事务通知无法获悉
@@ -53,19 +73,19 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
   **解法: **1. 依赖注入自己(代理)来调用; 2. 通过AopContext拿到代理对象,来调用; 3. 通过CTW,LTW实现功能增强]]></description>
 </item><item>
     <title>SpringBean的生命周期</title>
-    <link>https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
+    <link>https://coden1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
     <pubDate>Sun, 27 Mar 2022 13:14:08 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</guid>
+    <guid>https://coden1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</guid>
     <description><![CDATA[阶段一: 处理名称,检查缓存 阶段二: 检查父工厂 阶段三: 检查DependsOn 阶段四: 按Scope创建bean  创建singleton 创建prototype 创建其他scope   阶段五: 创建bean  创建bean实例 依赖注入 初始化 登记可销毁bean   阶段六: 类型转换 阶段七: 销毁bean  阶段一: 处理名称,检查缓存  先把别名解析为实际名称,再进行后续处理 若要FactoryBean本身,需要使用&amp;名称获取 singletonObjects是一级缓存,放单例成品对象 singletonFactories是三级缓存,放单例工厂 earlySingletonObjects是耳机缓存,放单例工厂的产品,可成为提前单例对象  阶段二: 处理父子容器 阶段三: 阶段四: 按Scope创建bean  scope理解为从xxx范围内找到bean更加贴切 singleton scope表示从单例池范围获取bean,如果没有,则创建并放入单例池 prototype scope表示从不缓存bean,每次都创建新的 request scope表示从request对象范围内获取bean,如果没有,则创建并放入request  阶段五: 创建bean 1. 创建bean实例   FactoryMethod方式创建bean实例
  分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
  优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造]]></description>
 </item><item>
     <title>Aop</title>
-    <link>https://codesn1per.github.io/aop/</link>
+    <link>https://coden1per.github.io/aop/</link>
     <pubDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/aop/</guid>
+    <guid>https://coden1per.github.io/aop/</guid>
     <description><![CDATA[AOP是什么   AOP(Aspect Oriented Programming),意味面向切面编程,可以通过预编译方式和运行期动态代理实现在不修改源代码的情况下给程序动态同一添加功能的一种技术.
   AOP的编程思想就是把很多类对象的横切问题点,从业务逻辑中分离出来,从而达到解耦的目的,增加代码的重用性,提高开发效率
   AOP应用场景  日志记录 异常处理 权限验证 缓存处理 事务处理 数据持久化 效率检查 内容分发  Aspect概念  aspect:切面,切面有切点和通知组成,即包括横切逻辑的定义也包括连接点的定义 pointcut: 切点,每个类都拥有多个连接点,可以理解是连接点的集合 joinpoint: 连接点,程序执行的某个特定位置,如某个方法调用前后等 weaving: 织入,将增强添加到目标类的具体连接点的过程 advice: 通知,是织入到目标类连接点上的一段代码,就是增强到什么地方?增强什么内容? target: 目标对象,通知织入的目标类 aop Proxy: 代理对象,即增强后产生的对象  Spring AOP底层实现,是通过JDK动态代理或CGlib代理在运行时期在对象初始化阶段织入代码的
@@ -80,26 +100,26 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
   Around advice]]></description>
 </item><item>
     <title>面试题</title>
-    <link>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <link>https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
     <pubDate>Thu, 10 Mar 2022 16:57:05 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <guid>https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
     <description><![CDATA[springmvc执行流程 数据参数在handler处理 mybatis 分页插件如何实现 动态sql如何写 方法和sql如何绑定 先namespace 线程 进程关系 线程的状态 6种 interipped notify all区别 线程安全 写 锁机制 new创建字符串 syn锁升级 反射可以获取私有信息吗 需要设置一下setaccess 自定义注解 多态的理解 封装 treeset如何去重 compareto 数组链表区别 序列化 反序列化 Spring如何为我们创建对象 动态代理 Springbean生命周期 init aware 对象作用域 threadlocal 私有化 线程隔离 底层机制 threallocalmap k v Spring 如何解决循环依赖 三级缓存 linux的常用 ps -ef 进程号 kill 全局找一个文件 find 动态查看日志 tail f 动态 n 末尾多少行 数据库隔离级别 读未提交 读以提交 可重复读 串行化 存储引擎 sql语句执行过程 先执行from
 hashmap循环链表
 1.你怎么理解线程的优先级？ 2.线程之间是如何通信的？ 3.线程池怎么配置的？ 4、并发编程的三要素是什么？ 5、hashmap的底层原理？ 6、ArrayList和 LinkedList 的区别在哪里？ 7、我们常说spring全家桶，他包含哪些部分？ 8、能说一下基于XML配置方式的搭建SSM框架的步骤嘛？ 9、如果数据库表锁了，数据插入不了，怎么办？ 10、 mysql 的存储引擎有哪些，区别是什么 11、maven有哪些优缺点，如何解决jar包的冲突？ 12、能说一下常用的linux部署命令嘛？]]></description>
 </item><item>
     <title>Hashtable和ConcurrentHashMap</title>
-    <link>https://codesn1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/</link>
+    <link>https://coden1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/</link>
     <pubDate>Tue, 08 Mar 2022 17:49:05 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/</guid>
+    <guid>https://coden1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/</guid>
     <description><![CDATA[1. 两者对比  Hashtable与ConcurrentHashMap都是线程安全的Map集合 Hashtable并发度低,整个Hashtable对应一把锁,同一时刻,只能有一个线程操作它 1.8之前ConcurrentHashMap使用了Segment+数组+链表的结构,每个Segment对应一把锁,如果多个线程访问不同的Segment,则不会冲突 1.8开始ConcurrentHashMap将数组的每个头结点作为锁,如果多个线程访问的头结点不同,则不会冲突  ]]></description>
 </item><item>
     <title>MySQL索引</title>
-    <link>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
+    <link>https://coden1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
     <pubDate>Sat, 26 Feb 2022 15:28:31 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
+    <guid>https://coden1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
     <description><![CDATA[1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
 缺点:
  利用hash存储的话需要将所有数据文件添加到内存,比较耗费内存空间 如果所有的查询都是等值查询,那么hash确实很快,但是使用范围查找情况更多,因此hash就不太适合了    2. 二叉树的索引形式
@@ -118,10 +138,10 @@ hashmap循环链表
 全文索引类型为FULL TEXT,在定义索引的列上支持值的全文查找,允许在这些所偶遇列中插入重复值和空值,全文索引可以在CHAR,VARCHAR上创建]]></description>
 </item><item>
     <title>线程安全之CAS操作</title>
-    <link>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</link>
+    <link>https://coden1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</link>
     <pubDate>Thu, 24 Feb 2022 18:05:17 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</guid>
+    <guid>https://coden1per.github.io/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/</guid>
     <description><![CDATA[背景介绍：假设现在有一个线程共享的变量c=0，让两个线程分别对c进行c++操作100次，那么我们最后得到的结果是200吗？
 **1.在线程不安全的方式下:**结果可能小于200，比如当前线程A取得c的值为3，然后线程A阻塞了，线程B取得的c的值也是3，然后线程B也阻塞了，现在线程A被唤醒执行了++操作使得c=4，结果写回c值内存，线程A执行结束，线程B被唤醒执行了++操作使得3++=4，也写回了c值内存，现在问题来了，两个线程分别进行了一次++操作，最后c值却为4而不是5，所以c值最后的结果肯定是小于200的，产生这种情况的原因就是线程不安全！，两个线程在同一时间读取了c值，然后又没有各种先执行完++操作而被阻塞（就是没有同步）
 **2.在线程安全的方式下:**比如++操作加上synchronized同步锁，结果一定是200，因为这样使得读取c值和++操作是一个原子性操作，不能被打断，所以线程是安全的，保证了同步
@@ -153,12 +173,5 @@ CAS机制的缺点：
 表面看没有什么影响，但是如果实际中理由CAS机制从取款机上取钱，假如账户开始有100元，在取款机上取走50，取款机出现问题一共提交了两次请求（线程1，线程2），第二次请求（线程2）在执行时因为某种原因被阻塞了，这时候有人往你的账户打了50元，线程2恢复了可执行状态，这个时候就会出现问题，原本线程2应该执行失败的，但是比较后仍然与旧值一致，这样就造成了账户实际上扣款了两次！
 ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存中的值，还比较两个比较变量的版本号是否一致，只有当版本号一致才进行后续操作，这样就完美的解决了ABA问题！
 3.不能保证代码块的原子性：CAS机制保证的是一个变量的原子性操作，若要保证多个变量的原子性操作，可以封装在一起，但是这样得不偿失，开销太大，还不如直接采用synchorized同步锁]]></description>
-</item><item>
-    <title>MySQL高级</title>
-    <link>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
-    <pubDate>Sat, 19 Feb 2022 15:25:53 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</guid>
-    <description><![CDATA[1. 存储引擎 1.1. 对比MyISAM和InnoDB    对比项 MyISAM InnoDB     主外键 不支持 支持   事务 不支持 支持   行表锁 表锁,即使操作一条记录也会锁住整个表,不适合高并发的操作 行锁,操作时只锁一行,不对其他行有影响,适合高并发的操作   缓存 只缓存索引,不缓存真实数据 不仅缓存索引还要缓存真实数据,对内存要求较高,而且内存大小对性能有决定性的影响   表空间 小 大   关注点 性能 事务   默认安装 Y Y    1.2. 阿里巴巴,淘宝用哪个?    产品 价格 目标 主要功能 是否可投入生产     PerCona Server 免费 提供XtraDB存储引擎的包装器和其他分析工具 XtraDB 是   MariaDB 免费 拓展MySQL以包含XtraDB和其他性能改进 XtraDB 是   Drizzle 免费 提供比MySQL更强大的可拓展性和性能改进 高可用性 是     Percona为MySQL数据库服务器进行了改进,在功能和性能上较MySQL有着很显著的提升.]]></description>
 </item></channel>
 </rss>

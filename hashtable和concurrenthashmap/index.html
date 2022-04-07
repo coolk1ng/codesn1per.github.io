@@ -8,19 +8,19 @@
         <title>Hashtable和ConcurrentHashMap - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="Hashtable和ConcurrentHashMap" />
 <meta property="og:description" content="1. 两者对比  Hashtable与ConcurrentHashMap都是线程安全的Map集合 Hashtable并发度低,整个Hashtable对应一把锁,同一时刻,只能有一个线程操作它 1.8之前ConcurrentHashMap使用了Segment&#43;数组&#43;链表的结构,每个Segment对应一把锁,如果多个线程访问不同的Segment,则不会冲突 1.8开始ConcurrentHashMap将数组的每个头结点作为锁,如果多个线程访问的头结点不同,则不会冲突  " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://codesn1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://coden1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-08T17:49:05&#43;08:00" />
 <meta property="article:modified_time" content="2022-03-08T17:49:05&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="Hashtable和ConcurrentHashMap"/>
 <meta name="twitter:description" content="1. 两者对比  Hashtable与ConcurrentHashMap都是线程安全的Map集合 Hashtable并发度低,整个Hashtable对应一把锁,同一时刻,只能有一个线程操作它 1.8之前ConcurrentHashMap使用了Segment&#43;数组&#43;链表的结构,每个Segment对应一把锁,如果多个线程访问不同的Segment,则不会冲突 1.8开始ConcurrentHashMap将数组的每个头结点作为锁,如果多个线程访问的头结点不同,则不会冲突  "/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/" /><link rel="prev" href="https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/" /><link rel="next" href="https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/hashtable%E5%92%8Cconcurrenthashmap/" /><link rel="prev" href="https://coden1per.github.io/mysql%E7%B4%A2%E5%BC%95/" /><link rel="next" href="https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,9 +28,9 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/codesn1per.github.io\/hashtable%E5%92%8Cconcurrenthashmap\/"
+            "@id": "https:\/\/coden1per.github.io\/hashtable%E5%92%8Cconcurrenthashmap\/"
         },"genre": "posts","keywords": "ConcurrentHashMap, Hashtable","wordcount":  6 ,
-        "url": "https:\/\/codesn1per.github.io\/hashtable%E5%92%8Cconcurrenthashmap\/","datePublished": "2022-03-08T17:49:05+08:00","dateModified": "2022-03-08T17:49:05+08:00","publisher": {
+        "url": "https:\/\/coden1per.github.io\/hashtable%E5%92%8Cconcurrenthashmap\/","datePublished": "2022-03-08T17:49:05+08:00","dateModified": "2022-03-08T17:49:05+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",

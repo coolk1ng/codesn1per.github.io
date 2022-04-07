@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Linux - Tag - CodeSniper&#39; Blog</title>
-        <link>https://codesn1per.github.io/tags/linux/</link>
+        <link>https://coden1per.github.io/tags/linux/</link>
         <description>Linux - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 02 Jun 2021 02:07:14 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 02 Jun 2021 02:07:14 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
     <title>Linux基本命令</title>
-    <link>https://codesn1per.github.io/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</link>
+    <link>https://coden1per.github.io/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</link>
     <pubDate>Wed, 02 Jun 2021 02:07:14 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://codesn1per.github.io/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</guid>
+    <guid>https://coden1per.github.io/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</guid>
     <description><![CDATA[Linux 1. Linux的应用领域   服务器领域
 linux在服务器领域的应用是最强的;
 linux免费,稳定,高效等特点在这里得到了很好的提现,尤其砸一些高端领域尤为广泛(c/c++/php/java/python/go);

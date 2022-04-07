@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>面试题目整理 - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="面试题目整理" />
+<meta property="og:description" content="1. JavaSE 2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
+  Spring中比较核心的是IOC(控制反转)和AOP(面向切面编程)
+   IOC可以帮助我们维护对象与对象之间的依赖关系,降低了对象之间的耦合度,DI是依赖注入的意思,他是IOC实现的方式,指应用运行过程中,对象之间的关系不再需要对象的使用者来维护,而是被IOC容器进行管理注入 AOP是面向切面编程,是对OOP的补充,可以同一解决一批组件的共性需求(如权限检查,记录日志,事务管理等).我们可以将解决共性需求的代码独立出来,通过配置的方式,声明这些代码在什么地方,什么时机调用.满足调用条件,AOP会将业务代码织入到我们指定的位置,从而同一解决问题,不需要修改这一批组件的代码  BeanFactory和ApplicationContext有什么区别?  ApplicationContext是BeanFacotry的子接口 ApplicationContext提供更完整的功能:  继承MessageSource,支持国际化 同一的资源文件访问方式 提供在监听器中注册bean的事件 同时加载多个配置文件   BeanFactory采用延迟加载形式来注入Bean的,即只有使用某个Bean时,才对该Bean进行加载实例化.如果Bean的某一个属性没有注入,BeanFactory加载后,知道第一次使用这个Bean才会抛出异常 ApplicationContext是在容器启动时,一次性创建所有的bean,在启动时就可以发现spring中存在的配置问题,这样有利于检查所依赖属性是否注入.  两者都都支持BeanPostProcessor,BeanFactoryPostProcessor的使用,但两者的区别是:BeanFactory需要手动注册,而ApplicationContext则是自动注册    SpringBean的生命周期?   Spring中的bean的生命主要包含四个阶段:实例化Bean-&gt;Bean属性填充-&gt;初始化Bean-&gt;销毁Bean
+  首先是实例化Bean,当客户端想容器请求一个尚未初始化的bean时,或初始化bean的时候需要注入另一个尚未初始化的bean的依赖时,容器就会调用doCreatebean()方法进行实例化,实际上就是通过反射的方式创建出一个bean对象
+  Bean实例创建出来后,接着就是给这个bean对象进行属性填充,也就是注入这个bean依赖的其他bean对象
+  属性填充完成后,进行初始化Bean操作,初始化阶段可以分为几个步骤
+  执行Aware接口的方法
+Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口,可以让我们拿到Spring容器的一些资源.如实现BeanNameAware接口可以获取到BeanName,实现BeanFactoryAware接口可以获取工厂对象BeanFactory等等
+  执行BeanPostProcessor的前置处理方法PostProcessbeforeInitiaization(),对bean进行一些自定义的前置处理
+  判断bean是否实现了initializingBean接口,如果实现了,将会执行initializingBean的afterPropertiesSet()初始化方法
+  执行用户自定义的初始化方法,如init-method等
+  执行BeanPostProcessor的后置处理方法postProcessAfterInitialization()
+    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作
+ 首先判断bean是否实现了DestructionAwarebeanPostProcessor接口,如果实现了,则会执行DestructionAwareBeanPostProcessor后置处理器的销毁回调方法 其次会判断Bean是否实现了DisposableBean接口,如果实现了将会调用其实现destroy方法 最后判断这个bean是否配置了destroy-method等自定义的销毁方法,如果有的话,则会自动调用其配置的销毁方法    Spring的作用域?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-06T15:35:22&#43;08:00" />
+<meta property="article:modified_time" content="2022-04-06T15:35:22&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+
+<meta name="twitter:title" content="面试题目整理"/>
+<meta name="twitter:description" content="1. JavaSE 2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
+  Spring中比较核心的是IOC(控制反转)和AOP(面向切面编程)
+   IOC可以帮助我们维护对象与对象之间的依赖关系,降低了对象之间的耦合度,DI是依赖注入的意思,他是IOC实现的方式,指应用运行过程中,对象之间的关系不再需要对象的使用者来维护,而是被IOC容器进行管理注入 AOP是面向切面编程,是对OOP的补充,可以同一解决一批组件的共性需求(如权限检查,记录日志,事务管理等).我们可以将解决共性需求的代码独立出来,通过配置的方式,声明这些代码在什么地方,什么时机调用.满足调用条件,AOP会将业务代码织入到我们指定的位置,从而同一解决问题,不需要修改这一批组件的代码  BeanFactory和ApplicationContext有什么区别?  ApplicationContext是BeanFacotry的子接口 ApplicationContext提供更完整的功能:  继承MessageSource,支持国际化 同一的资源文件访问方式 提供在监听器中注册bean的事件 同时加载多个配置文件   BeanFactory采用延迟加载形式来注入Bean的,即只有使用某个Bean时,才对该Bean进行加载实例化.如果Bean的某一个属性没有注入,BeanFactory加载后,知道第一次使用这个Bean才会抛出异常 ApplicationContext是在容器启动时,一次性创建所有的bean,在启动时就可以发现spring中存在的配置问题,这样有利于检查所依赖属性是否注入.  两者都都支持BeanPostProcessor,BeanFactoryPostProcessor的使用,但两者的区别是:BeanFactory需要手动注册,而ApplicationContext则是自动注册    SpringBean的生命周期?   Spring中的bean的生命主要包含四个阶段:实例化Bean-&gt;Bean属性填充-&gt;初始化Bean-&gt;销毁Bean
+  首先是实例化Bean,当客户端想容器请求一个尚未初始化的bean时,或初始化bean的时候需要注入另一个尚未初始化的bean的依赖时,容器就会调用doCreatebean()方法进行实例化,实际上就是通过反射的方式创建出一个bean对象
+  Bean实例创建出来后,接着就是给这个bean对象进行属性填充,也就是注入这个bean依赖的其他bean对象
+  属性填充完成后,进行初始化Bean操作,初始化阶段可以分为几个步骤
+  执行Aware接口的方法
+Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口,可以让我们拿到Spring容器的一些资源.如实现BeanNameAware接口可以获取到BeanName,实现BeanFactoryAware接口可以获取工厂对象BeanFactory等等
+  执行BeanPostProcessor的前置处理方法PostProcessbeforeInitiaization(),对bean进行一些自定义的前置处理
+  判断bean是否实现了initializingBean接口,如果实现了,将会执行initializingBean的afterPropertiesSet()初始化方法
+  执行用户自定义的初始化方法,如init-method等
+  执行BeanPostProcessor的后置处理方法postProcessAfterInitialization()
+    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作
+ 首先判断bean是否实现了DestructionAwarebeanPostProcessor接口,如果实现了,则会执行DestructionAwareBeanPostProcessor后置处理器的销毁回调方法 其次会判断Bean是否实现了DisposableBean接口,如果实现了将会调用其实现destroy方法 最后判断这个bean是否配置了destroy-method等自定义的销毁方法,如果有的话,则会自动调用其配置的销毁方法    Spring的作用域?"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" /><link rel="prev" href="https://coden1per.github.io/springsecurity/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "面试题目整理",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/coden1per.github.io\/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86\/"
+        },"genre": "posts","keywords": "面试题","wordcount":  97 ,
+        "url": "https:\/\/coden1per.github.io\/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86\/","datePublished": "2022-04-06T15:35:22+08:00","dateModified": "2022-04-06T15:35:22+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "CodeSniper"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="CodeSniper&#39; Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 博客 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="CodeSniper&#39; Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">博客</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">面试题目整理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%9D%A2%E8%AF%95/"><i class="far fa-folder fa-fw"></i>面试</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-06">2022-04-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;97 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-javase">1. JavaSE</a></li>
+        <li><a href="#2-spring">2. Spring</a></li>
+        <li><a href="#3-mysql">3. MySQL</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="1-javase">1. JavaSE</h3>
+<h3 id="2-spring">2. Spring</h3>
+<h5 id="spring是什么">Spring是什么?</h5>
+<ol>
+<li>
+<p>轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.</p>
+</li>
+<li>
+<p>Spring中比较核心的是IOC(控制反转)和AOP(面向切面编程)</p>
+</li>
+</ol>
+<ul>
+<li>IOC可以帮助我们维护对象与对象之间的依赖关系,降低了对象之间的耦合度,DI是依赖注入的意思,他是IOC实现的方式,指应用运行过程中,对象之间的关系不再需要对象的使用者来维护,而是被IOC容器进行管理注入</li>
+<li>AOP是面向切面编程,是对OOP的补充,可以同一解决一批组件的共性需求(如权限检查,记录日志,事务管理等).我们可以将解决共性需求的代码独立出来,通过配置的方式,声明这些代码在什么地方,什么时机调用.满足调用条件,AOP会将业务代码织入到我们指定的位置,从而同一解决问题,不需要修改这一批组件的代码</li>
+</ul>
+<h5 id="beanfactory和applicationcontext有什么区别">BeanFactory和ApplicationContext有什么区别?</h5>
+<ol>
+<li>ApplicationContext是BeanFacotry的子接口</li>
+<li>ApplicationContext提供更完整的功能:
+<ul>
+<li>继承MessageSource,支持国际化</li>
+<li>同一的资源文件访问方式</li>
+<li>提供在监听器中注册bean的事件</li>
+<li>同时加载多个配置文件</li>
+</ul>
+</li>
+<li>BeanFactory采用延迟加载形式来注入Bean的,即只有使用某个Bean时,才对该Bean进行加载实例化.如果Bean的某一个属性没有注入,BeanFactory加载后,知道第一次使用这个Bean才会抛出异常</li>
+<li>ApplicationContext是在容器启动时,一次性创建所有的bean,在启动时就可以发现spring中存在的配置问题,这样有利于检查所依赖属性是否注入.
+<ol>
+<li>两者都都支持BeanPostProcessor,BeanFactoryPostProcessor的使用,但两者的区别是:BeanFactory需要手动注册,而ApplicationContext则是自动注册</li>
+</ol>
+</li>
+</ol>
+<h5 id="springbean的生命周期">SpringBean的生命周期?</h5>
+<ol>
+<li>
+<p>Spring中的bean的生命主要包含四个阶段:实例化Bean-&gt;Bean属性填充-&gt;初始化Bean-&gt;销毁Bean</p>
+</li>
+<li>
+<p>首先是实例化Bean,当客户端想容器请求一个尚未初始化的bean时,或初始化bean的时候需要注入另一个尚未初始化的bean的依赖时,容器就会调用doCreatebean()方法进行实例化,实际上就是通过反射的方式创建出一个bean对象</p>
+</li>
+<li>
+<p>Bean实例创建出来后,接着就是给这个bean对象进行属性填充,也就是注入这个bean依赖的其他bean对象</p>
+</li>
+<li>
+<p>属性填充完成后,进行初始化Bean操作,初始化阶段可以分为几个步骤</p>
+<ol>
+<li>
+<p>执行Aware接口的方法</p>
+<p>Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口,可以让我们拿到Spring容器的一些资源.如实现BeanNameAware接口可以获取到BeanName,实现BeanFactoryAware接口可以获取工厂对象BeanFactory等等</p>
+</li>
+<li>
+<p>执行BeanPostProcessor的前置处理方法PostProcessbeforeInitiaization(),对bean进行一些自定义的前置处理</p>
+</li>
+<li>
+<p>判断bean是否实现了initializingBean接口,如果实现了,将会执行initializingBean的afterPropertiesSet()初始化方法</p>
+</li>
+<li>
+<p>执行用户自定义的初始化方法,如init-method等</p>
+</li>
+<li>
+<p>执行BeanPostProcessor的后置处理方法postProcessAfterInitialization()</p>
+</li>
+</ol>
+</li>
+<li>
+<p>初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作</p>
+<ol>
+<li>首先判断bean是否实现了DestructionAwarebeanPostProcessor接口,如果实现了,则会执行DestructionAwareBeanPostProcessor后置处理器的销毁回调方法</li>
+<li>其次会判断Bean是否实现了DisposableBean接口,如果实现了将会调用其实现destroy方法</li>
+<li>最后判断这个bean是否配置了destroy-method等自定义的销毁方法,如果有的话,则会自动调用其配置的销毁方法</li>
+</ol>
+</li>
+</ol>
+<h5 id="spring的作用域">Spring的作用域?</h5>
+<ol>
+<li>singleton: 默认,每个容器中只有一个bean的实例,单例的模式由BeanFactory自身来维护.该对象的生命周期与Spring IOC容器一致的(但在第一次被注入时才会创建)</li>
+<li>prototype: 为每个bean请求提供一个实例,在每次注入时都会创建一个新的对象</li>
+<li>request: bean被定义每个HTTP请求中创建一个单例对象,也就是说在单个请求中都会复用这一个单例对象</li>
+<li>session: 与request范围类似,确保每个session中都有一个bean的实例,在session过期后,bean会随之失效</li>
+<li>application: bean被定义在ServletContext的生命周期中复用一个单例对象</li>
+<li>websocket: bean被定义在websocket的生命周期中复用一个单例对象</li>
+</ol>
+<h5 id="springmvc的执行流程">SpringMVC的执行流程?</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220407230755791.png"
+        data-srcset="/image-20220407230755791.png, /image-20220407230755791.png 1.5x, /image-20220407230755791.png 2x"
+        data-sizes="auto"
+        alt="/image-20220407230755791.png"
+        title="image-20220407230755791" /></p>
+<ol>
+<li>DispatcherServlet接受请求,调用HandleMapping(处理器映射器)</li>
+<li>HandleMapping找到具体的处理器(可查找xml配置或注解配置),生成处理器对象及处理器拦截器(如果有),在一起返回给DispatcherServlet</li>
+<li>DispatcherServlet调用HandleAdapter(处理器适配器)</li>
+<li>HandleAdapter经过适配器调用具体的处理器(Handle/Controller),返回ModelAndView给DispatcherServlet</li>
+<li>DispatcherServlet调用ViewResolver(视图解析器),根据返回的ModelAndView中的逻辑视图名为DispatcherServlet返回一个可用的view实例</li>
+<li>DispatcherServlet根据View渲染视图,响应给用户</li>
+</ol>
+<h3 id="3-mysql">3. MySQL</h3>
+<h5 id="对mysql索引的理解">对MySQL索引的理解?</h5>
+<ol>
+<li>索引时单独的,存储在磁盘上的数据结构,包含对数据表中所有记录的引用指针.索引可以快速找到在某个或多个列有一特定值的行,所有MySQL列的类型都可以被索引.</li>
+<li>索引时在存储引擎中实现的,因此,每种存储引擎的所有都不一定完全相同,并且每种存储引擎也不一定支持所有索引类型.MySQL中所有的存储类型有两种,即B+树和Hash,具体和表的存储引擎相关.</li>
+</ol>
+<h5 id="索引的优点">索引的优点?</h5>
+<ol>
+<li>通过创建唯一索引,可以保证数据库中的每一行数据的唯一性</li>
+<li>加快数据的查询速度,降低数据库的IO成本,这也是创建索引的主要原因</li>
+<li>使用分组和排序子句进行数据检索时,同样可以显著减少查询中分组和排序的时间</li>
+<li>进行表连接操作时,索引加速表连接操作</li>
+</ol>
+<h5 id="索引的缺点">索引的缺点?</h5>
+<ol>
+<li>占用一定的磁盘空间</li>
+<li>在频繁插入,删除操作时,MySQL需要动态维护索引</li>
+</ol>
+<h5 id="索引有哪几种">索引有哪几种?</h5>
+<ol>
+<li>普通索引和唯一索引
+<ul>
+<li>普通索引时MySQL中的基本索引类型,允许在定义索引的列中插入重复值和空值</li>
+<li>唯一索引要求索引列的值必须唯一,但允许有空值,如果是组合索引,则列值的组合必须唯一</li>
+<li>主键索引时一种特殊的唯一索引,不允许有空值</li>
+</ul>
+</li>
+<li>单列索引和组合索引
+<ul>
+<li>单列索引即一个索引只包含单个列,一个表可以有多个单列索引</li>
+<li>组合索引是指在表的多个字段组合上组件的索引,只有在查询条件中使用了这些字段的左边字段时,索引次啊会被使用,使用组合索引时遵循最左前缀法则</li>
+</ul>
+</li>
+<li>全文索引
+<ul>
+<li>全文索引类型为FULLTEXT,在定义一索引的列上支持值的全文查找,允许在这些索引列中插入重复值和空值.全文索引可以在CHAR,VARCHAR或者TEXT类型的列上创建</li>
+</ul>
+</li>
+<li>空间索引
+<ul>
+<li>空间索引是对空间数据类型的字段建立的索引，MySQL中的空间数据类型有4种，分别是GEOMETRY、POINT、LINESTRING和POLYGON。MySQL使用SPATIAL关键字进行扩展，使得能够用创建正规索引类似的语法创建空间索引。创建空间索引的列，必须将其声明为NOT NULL，空间索引只能在存储引擎为MyISAM的表中创建。</li>
+</ul>
+</li>
+</ol>
+<h5 id="如何避免索引失效">如何避免索引失效?</h5>
+<ol>
+<li>使用组合索引,遵循&quot;最左前缀&quot;原则</li>
+<li>不在索引列上做任何操作,例如计算,函数,类型转换,会导致索引失效而转向全表扫描</li>
+<li>尽量使用覆盖索引(只访问索引列的查询),减少select * 覆盖索引能减少回表次数</li>
+<li>在使用不等于(!=或者&lt;&gt;)的时候无法使用索引会导致全表扫描</li>
+<li>LIKE以通配符开头(%abc),MySQL会失效变成全表扫描的操作</li>
+<li>字符串不加单引号会导致索引失效(可能发生索引列的隐式转换)</li>
+<li>少用or,用它来连接时会索引失效</li>
+</ol>
+<h5 id="不适合建索引的场合">不适合建索引的场合</h5>
+<ol>
+<li>频繁更新的字段</li>
+<li>where条件中用不到的字段不适合建立索引</li>
+<li>数据比较少的表不需要建索引</li>
+<li>数据重复且分布比较均匀的字段不适合建索引,例如性别,真假值</li>
+<li>参与列计算的列不是建索引</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-04-06</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/springsecurity/" class="prev" rel="prev" title="SpringSecurity"><i class="fas fa-angle-left fa-fw"></i>SpringSecurity</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">CodeSniper</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"CodeSniper' Blog","id-2":"CodeSniper' Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
