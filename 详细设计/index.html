@@ -65,7 +65,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/codesn1per.github.io\/%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1\/"
-        },"genre": "posts","wordcount":  40 ,
+        },"genre": "posts","wordcount":  60 ,
         "url": "https:\/\/codesn1per.github.io\/%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1\/","datePublished": "2022-04-29T00:43:57+08:00","dateModified": "2022-04-29T00:43:57+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -142,7 +142,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">详细设计</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;40 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;60 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -156,6 +156,7 @@
         <li><a href="#1-用户管理">1. 用户管理</a></li>
         <li><a href="#2-角色管理">2. 角色管理</a></li>
         <li><a href="#3-菜单管理">3 菜单管理</a></li>
+        <li><a href="#4-竞赛项目管理">4. 竞赛项目管理</a></li>
       </ul>
     </li>
   </ul>
@@ -371,6 +372,118 @@
         data-sizes="auto"
         alt="/image-20220429010318746.png"
         title="image-20220429010318746" /></p>
+</li>
+</ul>
+<h3 id="4-竞赛项目管理">4. 竞赛项目管理</h3>
+<h5 id="41-项目列表查询">4.1 项目列表查询</h5>
+<p>根据项目名称,学科搜索符合的项目,返回列表信息.</p>
+<ul>
+<li>
+<p>controller层代码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220429013012094.png"
+        data-srcset="/image-20220429013012094.png, /image-20220429013012094.png 1.5x, /image-20220429013012094.png 2x"
+        data-sizes="auto"
+        alt="/image-20220429013012094.png"
+        title="image-20220429013012094" /></p>
+</li>
+<li>
+<p>mapper层代码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220429013042103.png"
+        data-srcset="/image-20220429013042103.png, /image-20220429013042103.png 1.5x, /image-20220429013042103.png 2x"
+        data-sizes="auto"
+        alt="/image-20220429013042103.png"
+        title="image-20220429013042103" /></p>
+</li>
+<li>
+<p>页面截图</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="image-20220429012923562.png"
+        data-srcset="image-20220429012923562.png, image-20220429012923562.png 1.5x, image-20220429012923562.png 2x"
+        data-sizes="auto"
+        alt="image-20220429012923562.png"
+        title="image-20220429012923562" /></p>
+</li>
+</ul>
+<h5 id="42-项目新增">4.2 项目新增</h5>
+<p>根据传入的竞赛项目信息,创建该项目进行管理.</p>
+<ul>
+<li>
+<p>controller层代码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220429013225702.png"
+        data-srcset="/image-20220429013225702.png, /image-20220429013225702.png 1.5x, /image-20220429013225702.png 2x"
+        data-sizes="auto"
+        alt="/image-20220429013225702.png"
+        title="image-20220429013225702" /></p>
+</li>
+<li>
+<p>mapper层代码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220429013308465.png"
+        data-srcset="/image-20220429013308465.png, /image-20220429013308465.png 1.5x, /image-20220429013308465.png 2x"
+        data-sizes="auto"
+        alt="/image-20220429013308465.png"
+        title="image-20220429013308465" /></p>
+</li>
+<li>
+<p>页面截图</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220429013144758.png"
+        data-srcset="/image-20220429013144758.png, /image-20220429013144758.png 1.5x, /image-20220429013144758.png 2x"
+        data-sizes="auto"
+        alt="/image-20220429013144758.png"
+        title="image-20220429013144758" /></p>
+</li>
+</ul>
+<h5 id="43-项目修改">4.3 项目修改</h5>
+<p>点击改项目进入修改页面,该项目信息会渲染在该页面上,修改数据,完成修改操作.</p>
+<ul>
+<li>
+<p>controller层代码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220429013452367.png"
+        data-srcset="/image-20220429013452367.png, /image-20220429013452367.png 1.5x, /image-20220429013452367.png 2x"
+        data-sizes="auto"
+        alt="/image-20220429013452367.png"
+        title="image-20220429013452367" /></p>
+</li>
+<li>
+<p>mapper层代码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220429013510931.png"
+        data-srcset="/image-20220429013510931.png, /image-20220429013510931.png 1.5x, /image-20220429013510931.png 2x"
+        data-sizes="auto"
+        alt="/image-20220429013510931.png"
+        title="image-20220429013510931" /></p>
+</li>
+<li>
+<p>页面截图</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20220429013425585.png"
+        data-srcset="/image-20220429013425585.png, /image-20220429013425585.png 1.5x, /image-20220429013425585.png 2x"
+        data-sizes="auto"
+        alt="/image-20220429013425585.png"
+        title="image-20220429013425585" /></p>
 </li>
 </ul>
 </div><div class="post-footer" id="post-footer">
