@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/codesn1per.github.io\/springboot%E6%95%B4%E5%90%88es\/"
-        },"genre": "posts","keywords": "ElasticSearch","wordcount":  114 ,
+        },"genre": "posts","keywords": "ElasticSearch","wordcount":  208 ,
         "url": "https:\/\/codesn1per.github.io\/springboot%E6%95%B4%E5%90%88es\/","datePublished": "2022-04-28T02:42:27+08:00","dateModified": "2022-04-28T02:42:27+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -110,7 +110,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">SpringBoot整合ES</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"><i class="far fa-folder fa-fw"></i>搜索引擎</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-28">2022-04-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;114 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-28">2022-04-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;208 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -197,6 +197,50 @@
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testDelete</span><span class="o">(){</span>
         <span class="n">elasticsearchOperations</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">&#34;c9c312e6196746ad8c9c9e5060f36ea8&#34;</span><span class="o">,</span><span class="n">Product</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>查询所有doc</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFindAll</span><span class="o">(){</span>
+        <span class="n">SearchHits</span><span class="o">&lt;</span><span class="n">Product</span><span class="o">&gt;</span> <span class="n">search</span> <span class="o">=</span> <span class="n">elasticsearchOperations</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">Query</span><span class="o">.</span><span class="na">findAll</span><span class="o">(),</span> <span class="n">Product</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">SearchHit</span><span class="o">&lt;</span><span class="n">Product</span><span class="o">&gt;</span> <span class="n">item</span> <span class="o">:</span> <span class="n">search</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></li>
+</ul>
+<h5 id="2-resthighlevelclient">2. RestHighLevelClient</h5>
+<ul>
+<li>
+<p>创建索引和映射</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">restHighLevelClient_test_indexAndMapping</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">CreateIndexRequest</span> <span class="n">createIndexRequest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CreateIndexRequest</span><span class="o">(</span><span class="s">&#34;product&#34;</span><span class="o">);</span>
+        <span class="n">createIndexRequest</span><span class="o">.</span><span class="na">mapping</span><span class="o">(</span><span class="s">&#34;{\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;    \&#34;properties\&#34;:{\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;      \&#34;title\&#34;:{\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;        \&#34;type\&#34;: \&#34;keyword\&#34;\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;      },\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;      \&#34;price\&#34;:{\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;        \&#34;type\&#34;:\&#34;double\&#34;\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;      },\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;      \&#34;description\&#34;:{\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;        \&#34;type\&#34;:\&#34;text\&#34;\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;      }\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;    }\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;  }&#34;</span><span class="o">,</span> <span class="n">XContentType</span><span class="o">.</span><span class="na">JSON</span><span class="o">);</span>
+        <span class="n">restHighLevelClient</span><span class="o">.</span><span class="na">indices</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="n">createIndexRequest</span><span class="o">,</span> <span class="n">RequestOptions</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>删除索引</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">restHighLevelClient_test_deleteMapping</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">AcknowledgedResponse</span> <span class="n">acknowledgedResponse</span> <span class="o">=</span> <span class="n">restHighLevelClient</span><span class="o">.</span><span class="na">indices</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="k">new</span> <span class="n">DeleteIndexRequest</span><span class="o">(</span><span class="s">&#34;product&#34;</span><span class="o">),</span> <span class="n">RequestOptions</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">acknowledgedResponse</span><span class="o">.</span><span class="na">isAcknowledged</span><span class="o">());</span>
     <span class="o">}</span>
 </code></pre></div></li>
 </ul>

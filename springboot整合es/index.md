@@ -94,6 +94,53 @@ public class Product {
       }
   ```
 
+* 查询所有doc
 
+  ```java
+  @Test
+      public void testFindAll(){
+          SearchHits<Product> search = elasticsearchOperations.search(Query.findAll(), Product.class);
+          for (SearchHit<Product> item : search) {
+              System.out.println(item);
+          }
+      }
+  ```
+
+##### 2. RestHighLevelClient
+
+* 创建索引和映射
+
+  ```java
+  @Test
+      public void restHighLevelClient_test_indexAndMapping() throws IOException {
+          CreateIndexRequest createIndexRequest = new CreateIndexRequest("product");
+          createIndexRequest.mapping("{\n" +
+                  "    \"properties\":{\n" +
+                  "      \"title\":{\n" +
+                  "        \"type\": \"keyword\"\n" +
+                  "      },\n" +
+                  "      \"price\":{\n" +
+                  "        \"type\":\"double\"\n" +
+                  "      },\n" +
+                  "      \"description\":{\n" +
+                  "        \"type\":\"text\"\n" +
+                  "      }\n" +
+                  "    }\n" +
+                  "  }", XContentType.JSON);
+          restHighLevelClient.indices().create(createIndexRequest, RequestOptions.DEFAULT);
+      }
+  }
+  ```
+
+* 删除索引
+
+  ```java
+  @Test
+      public void restHighLevelClient_test_deleteMapping() throws IOException {
+          AcknowledgedResponse acknowledgedResponse = restHighLevelClient.indices()
+                  .delete(new DeleteIndexRequest("product"), RequestOptions.DEFAULT);
+          System.out.println(acknowledgedResponse.isAcknowledged());
+      }
+  ```
 
 
