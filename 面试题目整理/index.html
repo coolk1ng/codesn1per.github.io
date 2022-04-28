@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>面试题目整理 - CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="面试题目整理" />
-<meta property="og:description" content="1. JavaSE 2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
+<meta property="og:description" content="1. JavaSE StringBuffer,StringBuilder区别?  两者都是可变的字符串对象,有共同的父类AbstractStringBuilder,并且两个类的构造方法和成员方法也基本相同,不同的是,StringBuffer是线程安全的,而StringBUilder是非线程安全的,所以StringBuilder性能略高  2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
   Spring中比较核心的是IOC(控制反转)和AOP(面向切面编程)
    IOC可以帮助我们维护对象与对象之间的依赖关系,降低了对象之间的耦合度,DI是依赖注入的意思,他是IOC实现的方式,指应用运行过程中,对象之间的关系不再需要对象的使用者来维护,而是被IOC容器进行管理注入 AOP是面向切面编程,是对OOP的补充,可以同一解决一批组件的共性需求(如权限检查,记录日志,事务管理等).我们可以将解决共性需求的代码独立出来,通过配置的方式,声明这些代码在什么地方,什么时机调用.满足调用条件,AOP会将业务代码织入到我们指定的位置,从而同一解决问题,不需要修改这一批组件的代码  BeanFactory和ApplicationContext有什么区别?  ApplicationContext是BeanFacotry的子接口 ApplicationContext提供更完整的功能:  继承MessageSource,支持国际化 同一的资源文件访问方式 提供在监听器中注册bean的事件 同时加载多个配置文件   BeanFactory采用延迟加载形式来注入Bean的,即只有使用某个Bean时,才对该Bean进行加载实例化.如果Bean的某一个属性没有注入,BeanFactory加载后,知道第一次使用这个Bean才会抛出异常 ApplicationContext是在容器启动时,一次性创建所有的bean,在启动时就可以发现spring中存在的配置问题,这样有利于检查所依赖属性是否注入.  两者都都支持BeanPostProcessor,BeanFactoryPostProcessor的使用,但两者的区别是:BeanFactory需要手动注册,而ApplicationContext则是自动注册    SpringBean的生命周期?   Spring中的bean的生命主要包含四个阶段:实例化Bean-&gt;Bean属性填充-&gt;初始化Bean-&gt;销毁Bean
   首先是实例化Bean,当客户端想容器请求一个尚未初始化的bean时,或初始化bean的时候需要注入另一个尚未初始化的bean的依赖时,容器就会调用doCreatebean()方法进行实例化,实际上就是通过反射的方式创建出一个bean对象
@@ -18,18 +18,17 @@ Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口
   判断bean是否实现了initializingBean接口,如果实现了,将会执行initializingBean的afterPropertiesSet()初始化方法
   执行用户自定义的初始化方法,如init-method等
   执行BeanPostProcessor的后置处理方法postProcessAfterInitialization()
-    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作
- 首先判断bean是否实现了DestructionAwarebeanPostProcessor接口,如果实现了,则会执行DestructionAwareBeanPostProcessor后置处理器的销毁回调方法 其次会判断Bean是否实现了DisposableBean接口,如果实现了将会调用其实现destroy方法 最后判断这个bean是否配置了destroy-method等自定义的销毁方法,如果有的话,则会自动调用其配置的销毁方法    Spring的作用域?" />
+    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-04-06T15:35:22&#43;08:00" />
 <meta property="article:modified_time" content="2022-04-06T15:35:22&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="面试题目整理"/>
-<meta name="twitter:description" content="1. JavaSE 2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
+<meta name="twitter:description" content="1. JavaSE StringBuffer,StringBuilder区别?  两者都是可变的字符串对象,有共同的父类AbstractStringBuilder,并且两个类的构造方法和成员方法也基本相同,不同的是,StringBuffer是线程安全的,而StringBUilder是非线程安全的,所以StringBuilder性能略高  2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
   Spring中比较核心的是IOC(控制反转)和AOP(面向切面编程)
    IOC可以帮助我们维护对象与对象之间的依赖关系,降低了对象之间的耦合度,DI是依赖注入的意思,他是IOC实现的方式,指应用运行过程中,对象之间的关系不再需要对象的使用者来维护,而是被IOC容器进行管理注入 AOP是面向切面编程,是对OOP的补充,可以同一解决一批组件的共性需求(如权限检查,记录日志,事务管理等).我们可以将解决共性需求的代码独立出来,通过配置的方式,声明这些代码在什么地方,什么时机调用.满足调用条件,AOP会将业务代码织入到我们指定的位置,从而同一解决问题,不需要修改这一批组件的代码  BeanFactory和ApplicationContext有什么区别?  ApplicationContext是BeanFacotry的子接口 ApplicationContext提供更完整的功能:  继承MessageSource,支持国际化 同一的资源文件访问方式 提供在监听器中注册bean的事件 同时加载多个配置文件   BeanFactory采用延迟加载形式来注入Bean的,即只有使用某个Bean时,才对该Bean进行加载实例化.如果Bean的某一个属性没有注入,BeanFactory加载后,知道第一次使用这个Bean才会抛出异常 ApplicationContext是在容器启动时,一次性创建所有的bean,在启动时就可以发现spring中存在的配置问题,这样有利于检查所依赖属性是否注入.  两者都都支持BeanPostProcessor,BeanFactoryPostProcessor的使用,但两者的区别是:BeanFactory需要手动注册,而ApplicationContext则是自动注册    SpringBean的生命周期?   Spring中的bean的生命主要包含四个阶段:实例化Bean-&gt;Bean属性填充-&gt;初始化Bean-&gt;销毁Bean
   首先是实例化Bean,当客户端想容器请求一个尚未初始化的bean时,或初始化bean的时候需要注入另一个尚未初始化的bean的依赖时,容器就会调用doCreatebean()方法进行实例化,实际上就是通过反射的方式创建出一个bean对象
@@ -41,12 +40,11 @@ Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口
   判断bean是否实现了initializingBean接口,如果实现了,将会执行initializingBean的afterPropertiesSet()初始化方法
   执行用户自定义的初始化方法,如init-method等
   执行BeanPostProcessor的后置处理方法postProcessAfterInitialization()
-    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作
- 首先判断bean是否实现了DestructionAwarebeanPostProcessor接口,如果实现了,则会执行DestructionAwareBeanPostProcessor后置处理器的销毁回调方法 其次会判断Bean是否实现了DisposableBean接口,如果实现了将会调用其实现destroy方法 最后判断这个bean是否配置了destroy-method等自定义的销毁方法,如果有的话,则会自动调用其配置的销毁方法    Spring的作用域?"/>
+    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" /><link rel="prev" href="https://coden1per.github.io/springsecurity/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" /><link rel="prev" href="https://codesn1per.github.io/springsecurity/" /><link rel="next" href="https://codesn1per.github.io/elasticsearch%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -54,9 +52,9 @@ Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/coden1per.github.io\/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86\/"
-        },"genre": "posts","keywords": "面试题","wordcount":  97 ,
-        "url": "https:\/\/coden1per.github.io\/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86\/","datePublished": "2022-04-06T15:35:22+08:00","dateModified": "2022-04-06T15:35:22+08:00","publisher": {
+            "@id": "https:\/\/codesn1per.github.io\/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86\/"
+        },"genre": "posts","keywords": "面试题","wordcount":  110 ,
+        "url": "https:\/\/codesn1per.github.io\/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86\/","datePublished": "2022-04-06T15:35:22+08:00","dateModified": "2022-04-06T15:35:22+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -132,7 +130,7 @@ Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">面试题目整理</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%9D%A2%E8%AF%95/"><i class="far fa-folder fa-fw"></i>面试</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-06">2022-04-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;97 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-06">2022-04-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;110 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -151,6 +149,10 @@ Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h3 id="1-javase">1. JavaSE</h3>
+<h5 id="stringbufferstringbuilder区别">StringBuffer,StringBuilder区别?</h5>
+<ol>
+<li>两者都是可变的字符串对象,有共同的父类AbstractStringBuilder,并且两个类的构造方法和成员方法也基本相同,不同的是,StringBuffer是线程安全的,而StringBUilder是非线程安全的,所以StringBuilder性能略高</li>
+</ol>
 <h3 id="2-spring">2. Spring</h3>
 <h5 id="spring是什么">Spring是什么?</h5>
 <ol>
@@ -250,6 +252,21 @@ Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口
 <li>DispatcherServlet调用ViewResolver(视图解析器),根据返回的ModelAndView中的逻辑视图名为DispatcherServlet返回一个可用的view实例</li>
 <li>DispatcherServlet根据View渲染视图,响应给用户</li>
 </ol>
+<h5 id="spring中的bean是线程安全的么">Spring中的Bean是线程安全的么?</h5>
+<ol>
+<li>Spring本省没有针对Bean做线程安全的处理</li>
+<li>如果Bean是无状态的,那么Bean则是线程安全的,反之</li>
+<li>另外,Bean是不是线程安全,跟Bean的作用于没有关系,Bean的作用于至少表示Bean的生命周期范围,对于任何声明周期的Bean都是一个对象,是不是线程安全还得看Bean本身</li>
+</ol>
+<h5 id="spring中的事务是如何实现的">Spring中的事务是如何实现的?</h5>
+<ol>
+<li>Spring事务底层是基于数据库事务和AOP机制</li>
+<li>对使用了@Transactional注解的Bean,Spring会创建一个代理对象作为Bean</li>
+<li>如果代理对象的方法加了注解,则利用事务管理器创建数据连接</li>
+<li>修改数据库连接的autocommit为false,禁止此连接的自动提交</li>
+<li>执行方法,方法会执行sql,没有异常就提交事务</li>
+<li>Spring事务的隔离级别就是数据库的隔离级别</li>
+</ol>
 <h3 id="3-mysql">3. MySQL</h3>
 <h5 id="对mysql索引的理解">对MySQL索引的理解?</h5>
 <ol>
@@ -337,7 +354,8 @@ Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口
         </section>
     </div>
 
-    <div class="post-nav"><a href="/springsecurity/" class="prev" rel="prev" title="SpringSecurity"><i class="fas fa-angle-left fa-fw"></i>SpringSecurity</a></div>
+    <div class="post-nav"><a href="/springsecurity/" class="prev" rel="prev" title="SpringSecurity"><i class="fas fa-angle-left fa-fw"></i>SpringSecurity</a>
+            <a href="/elasticsearch%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="ElasticSearch学习">ElasticSearch学习<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"></div></article></div>
             </main><footer class="footer">

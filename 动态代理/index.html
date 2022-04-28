@@ -17,12 +17,12 @@ Object[] args: 目标类中的方法的参数,jdk提供
  表示方法的,确切的说是目标类中的方法 通过Mehtod可以执行某一个目标类的方法,Method.invoke()    Proxy
  核心的对象,创建的代理对象,之前创建对象都是用new类的构造方法(),现在使用Proxy类的方法,代替new的使用 静态方法:newProxyInstance(),创建代理对象 参数:  classLoader loader: 类加载器,负责向内存中加载对象的.使用反射获取对象的ClassLoader Class&lt;?&gt;[] interfaces: 接口,目标对象实现的接口,也是反射获取的 InvocationHander h: 我们自己写的,代理类要完成的功能     " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://coden1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-16T12:57:14&#43;08:00" />
 <meta property="article:modified_time" content="2022-01-16T12:57:14&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="动态代理"/>
 <meta name="twitter:description" content="1. 动态代理的实现 1. jdk动态代理:   使用java反射包中的类和接口实现动态代理的功能 反射包 java.lang.reflect,里面有三个类:InvocationHandler,Method,Proxy   2. cglib动态代理   cglib是第三方的工具库,创建代理对象. cglib的原理是继承,cglib通过继承目标类,创建他的子类,在子类中重写父类中同名的方法,实现功能的修改. 因为cglib是继承,重写方法,所以要求目标类不能是final的,方法也不能是final的   2. jdk动态代理 1. 反射,Method类,表示方法,类中的方法.通过Method可以执行某个方法. 2. jdk动态代理的实现  InvocationHandler
@@ -38,7 +38,7 @@ Object[] args: 目标类中的方法的参数,jdk提供
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" /><link rel="prev" href="https://coden1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" /><link rel="next" href="https://coden1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" /><link rel="prev" href="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" /><link rel="next" href="https://codesn1per.github.io/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -46,9 +46,9 @@ Object[] args: 目标类中的方法的参数,jdk提供
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/coden1per.github.io\/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86\/"
+            "@id": "https:\/\/codesn1per.github.io\/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86\/"
         },"genre": "posts","keywords": "反射","wordcount":  48 ,
-        "url": "https:\/\/coden1per.github.io\/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86\/","datePublished": "2022-01-16T12:57:14+08:00","dateModified": "2022-01-16T12:57:14+08:00","publisher": {
+        "url": "https:\/\/codesn1per.github.io\/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86\/","datePublished": "2022-01-16T12:57:14+08:00","dateModified": "2022-01-16T12:57:14+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",

@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Spring - Category - CodeSniper&#39; Blog</title>
-        <link>https://coden1per.github.io/categories/spring/</link>
+        <link>https://codesn1per.github.io/categories/spring/</link>
         <description>Spring - Category - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/categories/spring/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/spring/" rel="self" type="application/rss+xml" /><item>
     <title>Aop</title>
-    <link>https://coden1per.github.io/aop/</link>
+    <link>https://codesn1per.github.io/aop/</link>
     <pubDate>Wed, 16 Mar 2022 18:47:34 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/aop/</guid>
+    <guid>https://codesn1per.github.io/aop/</guid>
     <description><![CDATA[AOP是什么   AOP(Aspect Oriented Programming),意味面向切面编程,可以通过预编译方式和运行期动态代理实现在不修改源代码的情况下给程序动态同一添加功能的一种技术.
   AOP的编程思想就是把很多类对象的横切问题点,从业务逻辑中分离出来,从而达到解耦的目的,增加代码的重用性,提高开发效率
   AOP应用场景  日志记录 异常处理 权限验证 缓存处理 事务处理 数据持久化 效率检查 内容分发  Aspect概念  aspect:切面,切面有切点和通知组成,即包括横切逻辑的定义也包括连接点的定义 pointcut: 切点,每个类都拥有多个连接点,可以理解是连接点的集合 joinpoint: 连接点,程序执行的某个特定位置,如某个方法调用前后等 weaving: 织入,将增强添加到目标类的具体连接点的过程 advice: 通知,是织入到目标类连接点上的一段代码,就是增强到什么地方?增强什么内容? target: 目标对象,通知织入的目标类 aop Proxy: 代理对象,即增强后产生的对象  Spring AOP底层实现,是通过JDK动态代理或CGlib代理在运行时期在对象初始化阶段织入代码的
@@ -24,10 +24,10 @@
   Around advice]]></description>
 </item><item>
     <title>动态代理</title>
-    <link>https://coden1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</link>
+    <link>https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</link>
     <pubDate>Sun, 16 Jan 2022 12:57:14 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</guid>
+    <guid>https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</guid>
     <description><![CDATA[1. 动态代理的实现 1. jdk动态代理:   使用java反射包中的类和接口实现动态代理的功能 反射包 java.lang.reflect,里面有三个类:InvocationHandler,Method,Proxy   2. cglib动态代理   cglib是第三方的工具库,创建代理对象. cglib的原理是继承,cglib通过继承目标类,创建他的子类,在子类中重写父类中同名的方法,实现功能的修改. 因为cglib是继承,重写方法,所以要求目标类不能是final的,方法也不能是final的   2. jdk动态代理 1. 反射,Method类,表示方法,类中的方法.通过Method可以执行某个方法. 2. jdk动态代理的实现  InvocationHandler
   就一个方法invoke()
   invoke():表示代理对象要执行的功能代码,你的代理类要完成的功能卸载invoke()方法中.

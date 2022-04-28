@@ -10,12 +10,12 @@
  分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
  优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://coden1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-27T13:14:08&#43;08:00" />
 <meta property="article:modified_time" content="2022-03-27T13:14:08&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="SpringBean的生命周期"/>
 <meta name="twitter:description" content="阶段一: 处理名称,检查缓存 阶段二: 检查父工厂 阶段三: 检查DependsOn 阶段四: 按Scope创建bean  创建singleton 创建prototype 创建其他scope   阶段五: 创建bean  创建bean实例 依赖注入 初始化 登记可销毁bean   阶段六: 类型转换 阶段七: 销毁bean  阶段一: 处理名称,检查缓存  先把别名解析为实际名称,再进行后续处理 若要FactoryBean本身,需要使用&amp;名称获取 singletonObjects是一级缓存,放单例成品对象 singletonFactories是三级缓存,放单例工厂 earlySingletonObjects是耳机缓存,放单例工厂的产品,可成为提前单例对象  阶段二: 处理父子容器 阶段三: 阶段四: 按Scope创建bean  scope理解为从xxx范围内找到bean更加贴切 singleton scope表示从单例池范围获取bean,如果没有,则创建并放入单例池 prototype scope表示从不缓存bean,每次都创建新的 request scope表示从request对象范围内获取bean,如果没有,则创建并放入request  阶段五: 创建bean 1. 创建bean实例   FactoryMethod方式创建bean实例
@@ -24,7 +24,7 @@
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" /><link rel="prev" href="https://coden1per.github.io/aop/" /><link rel="next" href="https://coden1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" /><link rel="prev" href="https://codesn1per.github.io/aop/" /><link rel="next" href="https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -32,9 +32,9 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/coden1per.github.io\/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F\/"
+            "@id": "https:\/\/codesn1per.github.io\/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F\/"
         },"genre": "posts","keywords": "Spring","wordcount":  67 ,
-        "url": "https:\/\/coden1per.github.io\/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F\/","datePublished": "2022-03-27T13:14:08+08:00","dateModified": "2022-03-27T13:14:08+08:00","publisher": {
+        "url": "https:\/\/codesn1per.github.io\/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F\/","datePublished": "2022-03-27T13:14:08+08:00","dateModified": "2022-03-27T13:14:08+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",

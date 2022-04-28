@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>面试 - Category - CodeSniper&#39; Blog</title>
-        <link>https://coden1per.github.io/categories/%E9%9D%A2%E8%AF%95/</link>
+        <link>https://codesn1per.github.io/categories/%E9%9D%A2%E8%AF%95/</link>
         <description>面试 - Category - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 06 Apr 2022 15:35:22 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/categories/%E9%9D%A2%E8%AF%95/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Wed, 06 Apr 2022 15:35:22 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/%E9%9D%A2%E8%AF%95/" rel="self" type="application/rss+xml" /><item>
     <title>面试题目整理</title>
-    <link>https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/</link>
+    <link>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/</link>
     <pubDate>Wed, 06 Apr 2022 15:35:22 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/</guid>
-    <description><![CDATA[1. JavaSE 2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
+    <guid>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/</guid>
+    <description><![CDATA[1. JavaSE StringBuffer,StringBuilder区别?  两者都是可变的字符串对象,有共同的父类AbstractStringBuilder,并且两个类的构造方法和成员方法也基本相同,不同的是,StringBuffer是线程安全的,而StringBUilder是非线程安全的,所以StringBuilder性能略高  2. Spring Spring是什么?   轻量级开源JavaEE框架,它是一个容器框架,用来装javabean,中间层框架可以起一个连接作用,可以让我们企业开发更快速,更简洁.
   Spring中比较核心的是IOC(控制反转)和AOP(面向切面编程)
    IOC可以帮助我们维护对象与对象之间的依赖关系,降低了对象之间的耦合度,DI是依赖注入的意思,他是IOC实现的方式,指应用运行过程中,对象之间的关系不再需要对象的使用者来维护,而是被IOC容器进行管理注入 AOP是面向切面编程,是对OOP的补充,可以同一解决一批组件的共性需求(如权限检查,记录日志,事务管理等).我们可以将解决共性需求的代码独立出来,通过配置的方式,声明这些代码在什么地方,什么时机调用.满足调用条件,AOP会将业务代码织入到我们指定的位置,从而同一解决问题,不需要修改这一批组件的代码  BeanFactory和ApplicationContext有什么区别?  ApplicationContext是BeanFacotry的子接口 ApplicationContext提供更完整的功能:  继承MessageSource,支持国际化 同一的资源文件访问方式 提供在监听器中注册bean的事件 同时加载多个配置文件   BeanFactory采用延迟加载形式来注入Bean的,即只有使用某个Bean时,才对该Bean进行加载实例化.如果Bean的某一个属性没有注入,BeanFactory加载后,知道第一次使用这个Bean才会抛出异常 ApplicationContext是在容器启动时,一次性创建所有的bean,在启动时就可以发现spring中存在的配置问题,这样有利于检查所依赖属性是否注入.  两者都都支持BeanPostProcessor,BeanFactoryPostProcessor的使用,但两者的区别是:BeanFactory需要手动注册,而ApplicationContext则是自动注册    SpringBean的生命周期?   Spring中的bean的生命主要包含四个阶段:实例化Bean-&gt;Bean属性填充-&gt;初始化Bean-&gt;销毁Bean
   首先是实例化Bean,当客户端想容器请求一个尚未初始化的bean时,或初始化bean的时候需要注入另一个尚未初始化的bean的依赖时,容器就会调用doCreatebean()方法进行实例化,实际上就是通过反射的方式创建出一个bean对象
@@ -22,14 +22,13 @@ Spring会检测该对象是否实现了xxxAware接口,通过Aware类型的接口
   判断bean是否实现了initializingBean接口,如果实现了,将会执行initializingBean的afterPropertiesSet()初始化方法
   执行用户自定义的初始化方法,如init-method等
   执行BeanPostProcessor的后置处理方法postProcessAfterInitialization()
-    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作
- 首先判断bean是否实现了DestructionAwarebeanPostProcessor接口,如果实现了,则会执行DestructionAwareBeanPostProcessor后置处理器的销毁回调方法 其次会判断Bean是否实现了DisposableBean接口,如果实现了将会调用其实现destroy方法 最后判断这个bean是否配置了destroy-method等自定义的销毁方法,如果有的话,则会自动调用其配置的销毁方法    Spring的作用域?]]></description>
+    初始化完成后,Bean就成功创建了,之后就可以使用这个bean,当bean不在需要时,会进行销毁操作]]></description>
 </item><item>
     <title>面试题</title>
-    <link>https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <link>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
     <pubDate>Thu, 10 Mar 2022 16:57:05 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <guid>https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
     <description><![CDATA[springmvc执行流程 数据参数在handler处理 mybatis 分页插件如何实现 动态sql如何写 方法和sql如何绑定 先namespace 线程 进程关系 线程的状态 6种 interipped notify all区别 线程安全 写 锁机制 new创建字符串 syn锁升级 反射可以获取私有信息吗 需要设置一下setaccess 自定义注解 多态的理解 封装 treeset如何去重 compareto 数组链表区别 序列化 反序列化 Spring如何为我们创建对象 动态代理 Springbean生命周期 init aware 对象作用域 threadlocal 私有化 线程隔离 底层机制 threallocalmap k v Spring 如何解决循环依赖 三级缓存 linux的常用 ps -ef 进程号 kill 全局找一个文件 find 动态查看日志 tail f 动态 n 末尾多少行 数据库隔离级别 读未提交 读以提交 可重复读 串行化 存储引擎 sql语句执行过程 先执行from
 hashmap循环链表
 1.你怎么理解线程的优先级？ 2.线程之间是如何通信的？ 3.线程池怎么配置的？ 4、并发编程的三要素是什么？ 5、hashmap的底层原理？ 6、ArrayList和 LinkedList 的区别在哪里？ 7、我们常说spring全家桶，他包含哪些部分？ 8、能说一下基于XML配置方式的搭建SSM框架的步骤嘛？ 9、如果数据库表锁了，数据插入不了，怎么办？ 10、 mysql 的存储引擎有哪些，区别是什么 11、maven有哪些优缺点，如何解决jar包的冲突？ 12、能说一下常用的linux部署命令嘛？]]></description>

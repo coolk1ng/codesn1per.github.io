@@ -9,22 +9,22 @@
         <title>CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="CodeSniper&#39; Blog" />
 <meta property="og:description" content="This is My New Hugo Site" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://coden1per.github.io/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/>
+<meta property="og:url" content="https://codesn1per.github.io/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="CodeSniper&#39; Blog"/>
 <meta name="twitter:description" content="This is My New Hugo Site"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="CodeSniper&#39; Blog">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="CodeSniper&#39; Blog">
     <link rel="feed" href="/index.xml" type="application/rss+xml" title="CodeSniper&#39; Blog"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "WebSite",
-        "url": "https:\/\/coden1per.github.io\/","inLanguage": "en","author": {
+        "url": "https:\/\/codesn1per.github.io\/","inLanguage": "en","author": {
                 "@type": "Person",
                 "name": "CodeSniper"
             },"description": "This is My New Hugo Site","name": "CodeSniper' Blog"
@@ -102,6 +102,51 @@
         alt="/art.png"
         title="/art.png" /></a></div><h2 class="home-subtitle"><div id="id-3" class="typeit"></div></h2></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/">线程安全之CAS操作</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-02-24">2022-02-24</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="far fa-folder fa-fw"></i>并发编程</a></span></div><div class="content">背景介绍：假设现在有一个线程共享的变量c=0，让两个线程分别对c进行c++操作100次，那么我们最后得到的结果是200吗？
+**1.在线程不安全的方式下:**结果可能小于200，比如当前线程A取得c的值为3，然后线程A阻塞了，线程B取得的c的值也是3，然后线程B也阻塞了，现在线程A被唤醒执行了++操作使得c=4，结果写回c值内存，线程A执行结束，线程B被唤醒执行了++操作使得3++=4，也写回了c值内存，现在问题来了，两个线程分别进行了一次++操作，最后c值却为4而不是5，所以c值最后的结果肯定是小于200的，产生这种情况的原因就是线程不安全！，两个线程在同一时间读取了c值，然后又没有各种先执行完++操作而被阻塞（就是没有同步）
+**2.在线程安全的方式下:**比如++操作加上synchronized同步锁，结果一定是200，因为这样使得读取c值和++操作是一个原子性操作，不能被打断，所以线程是安全的，保证了同步
+现在问题来了，我们要保证线程安全只有加synchorized同步锁这一种办法吗？synchorized同步锁又有什么缺点呢?
+当然不仅只有synchorized这一种方法，还有原子操作类，关于原子操作类我们等下再说，先说说synchorized的缺点：
+syschorized缺点：
+synchorized的缺点关键在于性能！我们知道synchorized关键字会让没有得到锁资源的线程进入Blocked状态，而在得到锁的资源恢复为Runnable状态，这个过程涉及到操作系统用户模式和内核模式的切换，代价比较高！
+现在我们来说说原子操作类，顾名思义，就是保证某个操作的原子性，那它是怎么实现的呢？这个我们就要垃圾原子操作类的底层：CAS机制了
+CAS机制的英文缩写是Compare and Swap，翻译一下就是比较和交换
+CAS机制中使用3个基本操作数：内存地址V，旧的预期值A，要修改的新值B，更新一个变量的时候，只有当变量的旧的预期值A和内存地址V中的值相同的时候，才会将内存地址V中的值更新为新值B
+下面举个栗子：
+1）内存地址V中存放着值为10的变量
+2）此时线程1要把变量值加1，对线程1来说，旧的预期值A=10，要修改的新值B=11
+3）在线程1提交更新之前，另外一个线程2提前一步将内存地址V中的变量值率先更新成了11
+4）线程1此时开始提交更新，首先进行A和内存地址V中的值比较，发现A不等于此时内存地址V中的值11，提交失败
+5）线程1尝试重新获取内存地址V的当前值，并重新计算想要修改的值，对线程1来说，此时旧的预期值A=11，要修改的新值B=12，这个重新尝试的过程叫做自旋
+6）这一次比较幸运，没有其他线程更改内存地址V中的值，线程1进行compare，发现A和内存地址V中的值相同
+7）线程1进行Swap，把内存地址V中的值替换为B，也就是12
+这个过程涉及到以下几个问题：
+问题1：如何保证获取的当前值是内存中的最新值？（如果每次获得的当前值不是内存中的最新值，那么CAS机制将毫无意义）
+用volatile关键字修饰变量，使得每次对变量的修改操作完成后一定会先写回内存，保证了每次获取到值都是内存中的最新值！
+问题2：如何保证Compare和Swap过程中的原子性（如果Compare和Swap过程不是原子性操作，那么CAS机制也毫无意义）？
+Compare和Swap过程的原子性是通过unsafe类来实现的，unsafe类为我们提供了硬件级别的原子操作！
+总结一下：从思想上来说，Synchorized属于悲观锁，悲观的认为程序中的并发多，所以严防死守，CAS机制属于乐观锁，乐观的认为程序中并发少，让线程不断的去尝试更新
+那么现在又有一个问题来了，CAS机制有什么缺点呢？
+CAS机制的缺点：
+1.CPU开销过大：在并发量比较高的情况下，如果许多线程反复尝试去更新一个变量，却又一直更新失败，循环往复，会消耗CPU很多资源
+2.ABA问题：假设在内存中有一个值为A的变量储存在内存地址V当中，此时有三个线程使用CAS机制更新这个变量的值，每个线程的执行时间都略有偏差，线程1和线程2已经获取当前值，线程3还没有获取当前值。接下来线程1先一步执行成功，把当前值成功从A更新为B，同时线程2因为某种原因被阻塞，没有做更新操作，线程3在线程1更新成功之后获取了当前值B，再之后线程2仍然阻塞，线程3继续执行，成功将当前值更新为A，最后，线程2终于恢复了运行状态，由于线程2之前获取了“当前值A”并且经过了Compare检测，内存地址中的实际值也是A，所以线程2最后把变量A更新成了B，在这个过程中，线程2获取的当前值是一个旧值，尽管和当前值一模一样，但是内存地址中V中的变量已经经历了A-&gt;B-&gt;A的改变
+表面看没有什么影响，但是如果实际中理由CAS机制从取款机上取钱，假如账户开始有100元，在取款机上取走50，取款机出现问题一共提交了两次请求（线程1，线程2），第二次请求（线程2）在执行时因为某种原因被阻塞了，这时候有人往你的账户打了50元，线程2恢复了可执行状态，这个时候就会出现问题，原本线程2应该执行失败的，但是比较后仍然与旧值一致，这样就造成了账户实际上扣款了两次！
+ABA问题解决的方案：在Compare阶段不仅比较预期值和此时内存中的值，还比较两个比较变量的版本号是否一致，只有当版本号一致才进行后续操作，这样就完美的解决了ABA问题！
+3.不能保证代码块的原子性：CAS机制保证的是一个变量的原子性操作，若要保证多个变量的原子性操作，可以封装在一起，但是这样得不偿失，开销太大，还不如直接采用synchorized同步锁</div><div class="post-footer">
+        <a href="/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8Bcas%E6%93%8D%E4%BD%9C/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%B9%B6%E5%8F%91/">并发</a>,&nbsp;<a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/mysql%E9%AB%98%E7%BA%A7/">MySQL高级</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-02-19">2022-02-19</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div><div class="content">1. 存储引擎 1.1. 对比MyISAM和InnoDB    对比项 MyISAM InnoDB     主外键 不支持 支持   事务 不支持 支持   行表锁 表锁,即使操作一条记录也会锁住整个表,不适合高并发的操作 行锁,操作时只锁一行,不对其他行有影响,适合高并发的操作   缓存 只缓存索引,不缓存真实数据 不仅缓存索引还要缓存真实数据,对内存要求较高,而且内存大小对性能有决定性的影响   表空间 小 大   关注点 性能 事务   默认安装 Y Y    1.2. 阿里巴巴,淘宝用哪个?    产品 价格 目标 主要功能 是否可投入生产     PerCona Server 免费 提供XtraDB存储引擎的包装器和其他分析工具 XtraDB 是   MariaDB 免费 拓展MySQL以包含XtraDB和其他性能改进 XtraDB 是   Drizzle 免费 提供比MySQL更强大的可拓展性和性能改进 高可用性 是     Percona为MySQL数据库服务器进行了改进,在功能和性能上较MySQL有着很显著的提升.</div><div class="post-footer">
+        <a href="/mysql%E9%AB%98%E7%BA%A7/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">MySQL</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/springcloud/">SpringCloud</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-02-18">2022-02-18</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div><div class="content">SpringCloud 1. Eureka 1. 提供者与消费者  服务提供者: 一次业务中,被其他服务调用的服务(提供接口给其他服务) 服务消费者: 一次业务中,调用其他服务的服务(调用其他服务提供的接口) 提供者与消费者角色是相对 一个服务可以同时是服务提供者和服务消费者  2. Eureka注册中心  注册服务信息 拉取服务 负载均衡 远程调用 心跳续约 30s/次  1. Eureka的作用  消费者该如何获取服务提供者的具体信息?  服务提供者启动时向eureka注册自己的信息 eureka保存这些信息 消费者根据服务名称想eureka拉取提供者信息   如果有多个服务提供者,消费者该如何选择?  服务消费者利用负载均衡算法,从服务列表中挑选一个   消费者如何感知服务提供者健康状态?  服务提供者会每隔30s向eurekaServer发送心跳请求,报告健康状态 eureka会更新记录服务列表信息,心跳不正常会被剔除 消费者就可以拉取最新的信息    2. 服务注册  引入eureka-client依赖 在application.yml中配置eureka地址  2. Ribbon 1. Ribbon负载均衡规则  规则接口是IRule 默认实现是ZoneAvoidanceRule,根据zone选择服务列表,然后轮询  2. 负载均衡自定义方式  代码方式: 配置灵活,但修改时需要重新打包发布 配置方式: 直观,方便,无需重新打包发布,但是无法做全局配置  3. 饥饿加载  开启饥饿加载 eager-load 指定饥饿加载的服务名称  3.</div><div class="post-footer">
+        <a href="/springcloud/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/springcloud/">SpringCloud</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-22">2022-01-22</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="far fa-folder fa-fw"></i>并发编程</a></span></div><div class="content">1. 进程与线程 1.1 进程与线程 1.1.1 进程   程序由指令和数据组成,但这些指令要运行,数据要读写,就必须将指令加载至CPU,数据加载至内存.在指令运行过程中还需要用到磁盘,网络等设备.进程用来加载指令,管理内存,管理IO的. 当一个程序被运行,从磁盘加载这个程序至内存,这时就开启了一个进程. 进程就可以视为程序的一个实例.大部分程序可以同时运行多个实例进程,也有的程序只能启动一个实例进程.   1.1.2 线程   一个进程之内可以分一到多个线程. 一个线程就是一个指令流,将指令流中的一条条指令以一定的顺序交给CPU执行 Java中,线程作为最小调度单位,进程作为资源分配的最小单位,在Windows中进程是不活动的,知识作为线程的容器.   1.1.3 二者对比  进程基本上相互独立,线程在进程内,是进程的一个子集. 进程拥有共享的资源,如内存空间等,供内部的线程共享. 进程间通信较为复杂  同一台计算机的进程通信成为IPC 不同计算机之间的进程通信,需要通过网络,并遵守共同的协议.   线程通信相对简单,因为他们共享进程的内存,一个例子是多个线程可以访问同一个共享变量 线程更轻量,线程上下文切换成本一般要比进程上下文切换低.  1.2 并行与并发   单核cpu下,线程实际还是串行执行的.操作系统中有一个组件叫做任务调度器,将cpu的时间片分给不同的线程使用,只是由于cpu在线程间的切换非常快,感觉是同时运行的. 一般会将这种线程轮流使用cpu的做法成为并发. 多核cpu下,每个核都可以调度运行线程,这时候线程是并行的.     并发: 同一时间应对多件事情的能力. 并行: 同一时间动手做多件事情的能力.   1.3 应用 1.3.1 异步调用案例  从方法调用角度来说:
  需要等地啊结果返回,才能继续运行就是同步 不需要等待结果返回,就能继续运行就是异步  注意: 同步在多线程中海油另外一层的意思,是让多个线程步调一致
@@ -132,7 +177,7 @@ Object[] args: 目标类中的方法的参数,jdk提供
   不可重复读(读取了提交的新事物,指更新操作)
 不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
   幻读(读取了提交的新事物,指增删操作)
-  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
+  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数据不一致
   第一类事务丢失(回滚丢失)
 对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
   第二类事务丢失(覆盖丢失)
@@ -145,52 +190,9 @@ Object[] args: 目标类中的方法的参数,jdk提供
 重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
   Serializable
 最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- 4.</div><div class="post-footer">
+ 4. 事务的实现原理   原子性是通过undo log来实现</div><div class="post-footer">
         <a href="/mysql%E4%BA%8B%E5%8A%A1/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">MySQL</a>,&nbsp;<a href="/tags/%E4%BA%8B%E5%8A%A1/">事务</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/redis%E5%9F%BA%E7%A1%80/">Redis基础</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-07-02">2021-07-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div><div class="content">1. NoSQL数据库概述 NoSQL泛指非关系型数据库.NoSQL不依赖业务逻辑方式存储,而已简单的key_value模式存储.因此大大增加了数据库的拓展能力;
- 不遵循SQL标准 不支持ACID 远超于SQL的性能  2. NoSQL使用场景  对数据高并发的读写 海量数据的读写 对数据高可拓展性的  3. NoSQL不适用场景  需要事务支持 基于sql的结构查询存储,处理复杂的关系,需要即席查询 用不着sql和用了sql也不行的情况,考虑用NoSQL  4. 常见NoSQL数据库  Memcache Redis MongoDB  2. Redis概述安装   Redis是一个开源的key-value存储系统
-  和Memcached类似,他支持存储的value类型相对更对,包括string,list,set,zset(sorted set&ndash;有序集合)和hash
-  这些数据类型都支持push/pop add/remove及取交集并集和差集及更丰富的操作,而且这些操作都是原子性的;
-  在此基础上,Redis支持各种不同方式的排序
-  与memcached一样,为了保证效率,数据都是缓存在内存中.
-  区别的是Redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的几率文件;
-  并且在此基础上实现了master-slave(主从)同步;
-1. redis安装 1. 安装目录: /usr/local/bin 查看默认安装目录:
- redis-benchmark: 性能检测工具,可以在自己本子运行,看看自己本子性能如何 redis-check-aof: 修复有问题的AOF文件,rdb和aof后面讲 redis-check-rdb: 修复有问题的dump.rdb文件 redis-sentinel: Redis集群使用 redis-server: Redis服务器启动命令 redis-cli: 客户端,操作入口  2.</div><div class="post-footer">
-        <a href="/redis%E5%9F%BA%E7%A1%80/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">Redis</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">Linux基本命令</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-06-02">2021-06-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw"></i>操作系统</a></span></div><div class="content">Linux 1. Linux的应用领域   服务器领域
-linux在服务器领域的应用是最强的;
-linux免费,稳定,高效等特点在这里得到了很好的提现,尤其砸一些高端领域尤为广泛(c/c++/php/java/python/go);
-  嵌入式领域
-linxu运行稳定,对网络的良好支持性,低成本,且可以根据需要进行软件裁剪,内核最小可以达到几百KB等特点,使其近年来在嵌入式领域的应用得到非常大的提高
-主要应用: 机顶盒,数字电视,网络电话,程控交换机,手机,智能家居
-  2. Linux介绍   Linux是一个开源,免费的操作系统,其稳定性,安全性,处理多并发已经得到业界的认可,目前很多企业级的项目都会部署到linux服务器上;
-  Linux
-  Linux之父: Linus Torvalds
-Git创作者,世界著名黑客
-  Linux主要的发行版: Ubuntu ,RedHat ,CentOS ,Debain ,Fedora ,SuSE
-  3. Linux目录结构 1. 基本介绍  linux的文件系统是采用层级式的目录结构,在此结构中的最上层是根目录&quot;/&quot;,然后再此目录下载创建其他的目录; 深刻理解linux梳妆目录是非常重要的,这里我给大家说明一下; 记住一句经典的话: 在Linux世界里,一切皆为文件!  2. 具体目录结构 4. 远程登录Linux 1. 为什么要远程登录  Linux服务器是开发小组共享 正式上线的项目是运行在公网 因此程序员需要远程登录到Linux进行项目管理或者开发  5. Vim快捷键 6. 关机&amp;重启命令 1. 基本介绍  shutdown -h now : 立刻进行关机 shutdown -h 1: 一分钟后关机 shutdown -r now : 现在重新启动计算机 halt: 关机,作用和上面一样 reboot: 现在重新启动计算机 sync: 把内存的数据同步到磁盘  2.</div><div class="post-footer">
-        <a href="/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">Linux</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/io%E6%B5%81/">IO流</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-04-02">2021-04-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/javase/"><i class="far fa-folder fa-fw"></i>JavaSE</a></span></div><div class="content">1. 文件 1. 什么是文件? 保存数据的地方
-2. 文件流 文件在程序中是以流的形式来操作的
-流: 数据在数据源(文件)和程序(内存)之间经历的路径
-输入流: 数据从数据源(文件)到程序(内存)的路径
-输出流: 数据从程序(内存)到数据源(文件)的路径
-3. 常用文件操作  new File(String pathname) //根据路径创建一个File对象 new File(File parent,String child) //根据父目录文件+子路径创建 new File(String parent,String child) //根据父目录+子路径构建 createNewFile 创建文件 getName,getAbsoutePath,getParent,length,exists,isFile,isDirectory mkdir:创建一级目录,mkdirs: 创建多级目录,delete:删除空目录或文件  2. IO流原理及流的分类 1. io流原理  I/O是input/output的缩写,I/O技术是非常实用的技术,用于处理数据传输,如读写文件,网络通信等; java程序中,对于数据的输入/输出操作以流(stream)的方式进行; java.io包下提供各种&quot;流&quot;类和接口,用以获取不同种类的数据,并通过方法输入或输出数据; 输入input:读取外部数据(磁盘,光盘等存储设备的数据)到程序(内存)中; 输出output:将程序数据输出到磁盘,光盘等存储设备中;  2. 流的分类   按操作数据单位不同分为: 字节流(8bit) 二进制文件,字符流(按字符) 文本文件;
-  按数据流的流向不同分为: 输入流,输出流
-  按流的角色的不同分为: 节点流,处理流/包装流
- java的IO流共设计40多个类,实际上非常规则,都是从如上4个抽象基类派生的. 由这四个类派生出来的子类名称都是以其父类作为子类名后缀;    3.</div><div class="post-footer">
-        <a href="/io%E6%B5%81/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/io%E6%B5%81/">IO流</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -206,6 +208,10 @@ Git创作者,世界著名黑客
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/4/">4</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/5/">5</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

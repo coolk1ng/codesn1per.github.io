@@ -3,6 +3,14 @@
 
 ### 1. JavaSE
 
+##### StringBuffer,StringBuilder区别?
+
+1. 两者都是可变的字符串对象,有共同的父类AbstractStringBuilder,并且两个类的构造方法和成员方法也基本相同,不同的是,StringBuffer是线程安全的,而StringBUilder是非线程安全的,所以StringBuilder性能略高
+
+
+
+
+
 ### 2. Spring
 
 ##### Spring是什么?
@@ -73,6 +81,21 @@
 4. HandleAdapter经过适配器调用具体的处理器(Handle/Controller),返回ModelAndView给DispatcherServlet
 5. DispatcherServlet调用ViewResolver(视图解析器),根据返回的ModelAndView中的逻辑视图名为DispatcherServlet返回一个可用的view实例
 6. DispatcherServlet根据View渲染视图,响应给用户
+
+##### Spring中的Bean是线程安全的么?
+
+1. Spring本省没有针对Bean做线程安全的处理
+2. 如果Bean是无状态的,那么Bean则是线程安全的,反之
+3. 另外,Bean是不是线程安全,跟Bean的作用于没有关系,Bean的作用于至少表示Bean的生命周期范围,对于任何声明周期的Bean都是一个对象,是不是线程安全还得看Bean本身
+
+##### Spring中的事务是如何实现的?
+
+1. Spring事务底层是基于数据库事务和AOP机制
+2. 对使用了@Transactional注解的Bean,Spring会创建一个代理对象作为Bean
+3. 如果代理对象的方法加了注解,则利用事务管理器创建数据连接
+4. 修改数据库连接的autocommit为false,禁止此连接的自动提交
+5. 执行方法,方法会执行sql,没有异常就提交事务
+6. Spring事务的隔离级别就是数据库的隔离级别
 
 
 

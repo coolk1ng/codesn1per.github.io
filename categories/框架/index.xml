@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>框架 - Category - CodeSniper&#39; Blog</title>
-        <link>https://coden1per.github.io/categories/%E6%A1%86%E6%9E%B6/</link>
+        <link>https://codesn1per.github.io/categories/%E6%A1%86%E6%9E%B6/</link>
         <description>框架 - Category - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 02:12:28 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/categories/%E6%A1%86%E6%9E%B6/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 02:12:28 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/%E6%A1%86%E6%9E%B6/" rel="self" type="application/rss+xml" /><item>
     <title>SpringSecurity</title>
-    <link>https://coden1per.github.io/springsecurity/</link>
+    <link>https://codesn1per.github.io/springsecurity/</link>
     <pubDate>Sat, 02 Apr 2022 02:12:28 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/springsecurity/</guid>
+    <guid>https://codesn1per.github.io/springsecurity/</guid>
     <description><![CDATA[1.过滤器 security本质是一个过滤器链
   FilterSecurityInterceptor:是一个方法级的权限过滤器,基本位于过滤器链的最底部;
   ExceptionTranslationFilter:是一个异常过滤器,用来处理在认证授权过程中抛出的异常;
@@ -21,10 +21,10 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
 @Configuration public class SecurityConfigTest extends WebSecurityConfigurerAdapter { @Autowired private UserDetailsService userDetailsService; @Bean PasswordEncoder passwordEncoder(){ return new BCryptPasswordEncoder(); } @Override protected void configure(AuthenticationManagerBuilder auth) throws Exception { auth.]]></description>
 </item><item>
     <title>Spring事务失效情况</title>
-    <link>https://coden1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
+    <link>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</link>
     <pubDate>Sun, 27 Mar 2022 22:24:16 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</guid>
+    <guid>https://codesn1per.github.io/spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5/</guid>
     <description><![CDATA[1. 抛出检查异常导致事务不能正确回滚  **原因: **Srping默认只会回滚非检查异常
   解法: 配置rollbackFor属性
  2. 业务方法内自己try-catch异常导致事务不能正确回滚  原因: 事务通知只有捕捉到了目标抛出的异常,才能进行后续的回滚处理,如果目标自己处理异常,事务通知无法获悉
@@ -39,26 +39,26 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
   **解法: **1. 依赖注入自己(代理)来调用; 2. 通过AopContext拿到代理对象,来调用; 3. 通过CTW,LTW实现功能增强]]></description>
 </item><item>
     <title>SpringBean的生命周期</title>
-    <link>https://coden1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
+    <link>https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
     <pubDate>Sun, 27 Mar 2022 13:14:08 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</guid>
+    <guid>https://codesn1per.github.io/springbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</guid>
     <description><![CDATA[阶段一: 处理名称,检查缓存 阶段二: 检查父工厂 阶段三: 检查DependsOn 阶段四: 按Scope创建bean  创建singleton 创建prototype 创建其他scope   阶段五: 创建bean  创建bean实例 依赖注入 初始化 登记可销毁bean   阶段六: 类型转换 阶段七: 销毁bean  阶段一: 处理名称,检查缓存  先把别名解析为实际名称,再进行后续处理 若要FactoryBean本身,需要使用&amp;名称获取 singletonObjects是一级缓存,放单例成品对象 singletonFactories是三级缓存,放单例工厂 earlySingletonObjects是耳机缓存,放单例工厂的产品,可成为提前单例对象  阶段二: 处理父子容器 阶段三: 阶段四: 按Scope创建bean  scope理解为从xxx范围内找到bean更加贴切 singleton scope表示从单例池范围获取bean,如果没有,则创建并放入单例池 prototype scope表示从不缓存bean,每次都创建新的 request scope表示从request对象范围内获取bean,如果没有,则创建并放入request  阶段五: 创建bean 1. 创建bean实例   FactoryMethod方式创建bean实例
  分成静态工厂与实例工厂 工厂方法若有参数,需要对工厂方法参数进行解析,利用resolveDependency 如果有多个工厂方法候选者,还要进一步按权重筛选    AutowiredAnnotationBeanPostProcessor
  优先选择带@Autowired注解的构造 若有唯一的带参构造,也会入选    才有默认构造]]></description>
 </item><item>
     <title>SpringCloud</title>
-    <link>https://coden1per.github.io/springcloud/</link>
+    <link>https://codesn1per.github.io/springcloud/</link>
     <pubDate>Fri, 18 Feb 2022 20:13:04 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/springcloud/</guid>
+    <guid>https://codesn1per.github.io/springcloud/</guid>
     <description><![CDATA[SpringCloud 1. Eureka 1. 提供者与消费者  服务提供者: 一次业务中,被其他服务调用的服务(提供接口给其他服务) 服务消费者: 一次业务中,调用其他服务的服务(调用其他服务提供的接口) 提供者与消费者角色是相对 一个服务可以同时是服务提供者和服务消费者  2. Eureka注册中心  注册服务信息 拉取服务 负载均衡 远程调用 心跳续约 30s/次  1. Eureka的作用  消费者该如何获取服务提供者的具体信息?  服务提供者启动时向eureka注册自己的信息 eureka保存这些信息 消费者根据服务名称想eureka拉取提供者信息   如果有多个服务提供者,消费者该如何选择?  服务消费者利用负载均衡算法,从服务列表中挑选一个   消费者如何感知服务提供者健康状态?  服务提供者会每隔30s向eurekaServer发送心跳请求,报告健康状态 eureka会更新记录服务列表信息,心跳不正常会被剔除 消费者就可以拉取最新的信息    2. 服务注册  引入eureka-client依赖 在application.yml中配置eureka地址  2. Ribbon 1. Ribbon负载均衡规则  规则接口是IRule 默认实现是ZoneAvoidanceRule,根据zone选择服务列表,然后轮询  2. 负载均衡自定义方式  代码方式: 配置灵活,但修改时需要重新打包发布 配置方式: 直观,方便,无需重新打包发布,但是无法做全局配置  3. 饥饿加载  开启饥饿加载 eager-load 指定饥饿加载的服务名称  3.]]></description>
 </item><item>
     <title>MySQL事务</title>
-    <link>https://coden1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</link>
+    <link>https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</link>
     <pubDate>Sat, 15 Jan 2022 12:55:53 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</guid>
+    <guid>https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</guid>
     <description><![CDATA[1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
   通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
   2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 并发执行的事务不会互相影响,其对数据库的影响和他们串行执行时一样.比如多个用户同时往一个账户转账,最后账户的结果应该和他们按先后次序转账的记过一样 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
@@ -66,7 +66,7 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
   不可重复读(读取了提交的新事物,指更新操作)
 不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
   幻读(读取了提交的新事物,指增删操作)
-  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
+  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数据不一致
   第一类事务丢失(回滚丢失)
 对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
   第二类事务丢失(覆盖丢失)
@@ -79,13 +79,13 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
 重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
   Serializable
 最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- 4.]]></description>
+ 4. 事务的实现原理   原子性是通过undo log来实现]]></description>
 </item><item>
     <title>SpringMVC</title>
-    <link>https://coden1per.github.io/springmvc/</link>
+    <link>https://codesn1per.github.io/springmvc/</link>
     <pubDate>Tue, 02 Feb 2021 02:03:22 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/springmvc/</guid>
+    <guid>https://codesn1per.github.io/springmvc/</guid>
     <description><![CDATA[1. SpringMVC组件 2. 请求方式 3. 处理器方法的参数 处理器方法可以包含一下四类参数,这些参数会在系统调用时由系统自动赋值,即程序员可在方法内直接使用;
  HttpServletRequest HttpServletResponse HttpServletSession 请求中所携带的请求参数  3.1 逐个参数接收 逐个接收:请求中的参数名和控制器方法的形参名一样;
 接受参数的问题:
@@ -108,10 +108,10 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
   DispatcherServlet把控制器执行结果交给了视图解析器]]></description>
 </item><item>
     <title>Mybatis</title>
-    <link>https://coden1per.github.io/mybatis/</link>
+    <link>https://codesn1per.github.io/mybatis/</link>
     <pubDate>Tue, 18 Feb 2020 22:05:34 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mybatis/</guid>
+    <guid>https://codesn1per.github.io/mybatis/</guid>
     <description><![CDATA[Mybatis配置 1. 搭建实验数据库  创建一个MyBatis实验数据库,并创建一个user表  2. Idea新建项目,连接数据库  新建一个普通的maven项目 pom.xml中导入相关的maven依赖  Mysql驱动 Mybatis驱动 junit驱动    &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.21&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.5&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;  连接我们的Mysql  解决时区问题    3. 编写MyBatis核心配置文件  创建一个子模块mybatis-01 在该模块下的resource目录下,新建mybatis-config.xml文件,这是MyBatis的核心配置文件  &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!DOCTYPE configuration PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34; &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt; &lt;configuration&gt; &lt;environments default=&#34;development&#34;&gt; &lt;environment id=&#34;development&#34;&gt; &lt;transactionManager type=&#34;JDBC&#34;/&gt; &lt;dataSource type=&#34;POOLED&#34;&gt; &lt;property name=&#34;driver&#34; value=&#34;com.]]></description>
 </item></channel>
 </rss>

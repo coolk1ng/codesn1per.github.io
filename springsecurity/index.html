@@ -16,12 +16,12 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
 @Configuration public class SecurityConfig extends WebSecurityConfigurerAdapter { @Bean PasswordEncoder passwordEncoder(){ return new BCryptPasswordEncoder(); } @Autowired private PasswordEncoder passwordEncoder; @Override protected void configure(AuthenticationManagerBuilder auth) throws Exception { String password = passwordEncoder.encode(&#34;123&#34;); auth.inMemoryAuthentication().withUser(&#34;root&#34;).password(password).roles(&#34;admin&#34;); } }   自定义编写实现类
 @Configuration public class SecurityConfigTest extends WebSecurityConfigurerAdapter { @Autowired private UserDetailsService userDetailsService; @Bean PasswordEncoder passwordEncoder(){ return new BCryptPasswordEncoder(); } @Override protected void configure(AuthenticationManagerBuilder auth) throws Exception { auth." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://coden1per.github.io/springsecurity/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://codesn1per.github.io/springsecurity/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-04-02T02:12:28&#43;08:00" />
 <meta property="article:modified_time" content="2022-04-02T02:12:28&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="SpringSecurity"/>
 <meta name="twitter:description" content="1.过滤器 security本质是一个过滤器链
@@ -36,7 +36,7 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/springsecurity/" /><link rel="prev" href="https://coden1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/" /><link rel="next" href="https://coden1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/springsecurity/" /><link rel="prev" href="https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/" /><link rel="next" href="https://codesn1per.github.io/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -44,9 +44,9 @@ server.port=5555 spring.security.user.name=root spring.security.user.password=12
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/coden1per.github.io\/springsecurity\/"
+            "@id": "https:\/\/codesn1per.github.io\/springsecurity\/"
         },"genre": "posts","keywords": "SpringSecurity","wordcount":  590 ,
-        "url": "https:\/\/coden1per.github.io\/springsecurity\/","datePublished": "2022-04-02T02:12:28+08:00","dateModified": "2022-04-02T02:12:28+08:00","publisher": {
+        "url": "https:\/\/codesn1per.github.io\/springsecurity\/","datePublished": "2022-04-02T02:12:28+08:00","dateModified": "2022-04-02T02:12:28+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",

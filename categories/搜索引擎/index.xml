@@ -1,0 +1,36 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>搜索引擎 - Category - CodeSniper&#39; Blog</title>
+        <link>https://codesn1per.github.io/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</link>
+        <description>搜索引擎 - Category - CodeSniper&#39; Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Thu, 28 Apr 2022 02:42:27 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" rel="self" type="application/rss+xml" /><item>
+    <title>SpringBoot整合ES</title>
+    <link>https://codesn1per.github.io/springboot%E6%95%B4%E5%90%88es/</link>
+    <pubDate>Thu, 28 Apr 2022 02:42:27 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/springboot%E6%95%B4%E5%90%88es/</guid>
+    <description><![CDATA[1. 添加依赖 &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-data-elasticsearch&lt;/artifactId&gt; &lt;/dependency&gt; 2. 配置客户端 @Configuration public class RestClientConfig extends AbstractElasticsearchConfiguration { @Value(&#34;${elasticsearch.host}&#34;) private String host; @Override @Bean public RestHighLevelClient elasticsearchClient() { final ClientConfiguration clientConfiguration = ClientConfiguration.builder() .connectedTo(host).build(); return RestClients.create(clientConfiguration).rest(); } } # ES主机端口elasticsearch:host:127.0.0.1:92003. 客户端对象  ElasticsearchOperations RestHighLevelClient (推荐)  1. ElasticsearchOperations 特点: 始终使用面向对象方式操作ES
+相关注解:
+@Data @Document(indexName = &#34;product&#34;,createIndex = true) public class Product { @Id private String id; @Field(type = FieldType.Keyword) private String title; @Field(type = FieldType.]]></description>
+</item><item>
+    <title>ElasticSearch学习</title>
+    <link>https://codesn1per.github.io/elasticsearch%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Wed, 27 Apr 2022 03:00:14 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://codesn1per.github.io/elasticsearch%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[1. 什么是ElasticSearch ElasticSearch简称es,是一个开源的分布式全文检索引擎,他可以近乎实时的存储,检索数据;本身拓展性很好,可以拓展到上百台服务器,处理PB级别的数据.es也使用java开发并使用lucene作为核心来实现所有的所有和搜索的功能,但是他的目的是通过简单的Restful API来隐藏Lucene的复杂性,从而让全文搜索变的简单.
+2. ElasticSearch概念 2.1 概述 ElasticSearch是面向文档(document oriented)的,这意味着他可以存储整个对象或文档.然而他不仅是存储,还会索引(index)每个文档的内容使之可以被搜索.在ElasticSearch中,你可以对文档(而非成行成列的数据)进行索引,搜索,排序,过滤.与关系型数据库对比如下:
+Relational DB -&gt; Databases -&gt; Tables - &gt; Rows -&gt; COlumns ElasticSearch - &gt; Indices -&gt; Types -&gt; Documents -&gt; Fields 2.2 索引-index 一个索引就是一个拥有积分相似特征的文档的集合.比如说,你可以有一个客户数据的索引,另一个产品目录的索引,还有一个订单数据的索引.一个索引由一个名字来标识(必须全部是小写字母的),并且当我们要对对应于这个索引中的文档进行索引,搜索,更新和删除的时候,都要使用到这个名字.在一个集群中,可以定义人一多的索引.
+2.3 类型-type 在一个索引中,你可以定义一种或多种类型,一个类型是你的索引的一个逻辑上的分类/分区,其寓意完全由你来定.通常,会为具有一组共同字段的的文档定义一个类型.比如,我们假设你运营一个博客并且将你所有的数据存储到一个索引中.在这个索引中,你可以为用户数据定义一个类型,为博客数据定义另一个类型,当然,也可以为评论数据定义另一个类型.
+2.4 字段-Field 相当于是数据表的字段.对文档数据根据不同属性进行的分类标识
+2.5 映射-mapping mapping是处理数据的方式和规则方面做一些限制,如某个字段的数据类型,默认值,分析器,是否被索引等,这些都是映射里面可以设置的,其他就是处理es里面的数据一些使用葛泽设置也叫做映射.俺这最优规则处理数据对性能提升很大.
+2.6 文档-doucument 一个文档是一个可被索引的基础信息单元,在一个index/type里面,你可以存储人一多的文档.注意,尽管一个文档,物理上存在于一个索引之中,文档必须被索引/赋予一个索引的type.
+2.7 接近实时-NRT es是一个接近实时的搜索平台.这意味着,从索引一个文档直到这个文档能够被搜索到有一个轻微的延迟.
+3. 索引操作 3.1 创建索引 postman发送put请求 127.0.0.1:9200/shopping
+3.2 查看索引 postman发送get请求 127.0.0.1:9200/shopping
+查看所有索引: 127.0.0.1:9200/_cat/indices?v
+4. 文档操作 4.1 创建文档 postman发送post请求 127.0.0.1:9200/shopping/_doc
+{ &#34;title&#34;:&#34;小米手机&#34;, &#34;category&#34;:&#34;手机&#34;, &#34;price&#34;:4999 } 4.]]></description>
+</item></channel>
+</rss>

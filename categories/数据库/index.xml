@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>数据库 - Category - CodeSniper&#39; Blog</title>
-        <link>https://coden1per.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+        <link>https://codesn1per.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
         <description>数据库 - Category - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
     <title>MySQL锁机制</title>
-    <link>https://coden1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</link>
+    <link>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</link>
     <pubDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</guid>
+    <guid>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</guid>
     <description><![CDATA[1. 锁的分类  共享锁 Share Lock (简称S锁,属于行锁) 排它锁 Exclusive Locks (简称X锁,属于行锁) 意向共享锁 Intention Shared Locks (简称IS锁,属于表锁) 意向排他锁 Intention Exclusive Locks (简称IX锁,属于表锁) 自增锁 AUTO-INC Locks  2. 共享锁  共享锁就是多个事务对同一数据可以共享一把锁,都能访问到数据库,但是只能读不能修改
   事务A: select * from student where id = 1 lock in share mode;
 事务B: select * from student where id = 1 (读数据没有问题)
@@ -18,10 +18,10 @@
  3. 排它锁  排它锁不能与其他锁并存,如一个事务获取了一个数据行的排它锁,其他事务就不能再获取该行的锁,只有当前获取了排它锁的事务可以对数据进行读取和修改]]></description>
 </item><item>
     <title>MySQL索引</title>
-    <link>https://coden1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
+    <link>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
     <pubDate>Sat, 26 Feb 2022 15:28:31 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
+    <guid>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
     <description><![CDATA[1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
 缺点:
  利用hash存储的话需要将所有数据文件添加到内存,比较耗费内存空间 如果所有的查询都是等值查询,那么hash确实很快,但是使用范围查找情况更多,因此hash就不太适合了    2. 二叉树的索引形式
@@ -40,17 +40,17 @@
 全文索引类型为FULL TEXT,在定义索引的列上支持值的全文查找,允许在这些所偶遇列中插入重复值和空值,全文索引可以在CHAR,VARCHAR上创建]]></description>
 </item><item>
     <title>MySQL高级</title>
-    <link>https://coden1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
+    <link>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
     <pubDate>Sat, 19 Feb 2022 15:25:53 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mysql%E9%AB%98%E7%BA%A7/</guid>
+    <guid>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</guid>
     <description><![CDATA[1. 存储引擎 1.1. 对比MyISAM和InnoDB    对比项 MyISAM InnoDB     主外键 不支持 支持   事务 不支持 支持   行表锁 表锁,即使操作一条记录也会锁住整个表,不适合高并发的操作 行锁,操作时只锁一行,不对其他行有影响,适合高并发的操作   缓存 只缓存索引,不缓存真实数据 不仅缓存索引还要缓存真实数据,对内存要求较高,而且内存大小对性能有决定性的影响   表空间 小 大   关注点 性能 事务   默认安装 Y Y    1.2. 阿里巴巴,淘宝用哪个?    产品 价格 目标 主要功能 是否可投入生产     PerCona Server 免费 提供XtraDB存储引擎的包装器和其他分析工具 XtraDB 是   MariaDB 免费 拓展MySQL以包含XtraDB和其他性能改进 XtraDB 是   Drizzle 免费 提供比MySQL更强大的可拓展性和性能改进 高可用性 是     Percona为MySQL数据库服务器进行了改进,在功能和性能上较MySQL有着很显著的提升.]]></description>
 </item><item>
     <title>Redis基础</title>
-    <link>https://coden1per.github.io/redis%E5%9F%BA%E7%A1%80/</link>
+    <link>https://codesn1per.github.io/redis%E5%9F%BA%E7%A1%80/</link>
     <pubDate>Fri, 02 Jul 2021 02:05:19 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/redis%E5%9F%BA%E7%A1%80/</guid>
+    <guid>https://codesn1per.github.io/redis%E5%9F%BA%E7%A1%80/</guid>
     <description><![CDATA[1. NoSQL数据库概述 NoSQL泛指非关系型数据库.NoSQL不依赖业务逻辑方式存储,而已简单的key_value模式存储.因此大大增加了数据库的拓展能力;
  不遵循SQL标准 不支持ACID 远超于SQL的性能  2. NoSQL使用场景  对数据高并发的读写 海量数据的读写 对数据高可拓展性的  3. NoSQL不适用场景  需要事务支持 基于sql的结构查询存储,处理复杂的关系,需要即席查询 用不着sql和用了sql也不行的情况,考虑用NoSQL  4. 常见NoSQL数据库  Memcache Redis MongoDB  2. Redis概述安装   Redis是一个开源的key-value存储系统
   和Memcached类似,他支持存储的value类型相对更对,包括string,list,set,zset(sorted set&ndash;有序集合)和hash

@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>MySQL - Tag - CodeSniper&#39; Blog</title>
-        <link>https://coden1per.github.io/tags/mysql/</link>
+        <link>https://codesn1per.github.io/tags/mysql/</link>
         <description>MySQL - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/mysql/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/mysql/" rel="self" type="application/rss+xml" /><item>
     <title>MySQL锁机制</title>
-    <link>https://coden1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</link>
+    <link>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</link>
     <pubDate>Sat, 02 Apr 2022 01:46:41 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</guid>
+    <guid>https://codesn1per.github.io/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</guid>
     <description><![CDATA[1. 锁的分类  共享锁 Share Lock (简称S锁,属于行锁) 排它锁 Exclusive Locks (简称X锁,属于行锁) 意向共享锁 Intention Shared Locks (简称IS锁,属于表锁) 意向排他锁 Intention Exclusive Locks (简称IX锁,属于表锁) 自增锁 AUTO-INC Locks  2. 共享锁  共享锁就是多个事务对同一数据可以共享一把锁,都能访问到数据库,但是只能读不能修改
   事务A: select * from student where id = 1 lock in share mode;
 事务B: select * from student where id = 1 (读数据没有问题)
@@ -18,10 +18,10 @@
  3. 排它锁  排它锁不能与其他锁并存,如一个事务获取了一个数据行的排它锁,其他事务就不能再获取该行的锁,只有当前获取了排它锁的事务可以对数据进行读取和修改]]></description>
 </item><item>
     <title>MySQL索引</title>
-    <link>https://coden1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
+    <link>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</link>
     <pubDate>Sat, 26 Feb 2022 15:28:31 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
+    <guid>https://codesn1per.github.io/mysql%E7%B4%A2%E5%BC%95/</guid>
     <description><![CDATA[1. 索引是什么?  索引时帮助MySQL高效获取数据的数据结构; 索引存储在文件系统中; 索引的文件存储形式与存储引擎有关; 索引文件的结构  hash 二叉树 B树 B+树     1. hash表的索引形式
 缺点:
  利用hash存储的话需要将所有数据文件添加到内存,比较耗费内存空间 如果所有的查询都是等值查询,那么hash确实很快,但是使用范围查找情况更多,因此hash就不太适合了    2. 二叉树的索引形式
@@ -40,17 +40,17 @@
 全文索引类型为FULL TEXT,在定义索引的列上支持值的全文查找,允许在这些所偶遇列中插入重复值和空值,全文索引可以在CHAR,VARCHAR上创建]]></description>
 </item><item>
     <title>MySQL高级</title>
-    <link>https://coden1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
+    <link>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</link>
     <pubDate>Sat, 19 Feb 2022 15:25:53 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mysql%E9%AB%98%E7%BA%A7/</guid>
+    <guid>https://codesn1per.github.io/mysql%E9%AB%98%E7%BA%A7/</guid>
     <description><![CDATA[1. 存储引擎 1.1. 对比MyISAM和InnoDB    对比项 MyISAM InnoDB     主外键 不支持 支持   事务 不支持 支持   行表锁 表锁,即使操作一条记录也会锁住整个表,不适合高并发的操作 行锁,操作时只锁一行,不对其他行有影响,适合高并发的操作   缓存 只缓存索引,不缓存真实数据 不仅缓存索引还要缓存真实数据,对内存要求较高,而且内存大小对性能有决定性的影响   表空间 小 大   关注点 性能 事务   默认安装 Y Y    1.2. 阿里巴巴,淘宝用哪个?    产品 价格 目标 主要功能 是否可投入生产     PerCona Server 免费 提供XtraDB存储引擎的包装器和其他分析工具 XtraDB 是   MariaDB 免费 拓展MySQL以包含XtraDB和其他性能改进 XtraDB 是   Drizzle 免费 提供比MySQL更强大的可拓展性和性能改进 高可用性 是     Percona为MySQL数据库服务器进行了改进,在功能和性能上较MySQL有着很显著的提升.]]></description>
 </item><item>
     <title>MySQL事务</title>
-    <link>https://coden1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</link>
+    <link>https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</link>
     <pubDate>Sat, 15 Jan 2022 12:55:53 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</guid>
+    <guid>https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/</guid>
     <description><![CDATA[1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
   通俗点说就是为了达到某个目的而做的一些列操作,要么一起成功(事务提交),要么一起失败(事务回滚)
   2. 事务的四大特性  原子性(Atomicity): 事务中所有操作时不可再分割的原子单位.事务中所有操作要么全部执行成功,要么全部执行失败 一致性(Consistency): 事务执行后,数据库状态与其他业务规则保持一致,如转账业务,无论事务执行成功与否,参与转账的两个账号余额之和应该是不变的 隔离性(Isolation): 并发执行的事务不会互相影响,其对数据库的影响和他们串行执行时一样.比如多个用户同时往一个账户转账,最后账户的结果应该和他们按先后次序转账的记过一样 持久性(Durability): 一旦事务提交成功,事务中的所有数据操作都必须被持久化到数据库中,即使提交事务后,数据库崩溃,在数据库重启时,也能保证某种机制恢复数据  3. 事务的隔离级别   脏读(读取了未提交的数据,然后被回滚了)
@@ -58,7 +58,7 @@
   不可重复读(读取了提交的新事物,指更新操作)
 不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
   幻读(读取了提交的新事物,指增删操作)
-  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
+  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数据不一致
   第一类事务丢失(回滚丢失)
 对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
   第二类事务丢失(覆盖丢失)
@@ -71,6 +71,6 @@
 重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
   Serializable
 最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- 4.]]></description>
+ 4. 事务的实现原理   原子性是通过undo log来实现]]></description>
 </item></channel>
 </rss>

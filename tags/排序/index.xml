@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>排序 - Tag - CodeSniper&#39; Blog</title>
-        <link>https://coden1per.github.io/tags/%E6%8E%92%E5%BA%8F/</link>
+        <link>https://codesn1per.github.io/tags/%E6%8E%92%E5%BA%8F/</link>
         <description>排序 - Tag - CodeSniper&#39; Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>codesniperrrrr@gmail.com (CodeSniper)</managingEditor>
-            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Thu, 18 Feb 2021 22:36:00 &#43;0800</lastBuildDate><atom:link href="https://coden1per.github.io/tags/%E6%8E%92%E5%BA%8F/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>codesniperrrrr@gmail.com (CodeSniper)</webMaster><lastBuildDate>Thu, 18 Feb 2021 22:36:00 &#43;0800</lastBuildDate><atom:link href="https://codesn1per.github.io/tags/%E6%8E%92%E5%BA%8F/" rel="self" type="application/rss+xml" /><item>
     <title>Sort</title>
-    <link>https://coden1per.github.io/sort/</link>
+    <link>https://codesn1per.github.io/sort/</link>
     <pubDate>Thu, 18 Feb 2021 22:36:00 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://coden1per.github.io/sort/</guid>
+    <guid>https://codesn1per.github.io/sort/</guid>
     <description><![CDATA[1. comparable接口 代码测试: package Sort.comparable; public class student implements Comparable&lt;student&gt;{ private String username; private int age; public student() { } public student(String username, int age) { this.username = username; this.age = age; } public String getUsername() { return username; } public void setUsername(String username) { this.username = username; } public int getAge() { return age; } public void setAge(int age) { this.age = age; } @Override public String toString() { return &#34;student{&#34; + &#34;username=&#39;&#34; + username + &#39;\&#39;&#39; + &#34;, age=&#34; + age + &#39;}&#39;; } @Override public int compareTo(student o) { return this.]]></description>
 </item></channel>
 </rss>

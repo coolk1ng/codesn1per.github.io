@@ -9,22 +9,22 @@
         <title>CodeSniper&#39; Blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="CodeSniper&#39; Blog" />
 <meta property="og:description" content="This is My New Hugo Site" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://coden1per.github.io/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/>
+<meta property="og:url" content="https://codesn1per.github.io/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="CodeSniper&#39; Blog"/>
 <meta name="twitter:description" content="This is My New Hugo Site"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="CodeSniper&#39; Blog">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="CodeSniper&#39; Blog">
     <link rel="feed" href="/index.xml" type="application/rss+xml" title="CodeSniper&#39; Blog"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "WebSite",
-        "url": "https:\/\/coden1per.github.io\/","inLanguage": "en","author": {
+        "url": "https:\/\/codesn1per.github.io\/","inLanguage": "en","author": {
                 "@type": "Person",
                 "name": "CodeSniper"
             },"description": "This is My New Hugo Site","name": "CodeSniper' Blog"
@@ -102,6 +102,49 @@
         alt="/art.png"
         title="/art.png" /></a></div><h2 class="home-subtitle"><div id="id-3" class="typeit"></div></h2></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/redis%E5%9F%BA%E7%A1%80/">Redis基础</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-07-02">2021-07-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div><div class="content">1. NoSQL数据库概述 NoSQL泛指非关系型数据库.NoSQL不依赖业务逻辑方式存储,而已简单的key_value模式存储.因此大大增加了数据库的拓展能力;
+ 不遵循SQL标准 不支持ACID 远超于SQL的性能  2. NoSQL使用场景  对数据高并发的读写 海量数据的读写 对数据高可拓展性的  3. NoSQL不适用场景  需要事务支持 基于sql的结构查询存储,处理复杂的关系,需要即席查询 用不着sql和用了sql也不行的情况,考虑用NoSQL  4. 常见NoSQL数据库  Memcache Redis MongoDB  2. Redis概述安装   Redis是一个开源的key-value存储系统
+  和Memcached类似,他支持存储的value类型相对更对,包括string,list,set,zset(sorted set&ndash;有序集合)和hash
+  这些数据类型都支持push/pop add/remove及取交集并集和差集及更丰富的操作,而且这些操作都是原子性的;
+  在此基础上,Redis支持各种不同方式的排序
+  与memcached一样,为了保证效率,数据都是缓存在内存中.
+  区别的是Redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的几率文件;
+  并且在此基础上实现了master-slave(主从)同步;
+1. redis安装 1. 安装目录: /usr/local/bin 查看默认安装目录:
+ redis-benchmark: 性能检测工具,可以在自己本子运行,看看自己本子性能如何 redis-check-aof: 修复有问题的AOF文件,rdb和aof后面讲 redis-check-rdb: 修复有问题的dump.rdb文件 redis-sentinel: Redis集群使用 redis-server: Redis服务器启动命令 redis-cli: 客户端,操作入口  2.</div><div class="post-footer">
+        <a href="/redis%E5%9F%BA%E7%A1%80/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">Redis</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">Linux基本命令</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-06-02">2021-06-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw"></i>操作系统</a></span></div><div class="content">Linux 1. Linux的应用领域   服务器领域
+linux在服务器领域的应用是最强的;
+linux免费,稳定,高效等特点在这里得到了很好的提现,尤其砸一些高端领域尤为广泛(c/c++/php/java/python/go);
+  嵌入式领域
+linxu运行稳定,对网络的良好支持性,低成本,且可以根据需要进行软件裁剪,内核最小可以达到几百KB等特点,使其近年来在嵌入式领域的应用得到非常大的提高
+主要应用: 机顶盒,数字电视,网络电话,程控交换机,手机,智能家居
+  2. Linux介绍   Linux是一个开源,免费的操作系统,其稳定性,安全性,处理多并发已经得到业界的认可,目前很多企业级的项目都会部署到linux服务器上;
+  Linux
+  Linux之父: Linus Torvalds
+Git创作者,世界著名黑客
+  Linux主要的发行版: Ubuntu ,RedHat ,CentOS ,Debain ,Fedora ,SuSE
+  3. Linux目录结构 1. 基本介绍  linux的文件系统是采用层级式的目录结构,在此结构中的最上层是根目录&quot;/&quot;,然后再此目录下载创建其他的目录; 深刻理解linux梳妆目录是非常重要的,这里我给大家说明一下; 记住一句经典的话: 在Linux世界里,一切皆为文件!  2. 具体目录结构 4. 远程登录Linux 1. 为什么要远程登录  Linux服务器是开发小组共享 正式上线的项目是运行在公网 因此程序员需要远程登录到Linux进行项目管理或者开发  5. Vim快捷键 6. 关机&amp;重启命令 1. 基本介绍  shutdown -h now : 立刻进行关机 shutdown -h 1: 一分钟后关机 shutdown -r now : 现在重新启动计算机 halt: 关机,作用和上面一样 reboot: 现在重新启动计算机 sync: 把内存的数据同步到磁盘  2.</div><div class="post-footer">
+        <a href="/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">Linux</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/io%E6%B5%81/">IO流</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-04-02">2021-04-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/javase/"><i class="far fa-folder fa-fw"></i>JavaSE</a></span></div><div class="content">1. 文件 1. 什么是文件? 保存数据的地方
+2. 文件流 文件在程序中是以流的形式来操作的
+流: 数据在数据源(文件)和程序(内存)之间经历的路径
+输入流: 数据从数据源(文件)到程序(内存)的路径
+输出流: 数据从程序(内存)到数据源(文件)的路径
+3. 常用文件操作  new File(String pathname) //根据路径创建一个File对象 new File(File parent,String child) //根据父目录文件+子路径创建 new File(String parent,String child) //根据父目录+子路径构建 createNewFile 创建文件 getName,getAbsoutePath,getParent,length,exists,isFile,isDirectory mkdir:创建一级目录,mkdirs: 创建多级目录,delete:删除空目录或文件  2. IO流原理及流的分类 1. io流原理  I/O是input/output的缩写,I/O技术是非常实用的技术,用于处理数据传输,如读写文件,网络通信等; java程序中,对于数据的输入/输出操作以流(stream)的方式进行; java.io包下提供各种&quot;流&quot;类和接口,用以获取不同种类的数据,并通过方法输入或输出数据; 输入input:读取外部数据(磁盘,光盘等存储设备的数据)到程序(内存)中; 输出output:将程序数据输出到磁盘,光盘等存储设备中;  2. 流的分类   按操作数据单位不同分为: 字节流(8bit) 二进制文件,字符流(按字符) 文本文件;
+  按数据流的流向不同分为: 输入流,输出流
+  按流的角色的不同分为: 节点流,处理流/包装流
+ java的IO流共设计40多个类,实际上非常规则,都是从如上4个抽象基类派生的. 由这四个类派生出来的子类名称都是以其父类作为子类名后缀;    3.</div><div class="post-footer">
+        <a href="/io%E6%B5%81/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/io%E6%B5%81/">IO流</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/sort/">Sort</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-02-18">2021-02-18</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="far fa-folder fa-fw"></i>算法与数据结构</a></span></div><div class="content">1. comparable接口 代码测试: package Sort.comparable; public class student implements Comparable&lt;student&gt;{ private String username; private int age; public student() { } public student(String username, int age) { this.username = username; this.age = age; } public String getUsername() { return username; } public void setUsername(String username) { this.username = username; } public int getAge() { return age; } public void setAge(int age) { this.age = age; } @Override public String toString() { return &#34;student{&#34; + &#34;username=&#39;&#34; + username + &#39;\&#39;&#39; + &#34;, age=&#34; + age + &#39;}&#39;; } @Override public int compareTo(student o) { return this.</div><div class="post-footer">
         <a href="/sort/">Read More</a><div class="post-tags">
@@ -135,23 +178,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-01-17">2021-01-17</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="far fa-folder fa-fw"></i>算法与数据结构</a></span></div><div class="content">1. 二叉查找树 二叉树结点类API的设计:    类名 Node&lt;Key,Value&gt;     构造方法 Node(Key key,Value value,Node left,Node right):创建Node对象   成员变量 1. public Node left:记录左子结点 2. public Node right:记录右子结点 3. public Key key:存储键 4. public Value value:存储值    代码实现: public class Node&lt;Key,Value&gt; { //存储键  public Key key; //存储值  public Value value; //存储左子结点  public Node left; //存储右子结点  public Node right; public Node(Key key, Value value, Node left, Node right) { this.</div><div class="post-footer">
         <a href="/tree/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/%E5%8F%8D%E5%B0%84/">反射</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-11-02">2020-11-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/javase/"><i class="far fa-folder fa-fw"></i>JavaSE</a></span></div><div class="content">1. 反射机制 1. 介绍  反射机制允许程序在执行期借助ReflectionAPI取得任何类的内部信息(比如成员变量,构造方法,成员方法等等),并能操作对象的属性及方法.反射在设计模式和框架底层都会用到; 加载完类后,在堆中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象包含了类的完整结构信息.通过这个对象得到类的结构.这个对象就像一面镜子,透过这个镜子看到类的结构,所以,形象的称为反射;  2. 原理示意图 3. 反射机制作用  在运行时判断任意一个对象所属的类 在运行时构造任意一个类的对象 在运行时得到任意一个类所具有的成员变量和方法 在运行时调用任意一个对象的成员变量和方法 生成动态代理  4. 反射相关的主要类 5. 反射的有点和缺点  优点: 可以动态的创建和使用对象(也是框架底层核心),使用灵活,没有反射机制,框架技术就失去底层支撑; 缺点: 使用反射基本是解释执行,对执行速度有影响;  6. 反射调用优化-关闭访问检查  Method和Field,Constructor对象都有setAccessible()方法; setAccessible作用是启动和禁用访问安全检查的开关; 参数值为true表示反射的对象在使用时取消访问检查,提高反射的效率,参数值为false则表示反射的对象执行访问检查;  2. Class类 1. 基本介绍   Class也是类,因此也继承Object类;
-  Class类对象不是new出来的,而是系统创建的;
-  对于某个类的Class类对象,在内存中只有一份,因为类只加载一次;
-  每个类的实例都会记得自己是由哪个Class实例所生成;
-  通过Class可以完整的得到一个类的完整结构,通过一系列API
-  Class对象时存放在堆的
-  类的字节码二进制数据,是放在方法区的,有点地方称为类的元数据;
-  2. 获取Class类对象 1. Class.forName()  前提:已知一个类的全类名,且该类路径下,可通过Class类的静态方法forName()获取,可能抛出ClassNotFoundException 应用场景:多用于配置文件,读取类全路径,加载类;  2.</div><div class="post-footer">
-        <a href="/%E5%8F%8D%E5%B0%84/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%8F%8D%E5%B0%84/">反射</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/mybatis/">Mybatis</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-02-18">2020-02-18</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div><div class="content">Mybatis配置 1. 搭建实验数据库  创建一个MyBatis实验数据库,并创建一个user表  2. Idea新建项目,连接数据库  新建一个普通的maven项目 pom.xml中导入相关的maven依赖  Mysql驱动 Mybatis驱动 junit驱动    &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.21&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.5&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;  连接我们的Mysql  解决时区问题    3. 编写MyBatis核心配置文件  创建一个子模块mybatis-01 在该模块下的resource目录下,新建mybatis-config.xml文件,这是MyBatis的核心配置文件  &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!DOCTYPE configuration PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34; &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt; &lt;configuration&gt; &lt;environments default=&#34;development&#34;&gt; &lt;environment id=&#34;development&#34;&gt; &lt;transactionManager type=&#34;JDBC&#34;/&gt; &lt;dataSource type=&#34;POOLED&#34;&gt; &lt;property name=&#34;driver&#34; value=&#34;com.</div><div class="post-footer">
-        <a href="/mybatis/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mybatis/">Mybatis</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -167,6 +193,10 @@
                 </li><li class="page-item active">
                     <span class="page-link">
                         <a href="/page/4/">4</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/5/">5</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

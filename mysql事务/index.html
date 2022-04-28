@@ -13,7 +13,7 @@
   不可重复读(读取了提交的新事物,指更新操作)
 不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
   幻读(读取了提交的新事物,指增删操作)
-  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
+  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数据不一致
   第一类事务丢失(回滚丢失)
 对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
   第二类事务丢失(覆盖丢失)
@@ -26,14 +26,14 @@
 重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
   Serializable
 最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- 4." />
+ 4. 事务的实现原理   原子性是通过undo log来实现" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://coden1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" /><meta property="og:image" content="https://coden1per.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" /><meta property="og:image" content="https://codesn1per.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-15T12:55:53&#43;08:00" />
 <meta property="article:modified_time" content="2022-01-15T12:55:53&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://coden1per.github.io/logo.png"/>
+<meta name="twitter:image" content="https://codesn1per.github.io/logo.png"/>
 
 <meta name="twitter:title" content="MySQL事务"/>
 <meta name="twitter:description" content="1. 基本概念   事务是数据库操作的最小工作单元,是作为单个逻辑工作单元执行的一些列操作;这些操作作为一个整体一起向系统提交,要么都执行,要么都不执行;事务是一组不可再分割的操作集合
@@ -43,7 +43,7 @@
   不可重复读(读取了提交的新事物,指更新操作)
 不可重复读是指在对于数据库中的某个数据,一个事务范围内多次查询却返回了不同的数据,这是由于在查询间隔,被另一个事务修改并提交了
   幻读(读取了提交的新事物,指增删操作)
-  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致
+  ​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数据不一致
   第一类事务丢失(回滚丢失)
 对于第一类事务丢失,就是比如A和B同时在执行一个数据,然后B事务已经提交了,然后A事务回滚了,这样B事务的操作就因A事务的回滚二丢失了
   第二类事务丢失(覆盖丢失)
@@ -56,11 +56,11 @@
 重复读,就是在开始读取数据(事务开启时),不在允许修改操作,可能会产生幻读
   Serializable
 最高的事务隔离级别,在该级别下,事务串行化顺序执行,可以避免脏读,不可重复读与幻读,但这种事务隔离级别效率低下,比较耗数据库性能,一般不使用
- 4."/>
+ 4. 事务的实现原理   原子性是通过undo log来实现"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://coden1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" /><link rel="prev" href="https://coden1per.github.io/redis%E5%9F%BA%E7%A1%80/" /><link rel="next" href="https://coden1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://codesn1per.github.io/mysql%E4%BA%8B%E5%8A%A1/" /><link rel="prev" href="https://codesn1per.github.io/redis%E5%9F%BA%E7%A1%80/" /><link rel="next" href="https://codesn1per.github.io/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -68,9 +68,9 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/coden1per.github.io\/mysql%E4%BA%8B%E5%8A%A1\/"
-        },"genre": "posts","keywords": "MySQL, 事务","wordcount":  104 ,
-        "url": "https:\/\/coden1per.github.io\/mysql%E4%BA%8B%E5%8A%A1\/","datePublished": "2022-01-15T12:55:53+08:00","dateModified": "2022-01-15T12:55:53+08:00","publisher": {
+            "@id": "https:\/\/codesn1per.github.io\/mysql%E4%BA%8B%E5%8A%A1\/"
+        },"genre": "posts","keywords": "MySQL, 事务","wordcount":  103 ,
+        "url": "https:\/\/codesn1per.github.io\/mysql%E4%BA%8B%E5%8A%A1\/","datePublished": "2022-01-15T12:55:53+08:00","dateModified": "2022-01-15T12:55:53+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -146,7 +146,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL事务</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-15">2022-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;104 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-15">2022-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;103 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
@@ -196,7 +196,7 @@
 <p>幻读(读取了提交的新事物,指增删操作)</p>
 </li>
 </ul>
-<p>​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数	据不一致</p>
+<p>​	在事务A多次读取中,事务B对数据进行了新增操作,导致事务A多次读取的数据不一致</p>
 <ul>
 <li>
 <p>第一类事务丢失(回滚丢失)</p>
