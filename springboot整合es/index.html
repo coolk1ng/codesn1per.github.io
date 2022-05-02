@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/codesn1per.github.io\/springboot%E6%95%B4%E5%90%88es\/"
-        },"genre": "posts","keywords": "ElasticSearch","wordcount":  208 ,
+        },"genre": "posts","keywords": "ElasticSearch","wordcount":  336 ,
         "url": "https:\/\/codesn1per.github.io\/springboot%E6%95%B4%E5%90%88es\/","datePublished": "2022-04-28T02:42:27+08:00","dateModified": "2022-04-28T02:42:27+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -110,8 +110,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">SpringBoot整合ES</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>CodeSniper</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"><i class="far fa-folder fa-fw"></i>搜索引擎</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-28">2022-04-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;208 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-28">2022-04-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;336 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -242,6 +242,60 @@
                 <span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="k">new</span> <span class="n">DeleteIndexRequest</span><span class="o">(</span><span class="s">&#34;product&#34;</span><span class="o">),</span> <span class="n">RequestOptions</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">acknowledgedResponse</span><span class="o">.</span><span class="na">isAcknowledged</span><span class="o">());</span>
     <span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>索引doc</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">restHighLevelClient_test_docCreate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">IndexRequest</span> <span class="n">indexRequest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IndexRequest</span><span class="o">(</span><span class="s">&#34;product&#34;</span><span class="o">);</span>
+        <span class="n">indexRequest</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;1&#34;</span><span class="o">).</span><span class="na">source</span><span class="o">(</span><span class="s">&#34;{\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;  \&#34;title\&#34;:\&#34;雪碧\&#34;,\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;  \&#34;price\&#34;:3,\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;  \&#34;descripiton\&#34;:\&#34;我是一个3元的雪碧!!!\&#34;\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;}&#34;</span><span class="o">,</span><span class="n">XContentType</span><span class="o">.</span><span class="na">JSON</span><span class="o">);</span>
+        <span class="n">IndexResponse</span> <span class="n">indexResponse</span> <span class="o">=</span> <span class="n">restHighLevelClient</span><span class="o">.</span><span class="na">index</span><span class="o">(</span><span class="n">indexRequest</span><span class="o">,</span> <span class="n">RequestOptions</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">indexResponse</span><span class="o">.</span><span class="na">status</span><span class="o">());</span>
+    <span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>更新doc by id</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">restHighLevelClient_test_docUpdate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">UpdateRequest</span> <span class="n">updateRequest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UpdateRequest</span><span class="o">(</span><span class="s">&#34;product&#34;</span><span class="o">,</span> <span class="s">&#34;1&#34;</span><span class="o">);</span>
+        <span class="n">UpdateRequest</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">updateRequest</span><span class="o">.</span><span class="na">doc</span><span class="o">(</span><span class="s">&#34;{\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;  \&#34;price\&#34;:4\n&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;}&#34;</span><span class="o">,</span> <span class="n">XContentType</span><span class="o">.</span><span class="na">JSON</span><span class="o">);</span>
+        <span class="n">UpdateResponse</span> <span class="n">updateResponse</span> <span class="o">=</span> <span class="n">restHighLevelClient</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">updateRequest</span><span class="o">,</span> <span class="n">RequestOptions</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">updateResponse</span><span class="o">.</span><span class="na">status</span><span class="o">());</span>
+    <span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>查询一条doc by id</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">restHighLevelClient_test_docSearch</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">GetResponse</span> <span class="n">getResponse</span> <span class="o">=</span> <span class="n">restHighLevelClient</span>
+                <span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">GetRequest</span><span class="o">(</span><span class="s">&#34;product&#34;</span><span class="o">,</span><span class="s">&#34;1&#34;</span><span class="o">),</span> <span class="n">RequestOptions</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getResponse</span><span class="o">.</span><span class="na">getSourceAsMap</span><span class="o">());</span>
+    <span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>查询所有doc</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">restHighLevelClient_test_docSearchAll</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">SearchRequest</span> <span class="n">searchRequest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SearchRequest</span><span class="o">(</span><span class="s">&#34;product&#34;</span><span class="o">);</span> <span class="c1">//指定索引
+</span><span class="c1"></span>        <span class="n">SearchSourceBuilder</span> <span class="n">searchSourceBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SearchSourceBuilder</span><span class="o">();</span> <span class="c1">//指定条件对象
+</span><span class="c1"></span>        <span class="n">searchSourceBuilder</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">QueryBuilders</span><span class="o">.</span><span class="na">matchAllQuery</span><span class="o">());</span> <span class="c1">//查询所有
+</span><span class="c1"></span>        <span class="n">searchRequest</span><span class="o">.</span><span class="na">source</span><span class="o">(</span><span class="n">searchSourceBuilder</span><span class="o">);</span>
+        <span class="n">SearchResponse</span> <span class="n">search</span> <span class="o">=</span> <span class="n">restHighLevelClient</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">searchRequest</span><span class="o">,</span> <span class="n">RequestOptions</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">search</span><span class="o">.</span><span class="na">getHits</span><span class="o">().</span><span class="na">getTotalHits</span><span class="o">().</span><span class="na">value</span><span class="o">);</span> <span class="c1">//总条数
+</span><span class="c1"></span>        <span class="c1">//获取结果
+</span><span class="c1"></span>        <span class="n">org</span><span class="o">.</span><span class="na">elasticsearch</span><span class="o">.</span><span class="na">search</span><span class="o">.</span><span class="na">SearchHit</span><span class="o">[]</span> <span class="n">hits</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="na">getHits</span><span class="o">().</span><span class="na">getHits</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">elasticsearch</span><span class="o">.</span><span class="na">search</span><span class="o">.</span><span class="na">SearchHit</span> <span class="n">hit</span> <span class="o">:</span> <span class="n">hits</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">hit</span><span class="o">.</span><span class="na">getSourceAsMap</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
 </code></pre></div></li>
 </ul>
 </div><div class="post-footer" id="post-footer">

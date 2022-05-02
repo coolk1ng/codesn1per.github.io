@@ -143,4 +143,66 @@ public class Product {
       }
   ```
 
+* 索引doc
+
+  ```java
+  @Test
+      public void restHighLevelClient_test_docCreate() throws IOException {
+          IndexRequest indexRequest = new IndexRequest("product");
+          indexRequest.id("1").source("{\n" +
+                  "  \"title\":\"雪碧\",\n" +
+                  "  \"price\":3,\n" +
+                  "  \"descripiton\":\"我是一个3元的雪碧!!!\"\n" +
+                  "}",XContentType.JSON);
+          IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+          System.out.println(indexResponse.status());
+      }
+  ```
+
+* 更新doc by id
+
+  ```java
+  @Test
+      public void restHighLevelClient_test_docUpdate() throws IOException {
+          UpdateRequest updateRequest = new UpdateRequest("product", "1");
+          UpdateRequest doc = updateRequest.doc("{\n" +
+                  "  \"price\":4\n" +
+                  "}", XContentType.JSON);
+          UpdateResponse updateResponse = restHighLevelClient.update(updateRequest, RequestOptions.DEFAULT);
+          System.out.println(updateResponse.status());
+      }
+  ```
+
+* 查询一条doc by id
+
+  ```java
+  @Test
+      public void restHighLevelClient_test_docSearch() throws IOException {
+          GetResponse getResponse = restHighLevelClient
+                  .get(new GetRequest("product","1"), RequestOptions.DEFAULT);
+          System.out.println(getResponse.getSourceAsMap());
+      }
+  ```
+
+* 查询所有doc
+
+  ```java
+  @Test
+      public void restHighLevelClient_test_docSearchAll() throws IOException {
+          SearchRequest searchRequest = new SearchRequest("product"); //指定索引
+          SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); //指定条件对象
+          searchSourceBuilder.query(QueryBuilders.matchAllQuery()); //查询所有
+          searchRequest.source(searchSourceBuilder);
+          SearchResponse search = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+  
+          System.out.println(search.getHits().getTotalHits().value); //总条数
+          //获取结果
+          org.elasticsearch.search.SearchHit[] hits = search.getHits().getHits();
+          for (org.elasticsearch.search.SearchHit hit : hits) {
+              System.out.println(hit.getSourceAsMap());
+          }
+      }
+  
+  ```
+
 
